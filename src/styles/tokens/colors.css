@@ -1,0 +1,64 @@
+:root {
+  /* Primitive colors */
+  --lh-c-white: #ffffff;
+  --lh-c-black: #000000;
+
+  /* Brand Colors */
+  --lh-c-brand-1: #428AC8;
+  --lh-c-brand-1-50: #EBF3FA;
+  --lh-c-brand-1-100: #D7E7F5;
+  --lh-c-brand-1-200: #B0CFEB;
+  --lh-c-brand-1-300: #88B7E1;
+  --lh-c-brand-1-400: #619FD7;
+  --lh-c-brand-1-500: #428AC8;
+  --lh-c-brand-1-600: #346EA0;
+  --lh-c-brand-1-700: #275278;
+  --lh-c-brand-1-800: #1A3750;
+  --lh-c-brand-1-900: #0D1B28;
+
+  --lh-c-brand-2: #7CC7B9;
+  --lh-c-brand-2-50: #F2F9F8;
+  --lh-c-brand-2-100: #E5F3F1;
+  --lh-c-brand-2-200: #CBE7E3;
+  --lh-c-brand-2-300: #B1DBD5;
+  --lh-c-brand-2-400: #97CFC7;
+  --lh-c-brand-2-500: #7CC7B9;
+  --lh-c-brand-2-600: #639F94;
+  --lh-c-brand-2-700: #4A776F;
+  --lh-c-brand-2-800: #31504A;
+  --lh-c-brand-2-900: #182825;
+
+  --lh-c-brand-3: #FF6B6B;
+  --lh-c-brand-3-50: #FFF0F0;
+  --lh-c-brand-3-100: #FFE1E1;
+  --lh-c-brand-3-200: #FFC3C3;
+  --lh-c-brand-3-300: #FFA5A5;
+  --lh-c-brand-3-400: #FF8787;
+  --lh-c-brand-3-500: #FF6B6B;
+  --lh-c-brand-3-600: #CC5656;
+  --lh-c-brand-3-700: #994040;
+  --lh-c-brand-3-800: #662B2B;
+  --lh-c-brand-3-900: #331515;
+  
+  /* Functional Colors */
+  --lh-c-success: #18794e;
+  --lh-c-warning: #915930;
+  --lh-c-danger: #cc3333;
+  --lh-c-info: #0284c7;
+
+  /* Gray Scale */
+  --lh-c-gray-50: #f8fafc;
+  --lh-c-gray-100: #f1f5f9;
+  --lh-c-gray-200: #e2e8f0;
+  --lh-c-gray-300: #cbd5e1;
+  --lh-c-gray-400: #94a3b8;
+  --lh-c-gray-500: #64748b;
+  --lh-c-gray-600: #475569;
+  --lh-c-gray-700: #334155;
+  --lh-c-gray-800: #1e293b;
+  --lh-c-gray-900: #0f172a;
+
+  /* Alpha Colors */
+  --lh-c-gray-alpha: rgba(142, 150, 170, 0.14);
+  --lh-c-brand-alpha: rgba(66, 138, 200, 0.14);
+} 

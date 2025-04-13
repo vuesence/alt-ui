@@ -1,0 +1,42 @@
+:root[data-theme="dark"] {
+  /* Base Colors */
+  --lh-c-white: #ffffff;
+  --lh-c-black: #000000;
+
+  /* Text Colors */
+  --lh-c-text-1: var(--lh-c-gray-50);
+  --lh-c-text-2: var(--lh-c-gray-400);
+  --lh-c-text-3: var(--lh-c-gray-500);
+
+  /* Surface Colors */
+  --lh-c-surface-1: var(--lh-c-gray-900);
+  --lh-c-surface-2: var(--lh-c-gray-800);
+  --lh-c-surface-3: var(--lh-c-gray-700);
+  --lh-c-surface-4: var(--lh-c-gray-600);
+  --lh-c-surface-5: var(--lh-c-gray-500);
+
+  /* Brand Colors */
+  --lh-c-brand-1: #3b82f6;
+  --lh-c-brand-1-50: #1e3a8a;
+  --lh-c-brand-1-100: #1e40af;
+  --lh-c-brand-1-200: #1d4ed8;
+  --lh-c-brand-1-300: #2563eb;
+  --lh-c-brand-1-400: #3b82f6;
+  --lh-c-brand-1-500: #60a5fa;
+  --lh-c-brand-1-600: #93c5fd;
+  --lh-c-brand-1-700: #bfdbfe;
+  --lh-c-brand-1-800: #dbeafe;
+  --lh-c-brand-1-900: #eff6ff;
+
+  /* Background Colors */
+  --lh-c-bg: var(--lh-c-surface-1);
+  --lh-c-bg-alt: var(--lh-c-surface-2);
+  --lh-c-bg-soft: var(--lh-c-surface-3);
+
+  /* Border Colors */
+  --lh-c-border: var(--lh-c-gray-700);
+  --lh-c-divider: var(--lh-c-gray-700);
+
+  /* Overlay */
+  --lh-c-overlay: rgba(0, 0, 0, 0.7);
+} 

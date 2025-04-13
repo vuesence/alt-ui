@@ -1,0 +1,38 @@
+:root {
+  /* Font Family */
+  --lh-font-family-base: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --lh-font-family-heading: 'Roboto Slab', serif;
+  --lh-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco,
+    Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  /* Font Size */
+  --lh-font-size-initial: 15px;
+  font-size: var(--lh-font-size-initial);
+  --lh-font-size-000: 0.625rem;    /* 10px */
+  --lh-font-size-00: 0.75rem;    /* 12px */
+  --lh-font-size-0: 0.875rem;   /* 14px */
+  --lh-font-size-1: 1rem;     /* 16px */
+  --lh-font-size-2: 1.125rem;   /* 18px */
+  --lh-font-size-3: 1.25rem;    /* 20px */
+  --lh-font-size-4: 1.5rem;    /* 24px */
+  --lh-font-size-5: 1.875rem;  /* 30px */
+  --lh-font-size-6: 2.25rem;   /* 36px */
+
+  /* Line Height */
+  --lh-line-height-0: 1.1;
+  --lh-line-height-1: 1.25;
+  --lh-line-height-2: 1.5;
+  --lh-line-height-3: 1.75;
+  --lh-line-height-4: 2;
+
+  /* Font Weight */
+  --lh-font-weight-light: 300;
+  --lh-font-weight-regular: 400;
+  --lh-font-weight-medium: 500;
+  --lh-font-weight-bold: 700;
+
+  /* Letter Spacing */
+  --lh-letter-spacing-tight: -0.025em;
+  --lh-letter-spacing-normal: 0;
+  --lh-letter-spacing-wide: 0.025em;
+} 
