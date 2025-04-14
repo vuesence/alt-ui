@@ -19,7 +19,7 @@ export { default as BaseEditableText } from "./base/BaseEditableText.vue";
 export { default as BaseEditableTable } from "./base/BaseEditableTable.vue";
 export { default as BaseToaster } from "./base/BaseToaster.vue";
 export { default as BaseCollapsableHint } from "./base/BaseCollapsableHint.vue";
-export { toast, toaster } from "@/ui/utils/toaster";
+export { toast, toaster } from "../utils/toaster";
 
 export { default as BaseDialog } from "./base/BaseDialog.vue";
 // export { default as BaseAlertDialog } from "./dialogs/BaseAlertDialog.vue";

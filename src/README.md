@@ -33,13 +33,13 @@ Import components and styles:
 
 ```javascript
 // Import components
-import { BaseInput, BaseSelect, BaseTable } from '@/ui';
+import { BaseInput, BaseSelect, BaseTable } from '../';
 
 // Import utilities
-import { cn, cssVar, pxToRem } from '@/ui';
+import { cn, cssVar, pxToRem } from '../';
 
 // Import types
-import type { TableHeader, TableRow } from '@/ui';
+import type { TableHeader, TableRow } from '../';
 ```
 
 ### Themes

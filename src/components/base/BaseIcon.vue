@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { getImageUrl, getSvgIcon } from "@/ui/utils/icons";
-import { isNumeric } from "@/ui/utils/string-helpers";
+import { getImageUrl, getSvgIcon } from "../../utils/icons";
+import { isNumeric } from "../../utils/string-helpers";
 
 // Define a more strict type for icon types
 type IconType = "svg" | "image";

@@ -37,7 +37,7 @@ const modelValue = defineModel<string>();
 </template>
 
 <style scoped>
-@import "@/ui/styles/tokens/scrollbar.css";
+@import "../../styles/tokens/scrollbar.css";
 
 .segment-group {
   display: flex;

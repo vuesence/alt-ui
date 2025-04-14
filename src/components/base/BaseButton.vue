@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 // import { router } from "@/app/router";
-// import type { ButtonProps } from "@/ui/types/components";
+// import type { ButtonProps } from "../types/components";
 import BaseSpinner from "./BaseSpinner.vue";
 
 const router = useRouter();

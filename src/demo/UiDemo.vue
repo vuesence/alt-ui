@@ -12,7 +12,7 @@ import {
   BaseTable,
   type TableColumnDefinition,
   type TableRowData,
-} from "@/ui";
+} from "../";
 
 // Input demo data
 const inputValue = ref("");

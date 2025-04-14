@@ -1,35 +1,43 @@
-import { defineConfig, LibraryOptions } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import dts from 'vite-plugin-dts';
-import path from 'path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { resolve } from "node:path";
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
   plugins: [
     vue(),
-    dts({ rollupTypes: true })
+    dts({
+      include: ["src/index.ts"],
+      copyDtsFiles: false,
+      exclude: ["src/**/*.vue"],
+      tsconfigPath: resolve(__dirname, "tsconfig.json"),
+      outDir: "dist",
+    }),
   ],
   build: {
+    target: ["esnext"],
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'ui-kit',
-      fileName: (format: 'es' | 'cjs') => `index.${format === 'es' ? 'mjs' : 'js'}`
-    } as LibraryOptions,
+      entry: resolve(__dirname, "src/index.ts"),
+      name: "AltUI",
+      fileName: (format) => `index.${format === "es" ? "mjs" : "js"}`,
+    },
     rollupOptions: {
-      external: ['vue', 'vue-router'],
+      external: ["vue", "vue-router"],
       output: {
         globals: {
-          vue: 'Vue',
-          'vue-router': 'VueRouter'
-        }
-      }
-    }
+          vue: "Vue",
+          "vue-router": "VueRouter",
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'styles.css';
+          return assetInfo.name;
+        },
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
-  }
+      "@": resolve(__dirname, "src"),
+    },
+  },
 });
