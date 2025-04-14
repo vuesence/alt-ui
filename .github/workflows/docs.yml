@@ -1,0 +1,103 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build library
+        run: pnpm build
+
+      - name: Build documentation
+        run: pnpm docs:build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./docs/.vitepress/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+  deploy-custom-domain:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+      REMOTE_HOST: lissa-health.com
+      REMOTE_USER: ubuntu
+      TARGET_DIR: /var/www/alt-ui.lissa-health.com
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: github-pages
+          path: ./dist-docs
+
+      - name: Extract artifact
+        run: |
+          mkdir -p docs-content
+          tar -xf ./dist-docs/artifact.tar -C ./docs-content
+
+      - name: Clean up remote directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          envs: TARGET_DIR
+          script: |
+            mkdir -p $TARGET_DIR
+            rm -rf $TARGET_DIR/*
+
+      - name: Deploy to custom domain
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ env.REMOTE_HOST }}
+          REMOTE_USER: ${{ env.REMOTE_USER }}
+          SOURCE: ./docs-content/
+          TARGET: ${{ env.TARGET_DIR }} 

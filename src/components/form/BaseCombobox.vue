@@ -2,9 +2,8 @@
 import {
   Combobox,
   createListCollection,
-  type ComboboxRootProps,
 } from "@ark-ui/vue/combobox";
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick } from "vue";
 
 // Types
 interface ComboboxItem {
@@ -13,6 +12,10 @@ interface ComboboxItem {
   // value: any;
   // id: string;
   // disabled?: boolean;
+}
+
+interface InputChangeDetails {
+  inputValue: string;
 }
 
 interface BaseComboboxProps {
@@ -127,7 +130,7 @@ const collection = computed(() =>
 //   emit("update:inputValue", details.inputValue);
 // }
 
-function handleInputChange(details) {
+function handleInputChange(details: InputChangeDetails) {
   console.log("BaseCombobox: handleValueChange called", details);
 
   // selectedItemKeys.value = details.value;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type PropType } from "vue";
+import { ref } from "vue";
 
 interface FormFieldData {
   isValid: boolean;

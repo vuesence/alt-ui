@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { BaseButton, BaseIcon, type TableHeader, type TableRow } from "../";
+import { BaseButton, BaseIcon } from "../";
+import type { TableHeader, TableRow } from "../../types/table";
 import type { PropType } from "vue";
 
-const modelValue = defineModel<TableRow[]>();
+const modelValue = defineModel<TableRow[] | undefined>();
 
 const props = defineProps({
   headers: {
@@ -29,7 +30,9 @@ function onCellInput(
   const newValue = target.textContent?.trim() ?? "";
 
   row[header.key] = newValue;
-  modelValue.value![rowIndex] = row;
+  if (modelValue.value) {
+    modelValue.value[rowIndex] = row;
+  }
 }
 
 function onCellPaste(event: ClipboardEvent) {
@@ -50,11 +53,16 @@ function addRow() {
   props.headers.forEach((header) => {
     newRow[header.key] = "";
   });
+  if (!modelValue.value) {
+    modelValue.value = [];
+  }
   modelValue.value.push(newRow);
 }
 
 function deleteRow(index: number) {
-  modelValue.value = modelValue.value?.filter((_, i) => i !== index);
+  if (modelValue.value) {
+    modelValue.value = modelValue.value.filter((_, i) => i !== index);
+  }
 }
 </script>
 

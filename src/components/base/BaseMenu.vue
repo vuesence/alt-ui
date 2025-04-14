@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { Menu } from "@ark-ui/vue/menu";
+import { type PropType } from "vue";
+
+interface MenuItem {
+  [key: string]: any;
+}
 
 defineProps({
   items: {
-    type: Array,
+    type: Array as PropType<MenuItem[]>,
     required: true,
   },
   labelKey: {

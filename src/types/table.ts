@@ -33,14 +33,11 @@ export interface TableEmits {
  */
 export interface TableHeader {
   key: string;
-  label: string;
+  text?: string;
+  label?: string;
   sortable?: boolean;
-  width?: string;
-  align?: "left" | "center" | "right";
-  // Дополнительные свойства, используемые в BaseEditableTable
-  class?: string;
-  text?: string; // Если не указано, используется label
   editable?: boolean;
+  class?: string;
 }
 
 /**
@@ -48,6 +45,7 @@ export interface TableHeader {
  * @note Этот тип похож на TableRowData, но имеет обязательное поле id
  */
 export interface TableRow {
-  id: string | number;
+  id?: string;
+  rowClass?: string;
   [key: string]: any;
 }

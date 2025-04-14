@@ -26,22 +26,28 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
     "@ark-ui/vue": "^5.4.0",
-    "vue": "^3.3.0",
-    "vue-router": "^4.0.0"
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@sxzz/eslint-config": "^5.3.0",
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-vue": "^5.0.0",
-    "typescript": "^5.0.0",
-    "vite": "^5.0.0",
-    "vite-plugin-dts": "^3.0.0",
-    "vue": "^3.3.0",
-    "vue-router": "^4.0.0",
-    "vue-tsc": "^1.8.0"
+    "@types/node": "^22.14.1",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "markdown-it": "^14.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^5.4.18",
+    "vite-plugin-dts": "^4.5.3",
+    "vitepress": "^1.6.3",
+    "vitepress-plugin-diagrams": "^1.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "vue-tsc": "^1.8.27"
   }
 }

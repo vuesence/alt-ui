@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed } from "vue";
 
 export interface SelectOption {
   value: string | number;
@@ -38,13 +38,13 @@ const props = withDefaults(defineProps<BaseSelectProps>(), {
 });
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string | number): void;
-  (e: "change", value: string | number): void;
+  (e: "update:modelValue", value: string | number | undefined): void;
+  (e: "change", value: string | number | undefined): void;
 }>();
 
 const selectedValue = computed({
   get: () => props.modelValue,
-  set: (newValue) => {
+  set: (newValue: string | number | undefined) => {
     emit("update:modelValue", newValue);
     emit("change", newValue);
   },

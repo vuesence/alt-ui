@@ -129,13 +129,13 @@ const Pl = ["data-name", "innerHTML"], wl = ["src", "alt", "data-name"], Sl = /*
   setup(e, { expose: t }) {
     const n = J(null);
     function o() {
-      n.value.showModal();
+      n.value && n.value.showModal();
     }
     function s() {
-      n.value.close();
+      n.value && n.value.close();
     }
     function r(i) {
-      if (i.target === n.value) {
+      if (i.target === n.value && n.value) {
         const a = n.value.getBoundingClientRect(), l = n.value.offsetWidth - n.value.clientWidth;
         if (i.x < a.right && i.x > a.right - l)
           return;
@@ -154,7 +154,7 @@ const Pl = ["data-name", "innerHTML"], wl = ["src", "alt", "data-name"], Sl = /*
       E(i.$slots, "default", { onClose: s }, void 0, !0)
     ], 544));
   }
-}), ds = /* @__PURE__ */ Q(Rl, [["__scopeId", "data-v-ad658534"]]);
+}), ds = /* @__PURE__ */ Q(Rl, [["__scopeId", "data-v-87e133bb"]]);
 function $l(e) {
   return e ? Array.isArray(e) ? e : [e] : [];
 }
@@ -5273,7 +5273,7 @@ const Dp = (e = {}, t) => {
       _: 3
     }));
   }
-}), Dy = /* @__PURE__ */ Q(Hp, [["__scopeId", "data-v-69833513"]]), Up = { class: "base-table-wrapper" }, zp = {
+}), Dy = /* @__PURE__ */ Q(Hp, [["__scopeId", "data-v-ade0c28b"]]), Up = { class: "base-table-wrapper" }, zp = {
   key: 0,
   class: "base-table"
 }, Wp = ["onClick"], Kp = ["onInput", "textContent"], jp = {
@@ -6406,7 +6406,7 @@ const wg = (e = {}, t) => {
         return;
       }
       t.value = r.value[0], n = r.value[0];
-    }, s = J([t.value]);
+    }, s = J([t.value || ""]);
     return (r, i) => (v(), T(u(Lr).Root, {
       modelValue: s.value,
       "onUpdate:modelValue": i[0] || (i[0] = (a) => s.value = a),
@@ -6430,7 +6430,7 @@ const wg = (e = {}, t) => {
       _: 3
     }, 8, ["modelValue"]));
   }
-}), Fy = /* @__PURE__ */ Q(Rg, [["__scopeId", "data-v-d0daa70c"]]), [ba, Et] = X("SegmentGroupContext"), $g = /* @__PURE__ */ _({
+}), Fy = /* @__PURE__ */ Q(Rg, [["__scopeId", "data-v-22f78043"]]), [ba, Et] = X("SegmentGroupContext"), $g = /* @__PURE__ */ _({
   __name: "segment-group-context",
   setup(e) {
     const t = Et();
@@ -8085,7 +8085,7 @@ const Df = (e, t) => {
       ], 2)
     ], 2));
   }
-}), zy = /* @__PURE__ */ Q(Yf, [["__scopeId", "data-v-241b673d"]]), [$a, Vn] = X("CheckboxContext"), Zf = /* @__PURE__ */ _({
+}), zy = /* @__PURE__ */ Q(Yf, [["__scopeId", "data-v-f048c248"]]), [$a, Vn] = X("CheckboxContext"), Zf = /* @__PURE__ */ _({
   __name: "checkbox-context",
   setup(e) {
     const t = Vn();
@@ -8862,7 +8862,7 @@ const [ah, lh] = X("CheckboxGroupContext"), ch = /* @__PURE__ */ _({
       _: 1
     }, 8, ["model-value", "name", "disabled", "orientation", "class"]));
   }
-}), jy = /* @__PURE__ */ Q(Rh, [["__scopeId", "data-v-2713a3af"]]), [Na, An] = X("SwitchContext"), $h = /* @__PURE__ */ _({
+}), jy = /* @__PURE__ */ Q(Rh, [["__scopeId", "data-v-a462b9e0"]]), [Na, An] = X("SwitchContext"), $h = /* @__PURE__ */ _({
   __name: "switch-context",
   setup(e) {
     const t = An();
@@ -11248,7 +11248,7 @@ const $m = (e, t) => {
       _: 3
     }, 8, ["input-value", "collection", "disabled", "positioning"]));
   }
-}), Xy = /* @__PURE__ */ Q(Dm, [["__scopeId", "data-v-e13a334e"]]), Bm = { class: "form-field" }, Mm = {
+}), Xy = /* @__PURE__ */ Q(Dm, [["__scopeId", "data-v-3737eef1"]]), Bm = { class: "form-field" }, Mm = {
   key: 0,
   class: "title"
 }, Fm = /* @__PURE__ */ _({
@@ -11283,7 +11283,7 @@ const $m = (e, t) => {
       })
     ]));
   }
-}), Yy = /* @__PURE__ */ Q(Fm, [["__scopeId", "data-v-1c1a8f8d"]]);
+}), Yy = /* @__PURE__ */ Q(Fm, [["__scopeId", "data-v-94cfbf25"]]);
 function js() {
   return {
     async: !1,
@@ -12860,7 +12860,7 @@ const Cv = ["placeholder"], _v = ["placeholder"], Ev = ["innerHTML"], Tv = /* @_
     const t = Qe(e, "modelValue"), n = e;
     function o(l, c, d, f) {
       const g = l.target.textContent?.trim() ?? "";
-      c[d.key] = g, t.value[f] = c;
+      c[d.key] = g, t.value && (t.value[f] = c);
     }
     function s(l) {
       l.preventDefault();
@@ -12874,10 +12874,10 @@ const Cv = ["placeholder"], _v = ["placeholder"], Ev = ["innerHTML"], Tv = /* @_
       const l = { id: crypto.randomUUID() };
       n.headers.forEach((c) => {
         l[c.key] = "";
-      }), t.value.push(l);
+      }), t.value || (t.value = []), t.value.push(l);
     }
     function a(l) {
-      t.value = t.value?.filter((c, d) => d !== l);
+      t.value && (t.value = t.value.filter((c, d) => d !== l));
     }
     return (l, c) => (v(), M(re, null, [
       H("div", Iv, [
@@ -12944,7 +12944,7 @@ const Cv = ["placeholder"], _v = ["placeholder"], Ev = ["innerHTML"], Tv = /* @_
       ])) : Z("", !0)
     ], 64));
   }
-}), Qy = /* @__PURE__ */ Q(Rv, [["__scopeId", "data-v-6c2c7941"]]);
+}), Qy = /* @__PURE__ */ Q(Rv, [["__scopeId", "data-v-0d26e537"]]);
 var $v = Pe("toast").parts(
   "group",
   "root",

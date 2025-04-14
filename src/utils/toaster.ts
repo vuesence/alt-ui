@@ -1,7 +1,17 @@
 import { createToaster } from "@ark-ui/vue/toast";
 
+type ToastType = 'info' | 'success' | 'error' | 'warning' | 'loading';
+
+interface ToastOptions {
+  title: string;
+  description: string;
+  type: ToastType;
+  id?: string;
+  duration?: number;
+}
+
 // Дефолтные заголовки для типов уведомлений
-const defaultTitles = {
+const defaultTitles: Record<ToastType, string> = {
   info: "Information",
   success: "Success",
   error: "Error",
@@ -15,7 +25,7 @@ export const toaster = createToaster({
   // duration: 300000,
 });
 
-const createToast = (type: string, title: string, description: string) => {
+const createToast = (type: ToastType, title: string, description: string) => {
   return toaster.create({
     title,
     description,
@@ -24,7 +34,7 @@ const createToast = (type: string, title: string, description: string) => {
 };
 
 export const toast = {
-  create: (options) => toaster.create(options),
+  create: (options: ToastOptions) => toaster.create(options),
   info: (description: string, title?: string) => {
     return createToast("info", title ?? defaultTitles.info, description);
   },

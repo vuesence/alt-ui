@@ -29,7 +29,7 @@ const valueChange = (details: ToggleGroup.ValueChangeDetails) => {
   lastValue = details.value[0];
 };
 
-const state = ref([modelValue.value]);
+const state = ref<string[]>([modelValue.value || ""]);
 </script>
 
 <template>

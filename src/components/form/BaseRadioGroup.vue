@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { RadioGroup } from "@ark-ui/vue/radio-group";
 
+// Создаем свой интерфейс, вместо импорта
+interface ValueChangeDetails {
+  value: string | null;
+}
+
 interface RadioItem {
   value: string;
   label: string;
@@ -11,7 +16,7 @@ interface BaseRadioGroupProps {
   /**
    * Current selected value
    */
-  modelValue?: string;
+  modelValue?: string | null;
   /**
    * Array of radio items
    */
@@ -44,8 +49,8 @@ const props = withDefaults(defineProps<BaseRadioGroupProps>(), {
 });
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string): void;
-  (e: "valueChange", details: { value: string }): void;
+  (e: "update:modelValue", value: string | null): void;
+  (e: "valueChange", details: ValueChangeDetails): void;
 }>();
 </script>
 
@@ -57,8 +62,8 @@ const emit = defineEmits<{
     :orientation="props.orientation"
     class="radioGroup__root"
     :class="`radioGroup__root--size_${props.size}`"
-    @update:model-value="(value) => emit('update:modelValue', value)"
-    @value-change="(details) => emit('valueChange', details)"
+    @update:model-value="(value: string | null) => emit('update:modelValue', value)"
+    @value-change="(details: ValueChangeDetails) => emit('valueChange', details)"
   >
     <RadioGroup.Label
       v-if="props.label"

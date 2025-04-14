@@ -4,14 +4,18 @@ import { ref } from "vue";
 const dialog = ref<HTMLDialogElement | null>(null);
 
 function show() {
-  dialog.value.showModal();
+  if (dialog.value) {
+    dialog.value.showModal();
+  }
 }
 function close() {
-  dialog.value.close();
+  if (dialog.value) {
+    dialog.value.close();
+  }
 }
 
 function onMouseDown($event: MouseEvent) {
-  if ($event.target === dialog.value) {
+  if ($event.target === dialog.value && dialog.value) {
     const rect = dialog.value.getBoundingClientRect();
     const scrollbarWidth = dialog.value.offsetWidth - dialog.value.clientWidth;
 
