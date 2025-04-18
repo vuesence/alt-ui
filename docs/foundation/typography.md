@@ -15,17 +15,17 @@
 Мы определяем три основных семейства шрифтов для различных контекстов:
 
 ### Базовый шрифт
-- `--lh-font-family-base`: Основной шрифт для текста
+- `--alt-font-family-base`: Основной шрифт для текста
 - Оптимизирован для читаемости
 - Используется в абзацах, списках и стандартном контенте
 
 ### Шрифт заголовков
-- `--lh-font-family-heading`: Специальный шрифт для заголовков
+- `--alt-font-family-heading`: Специальный шрифт для заголовков
 - Обеспечивает визуальное различие
 - Поддерживает идентичность бренда
 
 ### Моноширный шрифт
-- `--lh-font-family-mono`: Технический и программный текст
+- `--alt-font-family-mono`: Технический и программный текст
 - Обеспечивает четкость программных блоков
 - Используется в блоках кода и технических аннотациях
 
@@ -33,39 +33,39 @@
 
 Наша типографическая шкала создает ритм и иерархию:
 
-- `--lh-font-size-0`: 0.75rem (12px) - Самый маленький, для сносок
-- `--lh-font-size-1`: 0.875rem (14px) - Малые метки
-- `--lh-font-size-2`: 1rem (16px) - Основной текст
-- `--lh-font-size-3`: 1.25rem (20px) - Большой основной, малые заголовки
-- `--lh-font-size-4`: 1.5rem (24px) - Заголовки разделов
-- `--lh-font-size-5`: 2rem (32px) - Заголовки страниц
-- `--lh-font-size-6`: 2.5rem (40px) - Героические заголовки
+- `--alt-font-size-0`: 0.75rem (12px) - Самый маленький, для сносок
+- `--alt-font-size-1`: 0.875rem (14px) - Малые метки
+- `--alt-font-size-2`: 1rem (16px) - Основной текст
+- `--alt-font-size-3`: 1.25rem (20px) - Большой основной, малые заголовки
+- `--alt-font-size-4`: 1.5rem (24px) - Заголовки разделов
+- `--alt-font-size-5`: 2rem (32px) - Заголовки страниц
+- `--alt-font-size-6`: 2.5rem (40px) - Героические заголовки
 
 ## Толщины шрифта
 
 Толщины создают акцент и структуру:
 
-- `--lh-font-weight-regular`: 400 - Стандартный текст
-- `--lh-font-weight-medium`: 500 - Легкий акцент
-- `--lh-font-weight-bold`: 700 - Сильный акцент, заголовки
+- `--alt-font-weight-regular`: 400 - Стандартный текст
+- `--alt-font-weight-medium`: 500 - Легкий акцент
+- `--alt-font-weight-bold`: 700 - Сильный акцент, заголовки
 
 ## Межстрочные интервалы
 
 Межстрочные интервалы обеспечивают оптимальную читаемость текста:
 
-- `--lh-line-height-0`: 1 - Компактный, для заголовков
-- `--lh-line-height-1`: 1.25 - Плотные абзацы
-- `--lh-line-height-2`: 1.5 - Стандартный текст
-- `--lh-line-height-3`: 1.75 - Просторные текстовые блоки
-- `--lh-line-height-4`: 2 - Максимальная читаемость
+- `--alt-line-height-0`: 1 - Компактный, для заголовков
+- `--alt-line-height-1`: 1.25 - Плотные абзацы
+- `--alt-line-height-2`: 1.5 - Стандартный текст
+- `--alt-line-height-3`: 1.75 - Просторные текстовые блоки
+- `--alt-line-height-4`: 2 - Максимальная читаемость
 
 ## Межбуквенные интервалы
 
 Точные межбуквенные интервалы улучшают разборчивость:
 
-- `--lh-letter-spacing-tight`: -0.02em - Заголовки
-- `--lh-letter-spacing-normal`: 0 - Основной текст
-- `--lh-letter-spacing-wide`: 0.05em - Прописной текст
+- `--alt-letter-spacing-tight`: -0.02em - Заголовки
+- `--alt-letter-spacing-normal`: 0 - Основной текст
+- `--alt-letter-spacing-wide`: 0.05em - Прописной текст
 
 ## Рекомендации по типографике
 
@@ -95,11 +95,11 @@
 
 ```css
 h1 {
-  font-family: var(--lh-font-family-heading);
-  font-size: var(--lh-font-size-6);
-  font-weight: var(--lh-font-weight-bold);
-  line-height: var(--lh-line-height-0);
-  letter-spacing: var(--lh-letter-spacing-tight);
+  font-family: var(--alt-font-family-heading);
+  font-size: var(--alt-font-size-6);
+  font-weight: var(--alt-font-weight-bold);
+  line-height: var(--alt-line-height-0);
+  letter-spacing: var(--alt-letter-spacing-tight);
 }
 ```
 
@@ -107,10 +107,10 @@ h1 {
 
 ```css
 p {
-  font-family: var(--lh-font-family-base);
-  font-size: var(--lh-font-size-2);
-  font-weight: var(--lh-font-weight-regular);
-  line-height: var(--lh-line-height-2);
+  font-family: var(--alt-font-family-base);
+  font-size: var(--alt-font-size-2);
+  font-weight: var(--alt-font-weight-regular);
+  line-height: var(--alt-line-height-2);
 }
 ```
 
@@ -118,8 +118,8 @@ p {
 
 ```css
 code {
-  font-family: var(--lh-font-family-mono);
-  font-size: var(--lh-font-size-1);
-  background-color: var(--lh-c-surface-2);
+  font-family: var(--alt-font-family-mono);
+  font-size: var(--alt-font-size-1);
+  background-color: var(--alt-c-surface-2);
 }
 ```

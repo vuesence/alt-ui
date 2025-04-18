@@ -67,25 +67,25 @@ const visited = ref(false);
 }
 
 .title {
-  font-size: var(--lh-font-size-0);
-  font-weight: var(--lh-font-weight-bold);
+  font-size: var(--alt-font-size-0);
+  font-weight: var(--alt-font-weight-bold);
   margin-bottom: 0;
-  color: var(--lh-c-text-3);
+  color: var(--alt-c-text-3);
 }
 
 .error-msg {
   position: absolute;
   top: 100%;
   left: 0;
-  color: var(--lh-c-danger);
-  margin-top: var(--lh-space-1);
-  font-size: var(--lh-font-size-0);
-  line-height: var(--lh-line-height-1);
+  color: var(--alt-c-danger);
+  margin-top: var(--alt-space-1);
+  font-size: var(--alt-font-size-0);
+  line-height: var(--alt-line-height-1);
 }
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity var(--lh-transition-base) var(--lh-ease-out);
+  transition: opacity var(--alt-transition-base) var(--alt-ease-out);
 }
 
 .v-enter-from,

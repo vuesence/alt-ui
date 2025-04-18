@@ -53,7 +53,7 @@ const computedHeight = computed(() => {
 
 // More robust color computation
 const iconColor = computed(() => {
-  return props.color !== "default" ? props.color : "var(--lh-c-brand-1)";
+  return props.color !== "default" ? props.color : "var(--alt-c-brand-1)";
 });
 
 // Determine if icon is an SVG
@@ -101,8 +101,8 @@ const svgFillStyle = computed(() => {
   justify-content: center;
   color: inherit;
   transition:
-    color var(--lh-transition-colors),
-    opacity var(--lh-transition-colors);
+    color var(--alt-transition-colors),
+    opacity var(--alt-transition-colors);
 }
 
 .base-icon:hover {

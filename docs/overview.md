@@ -145,82 +145,82 @@ Alt-UI использует систему токенов для обеспеч�
 
 ```css
 /* Семейство шрифтов */
---lh-font-family-base
---lh-font-family-heading
---lh-font-family-mono
+--alt-font-family-base
+--alt-font-family-heading
+--alt-font-family-mono
 
 /* Размер шрифта */
---lh-font-size-0  /* самый маленький */
---lh-font-size-6  /* самый большой */
+--alt-font-size-0  /* самый маленький */
+--alt-font-size-6  /* самый большой */
 
 /* Толщина шрифта */
---lh-font-weight-regular
---lh-font-weight-medium
---lh-font-weight-bold
+--alt-font-weight-regular
+--alt-font-weight-medium
+--alt-font-weight-bold
 
 /* Межстрочный интервал */
---lh-line-height-0  /* самый плотный */
---lh-line-height-4  /* самый свободный */
+--alt-line-height-0  /* самый плотный */
+--alt-line-height-4  /* самый свободный */
 ```
 
 ### Цвета
 
 ```css
 /* Цвета текста */
---lh-c-text-1  /* основной */
---lh-c-text-2  /* вторичный */
---lh-c-text-3  /* третичный */
+--alt-c-text-1  /* основной */
+--alt-c-text-2  /* вторичный */
+--alt-c-text-3  /* третичный */
 
 /* Цвета поверхности */
---lh-c-surface-1
---lh-c-surface-2
---lh-c-surface-3
---lh-c-surface-4
---lh-c-surface-5
+--alt-c-surface-1
+--alt-c-surface-2
+--alt-c-surface-3
+--alt-c-surface-4
+--alt-c-surface-5
 
 /* Цвета бренда */
---lh-c-brand-1-{50-900}
---lh-c-brand-2-{50-900}
---lh-c-brand-3-{50-900}
+--alt-c-brand-1-{50-900}
+--alt-c-brand-2-{50-900}
+--alt-c-brand-3-{50-900}
 
 /* Функциональные цвета */
---lh-c-success
---lh-c-warning
---lh-c-danger
---lh-c-info
+--alt-c-success
+--alt-c-warning
+--alt-c-danger
+--alt-c-info
 ```
 
 ### Отступы
 
 ```css
---lh-space-1   /* 0.25rem */
---lh-space-2   /* 0.5rem */
---lh-space-3   /* 0.75rem */
---lh-space-4   /* 1rem */
---lh-space-5   /* 1.25rem */
---lh-space-6   /* 1.5rem */
---lh-space-8   /* 2rem */
---lh-space-10  /* 2.5rem */
---lh-space-12  /* 3rem */
+--alt-space-1   /* 0.25rem */
+--alt-space-2   /* 0.5rem */
+--alt-space-3   /* 0.75rem */
+--alt-space-4   /* 1rem */
+--alt-space-5   /* 1.25rem */
+--alt-space-6   /* 1.5rem */
+--alt-space-8   /* 2rem */
+--alt-space-10  /* 2.5rem */
+--alt-space-12  /* 3rem */
 ```
 
 ### Границы и тени
 
 ```css
 /* Радиус границы */
---lh-radius-sm
---lh-radius-base
---lh-radius-md
---lh-radius-lg
---lh-radius-xl
---lh-radius-full
+--alt-radius-sm
+--alt-radius-base
+--alt-radius-md
+--alt-radius-lg
+--alt-radius-xl
+--alt-radius-full
 
 /* Тени */
---lh-shadow-1
---lh-shadow-2
---lh-shadow-3
---lh-shadow-4
---lh-shadow-5
+--alt-shadow-1
+--alt-shadow-2
+--alt-shadow-3
+--alt-shadow-4
+--alt-shadow-5
 ```
 
 ## Адаптивный дизайн
@@ -236,11 +236,11 @@ Alt-UI поддерживает адаптивность через классы
 
 ```css
 .my-component {
-  padding: var(--lh-space-4);
+  padding: var(--alt-space-4);
 }
 
 body.mobile .my-component {
-  padding: var(--lh-space-2);
+  padding: var(--alt-space-2);
 }
 ```
 
@@ -256,8 +256,8 @@ body.mobile .my-component {
 
    /* ✅ Делайте так */
    .element {
-     color: var(--lh-c-danger);
-     margin: var(--lh-space-4);
+     color: var(--alt-c-danger);
+     margin: var(--alt-space-4);
    }
    ```
 
@@ -265,12 +265,12 @@ body.mobile .my-component {
    ```css
    /* ❌ Не делайте так */
    .blue-button {
-     background-color: var(--lh-c-brand-1-500);
+     background-color: var(--alt-c-brand-1-500);
    }
 
    /* ✅ Делайте так */
    .primary-button {
-     background-color: var(--lh-c-brand-1-500);
+     background-color: var(--alt-c-brand-1-500);
    }
    ```
 
@@ -280,11 +280,11 @@ body.mobile .my-component {
      display: flex;
      
      &__header {
-       font-weight: var(--lh-font-weight-bold);
+       font-weight: var(--alt-font-weight-bold);
      }
      
      &__content {
-       padding: var(--lh-space-4);
+       padding: var(--alt-space-4);
      }
    }
    ```
@@ -294,13 +294,13 @@ body.mobile .my-component {
    /* ❌ Не делайте так */
    @media (max-width: 768px) {
      .component {
-       font-size: var(--lh-font-size-0);
+       font-size: var(--alt-font-size-0);
      }
    }
 
    /* ✅ Делайте так */
    body.mobile .component {
-     font-size: var(--lh-font-size-0);
+     font-size: var(--alt-font-size-0);
    }
    ```
 

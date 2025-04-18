@@ -197,22 +197,22 @@ h1 {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 2rem;
-  color: var(--lh-c-text-1);
+  color: var(--alt-c-text-1);
 }
 
 h2 {
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 1rem;
-  color: var(--lh-c-text-1);
+  color: var(--alt-c-text-1);
 }
 
 section {
   margin-bottom: 3rem;
   padding: 2rem;
-  background-color: var(--lh-c-surface-1);
+  background-color: var(--alt-c-surface-1);
   border-radius: 0.5rem;
-  border: 1px solid var(--lh-c-border);
+  border: 1px solid var(--alt-c-border);
 }
 
 .component-group {

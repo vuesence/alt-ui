@@ -42,7 +42,7 @@
 <BaseIcon 
   name="database" 
   size="32" 
-  color="var(--lh-c-brand-2)" 
+  color="var(--alt-c-brand-2)" 
   fill="none" 
 />
 ```

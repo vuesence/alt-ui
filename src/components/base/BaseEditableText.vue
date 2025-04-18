@@ -71,28 +71,28 @@ const props = defineProps({
 .input-field {
   outline: none;
   width: 100%;
-  font-family: var(--lh-font-family-base);
-  font-size: var(--lh-font-size-2);
-  line-height: var(--lh-line-height-2);
-  color: var(--lh-c-text-1);
-  background-color: var(--lh-c-surface-3);
+  font-family: var(--alt-font-family-base);
+  font-size: var(--alt-font-size-2);
+  line-height: var(--alt-line-height-2);
+  color: var(--alt-c-text-1);
+  background-color: var(--alt-c-surface-3);
   border: none;
-  border-radius: var(--lh-radius-base);
-  padding: var(--lh-space-1) var(--lh-space-2);
-  transition: var(--lh-transition-all);
+  border-radius: var(--alt-radius-base);
+  padding: var(--alt-space-1) var(--alt-space-2);
+  transition: var(--alt-transition-all);
 
   &:hover {
-    background-color: var(--lh-c-surface-4);
+    background-color: var(--alt-c-surface-4);
   }
 
   &:focus {
-    background-color: var(--lh-c-surface-4);
-    box-shadow: var(--lh-focus-ring);
+    background-color: var(--alt-c-surface-4);
+    box-shadow: var(--alt-focus-ring);
   }
 }
 
 .input-field--text {
-  min-height: var(--lh-space-6);
+  min-height: var(--alt-space-6);
 }
 
 .input-field--textarea {
@@ -101,8 +101,8 @@ const props = defineProps({
 }
 
 .content {
-  color: var(--lh-c-text-1);
-  line-height: calc(var(--lh-line-height-2) * var(--lh-spacing-scale));
+  color: var(--alt-c-text-1);
+  line-height: calc(var(--alt-line-height-2) * var(--alt-spacing-scale));
 }
 
 .content--text {

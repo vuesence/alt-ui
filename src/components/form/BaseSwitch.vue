@@ -32,18 +32,18 @@ const checked = defineModel<boolean>();
   display: flex;
   position: relative;
   align-items: center;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
 }
 
 .label {
-  color: var(--lh-c-text-1);
-  font-weight: var(--lh-font-weight-medium);
-  font-size: var(--lh-font-size-2);
+  color: var(--alt-c-text-1);
+  font-weight: var(--alt-font-weight-medium);
+  font-size: var(--alt-font-size-2);
 }
 
 .control {
-  background-color: var(--lh-c-surface-5);
-  border-radius: var(--lh-radius-full);
+  background-color: var(--alt-c-surface-5);
+  border-radius: var(--alt-radius-full);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -51,7 +51,7 @@ const checked = defineModel<boolean>();
   width: 2.75rem;
   height: 1.5rem;
   padding: 0.125rem;
-  transition: background-color var(--lh-transition-base) var(--lh-ease-in-out);
+  transition: background-color var(--alt-transition-base) var(--alt-ease-in-out);
 }
 
 .control:is(
@@ -60,27 +60,27 @@ const checked = defineModel<boolean>();
     [aria-checked="true"],
     [data-state="checked"]
   ) {
-  background: var(--lh-c-brand-1-600);
+  background: var(--alt-c-brand-1-600);
 }
 
 .control[data-focus-visible] {
-  outline: 2px solid var(--lh-c-brand-1-500);
+  outline: 2px solid var(--alt-c-brand-1-500);
   outline-offset: 2px;
 }
 
 .control[data-hover]:not([data-disabled]) {
-  background-color: var(--lh-c-brand-1-400);
+  background-color: var(--alt-c-brand-1-400);
 }
 
 .thumb {
-  background: var(--lh-c-white);
-  border-radius: var(--lh-radius-full);
-  box-shadow: var(--lh-shadow-1);
+  background: var(--alt-c-white);
+  border-radius: var(--alt-radius-full);
+  box-shadow: var(--alt-shadow-1);
   width: 1.25rem;
   height: 1.25rem;
   transition:
-    transform var(--lh-transition-base) var(--lh-ease-in-out),
-    background-color var(--lh-transition-base) var(--lh-ease-in-out);
+    transform var(--alt-transition-base) var(--alt-ease-in-out),
+    background-color var(--alt-transition-base) var(--alt-ease-in-out);
 }
 
 .thumb:is(

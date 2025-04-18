@@ -51,32 +51,32 @@ defineExpose({ show });
 
 <style scoped>
 .alert-dialog {
-  padding: var(--lh-space-4);
+  padding: var(--alt-space-4);
   min-width: 300px;
 }
 
 .alert-content {
   display: flex;
   flex-direction: column;
-  gap: var(--lh-space-4);
+  gap: var(--alt-space-4);
   text-align: center;
 }
 
 .alert-actions {
   display: flex;
   justify-content: center;
-  margin-top: var(--lh-space-3);
+  margin-top: var(--alt-space-3);
 }
 
 .btn {
-  padding: var(--lh-space-2) var(--lh-space-4);
-  border-radius: var(--lh-radius-base);
+  padding: var(--alt-space-2) var(--alt-space-4);
+  border-radius: var(--alt-radius-base);
   border: none;
   cursor: pointer;
 }
 
 .btn-primary {
-  background-color: var(--lh-c-brand-1-500);
-  color: var(--lh-c-white);
+  background-color: var(--alt-c-brand-1-500);
+  color: var(--alt-c-white);
 }
 </style>

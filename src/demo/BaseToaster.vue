@@ -32,20 +32,20 @@ import { BaseIcon, toaster } from "../";
 
 <style lang="css" scoped>
 .toast {
-  background-color: var(--lh-c-surface-2);
-  border-radius: var(--lh-radius-base);
-  box-shadow: var(--lh-shadow-4);
+  background-color: var(--alt-c-surface-2);
+  border-radius: var(--alt-radius-base);
+  box-shadow: var(--alt-shadow-4);
   min-width: 16rem;
   max-width: 22rem;
   width: 22rem;
   opacity: 1;
   overflow-wrap: anywhere;
   position: relative;
-  padding: var(--lh-space-4);
-  z-index: var(--lh-z-toast);
+  padding: var(--alt-space-4);
+  z-index: var(--alt-z-toast);
   transition-property: translate, scale, opacity, height;
-  transition-timing-function: var(--lh-ease-out);
-  transition-duration: var(--lh-transition-base);
+  transition-timing-function: var(--alt-ease-out);
+  transition-duration: var(--alt-transition-base);
   height: var(--height);
   opacity: var(--opacity);
   scale: var(--scale);
@@ -54,127 +54,127 @@ import { BaseIcon, toaster } from "../";
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  gap: var(--lh-space-3);
+  gap: var(--alt-space-3);
   .mobile & {
     width: 94vw;
   }
   .content-wrapper {
     display: flex;
     align-items: center;
-    gap: var(--lh-space-3);
+    gap: var(--alt-space-3);
   }
 
   &[data-type="info"] {
-    background-color: var(--lh-c-brand-1-100);
+    background-color: var(--alt-c-brand-1-100);
     [data-theme="dark"] & {
-      background-color: var(--lh-c-brand-1-800);
+      background-color: var(--alt-c-brand-1-800);
     }
     [data-theme="contrast"] & {
-      background-color: var(--lh-c-brand-1-900);
-      border: 1px solid var(--lh-c-brand-1-500);
+      background-color: var(--alt-c-brand-1-900);
+      border: 1px solid var(--alt-c-brand-1-500);
     }
   }
 
   &[data-type="success"] {
-    background-color: var(--lh-c-brand-2-100);
+    background-color: var(--alt-c-brand-2-100);
     [data-theme="dark"] & {
-      background-color: var(--lh-c-brand-2-800);
+      background-color: var(--alt-c-brand-2-800);
       .description {
-        color: var(--lh-c-text-2);
+        color: var(--alt-c-text-2);
       }
     }
     [data-theme="contrast"] & {
-      background-color: var(--lh-c-brand-2-900);
-      border: 1px solid var(--lh-c-brand-2-500);
+      background-color: var(--alt-c-brand-2-900);
+      border: 1px solid var(--alt-c-brand-2-500);
     }
   }
 
   &[data-type="error"] {
-    background-color: var(--lh-c-brand-3-100);
+    background-color: var(--alt-c-brand-3-100);
     [data-theme="dark"] & {
-      background-color: var(--lh-c-brand-3-800);
+      background-color: var(--alt-c-brand-3-800);
     }
     [data-theme="contrast"] & {
-      background-color: var(--lh-c-brand-3-900);
-      border: 1px solid var(--lh-c-brand-3-500);
+      background-color: var(--alt-c-brand-3-900);
+      border: 1px solid var(--alt-c-brand-3-500);
     }
   }
 
   &[data-type="warning"] {
-    background-color: var(--lh-c-brand-3-100);
+    background-color: var(--alt-c-brand-3-100);
     [data-theme="dark"] & {
-      background-color: var(--lh-c-brand-3-800);
+      background-color: var(--alt-c-brand-3-800);
       .description {
-        color: var(--lh-c-text-2);
+        color: var(--alt-c-text-2);
       }
     }
     [data-theme="contrast"] & {
-      background-color: var(--lh-c-brand-3-900);
-      border: 1px solid var(--lh-c-brand-3-500);
+      background-color: var(--alt-c-brand-3-900);
+      border: 1px solid var(--alt-c-brand-3-500);
     }
   }
 
   .title {
-    color: var(--lh-c-text-1);
-    font-size: var(--lh-font-size-1);
-    font-weight: var(--lh-font-weight-medium);
-    line-height: var(--lh-line-height-1);
+    color: var(--alt-c-text-1);
+    font-size: var(--alt-font-size-1);
+    font-weight: var(--alt-font-weight-medium);
+    line-height: var(--alt-line-height-1);
     [data-theme="contrast"] & {
-      color: var(--lh-c-white);
+      color: var(--alt-c-white);
     }
   }
 
   .icon {
     opacity: 0.6;
-    margin-left: var(--lh-space-2);
+    margin-left: var(--alt-space-2);
   }
   .description {
-    color: var(--lh-c-text-2);
-    font-size: var(--lh-font-size-0);
-    line-height: var(--lh-line-height-1);
-    margin-top: var(--lh-space-1);
+    color: var(--alt-c-text-2);
+    font-size: var(--alt-font-size-0);
+    line-height: var(--alt-line-height-1);
+    margin-top: var(--alt-space-1);
     [data-theme="contrast"] & {
-      color: var(--lh-c-white);
+      color: var(--alt-c-white);
     }
   }
 
   .action {
-    /* margin-top: var(--lh-space-3); */
-    color: var(--lh-c-brand-1-500);
+    /* margin-top: var(--alt-space-3); */
+    color: var(--alt-c-brand-1-500);
     align-self: flex-end;
-    padding: var(--lh-space-2) var(--lh-space-3);
-    border: 1px solid var(--lh-c-brand-1-200);
-    border-radius: var(--lh-radius-base);
-    margin-right: var(--lh-space-2);
+    padding: var(--alt-space-2) var(--alt-space-3);
+    border: 1px solid var(--alt-c-brand-1-200);
+    border-radius: var(--alt-radius-base);
+    margin-right: var(--alt-space-2);
     [data-theme="dark"] & {
-      color: var(--lh-c-brand-1-300);
+      color: var(--alt-c-brand-1-300);
     }
     [data-theme="contrast"] & {
-      color: var(--lh-c-white);
+      color: var(--alt-c-white);
       text-decoration: underline;
     }
   }
 
   .close {
     position: absolute;
-    top: var(--lh-space-3);
-    right: var(--lh-space-3);
-    color: var(--lh-c-text-3);
-    transition: color var(--lh-transition-base) var(--lh-ease-out);
+    top: var(--alt-space-3);
+    right: var(--alt-space-3);
+    color: var(--alt-c-text-3);
+    transition: color var(--alt-transition-base) var(--alt-ease-out);
     border: none;
     [data-theme="contrast"] & {
-      color: var(--lh-c-white);
+      color: var(--alt-c-white);
     }
     &:hover {
-      color: var(--lh-c-text-1);
+      color: var(--alt-c-text-1);
       [data-theme="contrast"] & {
-        color: var(--lh-c-white);
+        color: var(--alt-c-white);
         opacity: 0.8;
       }
     }
   }
 
-  animation: fadeIn var(--lh-transition-base) var(--lh-ease-out);
+  animation: fadeIn var(--alt-transition-base) var(--alt-ease-out);
 }
 
 /* Add keyframes for fade-in effect */

@@ -31,43 +31,43 @@
 ```css
 [data-theme="light"] {
   /* Фон */
-  --lh-c-bg: var(--lh-c-white);
-  --lh-c-bg-alt: var(--lh-c-gray-50);
+  --alt-c-bg: var(--alt-c-white);
+  --alt-c-bg-alt: var(--alt-c-gray-50);
   
   /* Текст */
-  --lh-c-text-1: var(--lh-c-gray-600);
-  --lh-c-text-2: var(--lh-c-gray-500);
+  --alt-c-text-1: var(--alt-c-gray-600);
+  --alt-c-text-2: var(--alt-c-gray-500);
   
   /* Поверхность */
-  --lh-c-surface-1: var(--lh-c-white);
-  --lh-c-surface-2: var(--lh-c-gray-50);
+  --alt-c-surface-1: var(--alt-c-white);
+  --alt-c-surface-2: var(--alt-c-gray-50);
 }
 
 [data-theme="dark"] {
   /* Фон */
-  --lh-c-bg: var(--lh-c-gray-900);
-  --lh-c-bg-alt: var(--lh-c-gray-800);
+  --alt-c-bg: var(--alt-c-gray-900);
+  --alt-c-bg-alt: var(--alt-c-gray-800);
   
   /* Текст */
-  --lh-c-text-1: var(--lh-c-gray-100);
-  --lh-c-text-2: var(--lh-c-gray-200);
+  --alt-c-text-1: var(--alt-c-gray-100);
+  --alt-c-text-2: var(--alt-c-gray-200);
   
   /* Поверхность */
-  --lh-c-surface-1: var(--lh-c-gray-900);
-  --lh-c-surface-2: var(--lh-c-gray-800);
+  --alt-c-surface-1: var(--alt-c-gray-900);
+  --alt-c-surface-2: var(--alt-c-gray-800);
 }
 
 [data-theme="contrast"] {
   /* Фон */
-  --lh-c-bg: var(--lh-c-black);
+  --alt-c-bg: var(--alt-c-black);
   
   /* Текст */
-  --lh-c-text-1: var(--lh-c-white);
-  --lh-c-text-2: var(--lh-c-white);
+  --alt-c-text-1: var(--alt-c-white);
+  --alt-c-text-2: var(--alt-c-white);
   
   /* Поверхность */
-  --lh-c-surface-1: var(--lh-c-black);
-  --lh-c-surface-2: #121212;
+  --alt-c-surface-1: var(--alt-c-black);
+  --alt-c-surface-2: #121212;
 }
 ```
 

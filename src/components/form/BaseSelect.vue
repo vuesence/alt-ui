@@ -109,13 +109,13 @@ const selectedLabel = computed(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
 }
 
 .base-select__label {
-  color: var(--lh-c-text-2);
-  font-size: var(--lh-font-size-1);
-  margin-bottom: var(--lh-space-2);
+  color: var(--alt-c-text-2);
+  font-size: var(--alt-font-size-1);
+  margin-bottom: var(--alt-space-2);
 }
 
 .base-select__wrapper {
@@ -138,14 +138,14 @@ const selectedLabel = computed(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--lh-space-3);
-  border: 1px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-base);
-  background: var(--lh-c-surface-1);
-  color: var(--lh-c-text-1);
+  padding: var(--alt-space-3);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-base);
+  background: var(--alt-c-surface-1);
+  color: var(--alt-c-text-1);
   transition:
-    border-color var(--lh-transition-colors),
-    box-shadow var(--lh-transition-colors);
+    border-color var(--alt-transition-colors),
+    box-shadow var(--alt-transition-colors);
 }
 
 .base-select__display-text {
@@ -156,29 +156,29 @@ const selectedLabel = computed(() => {
 }
 
 .base-select__icon {
-  color: var(--lh-c-text-3);
-  margin-left: var(--lh-space-3);
-  font-size: var(--lh-font-size-0);
-  transition: transform var(--lh-transition-base);
+  color: var(--alt-c-text-3);
+  margin-left: var(--alt-space-3);
+  font-size: var(--alt-font-size-0);
+  transition: transform var(--alt-transition-base);
 }
 
 .base-select--disabled .base-select__display {
-  background: var(--lh-c-surface-2);
-  color: var(--lh-c-text-3);
+  background: var(--alt-c-surface-2);
+  color: var(--alt-c-text-3);
   cursor: not-allowed;
 }
 
 .base-select__native:focus + .base-select__display {
-  border-color: var(--lh-c-brand-1-500);
-  box-shadow: var(--lh-focus-ring);
+  border-color: var(--alt-c-brand-1-500);
+  box-shadow: var(--alt-focus-ring);
 }
 
 .base-select__native:hover:not(:disabled) + .base-select__display {
-  border-color: var(--lh-c-brand-1-400);
+  border-color: var(--alt-c-brand-1-400);
 }
 
 .option {
-  color: var(--lh-c-text-1);
-  padding: var(--lh-space-3);
+  color: var(--alt-c-text-1);
+  padding: var(--alt-space-3);
 }
 </style>

@@ -86,7 +86,7 @@ const page = ref(0);
   width: 100%;
   position: relative;
   /* overflow: hidden; */
-  border-radius: var(--lh-radius-md);
+  border-radius: var(--alt-radius-md);
 }
 
 .carousel-controls {
@@ -96,15 +96,15 @@ const page = ref(0);
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 var(--lh-space-2);
+  padding: 0 var(--alt-space-2);
   z-index: 2;
   pointer-events: none;
 }
 
 .carousel-nav-button {
-  background-color: var(--lh-c-surface-3);
-  color: var(--lh-c-text-1);
-  border-radius: var(--lh-radius-full);
+  background-color: var(--alt-c-surface-3);
+  color: var(--alt-c-text-1);
+  border-radius: var(--alt-radius-full);
   width: 40px;
   height: 40px;
   display: flex;
@@ -112,39 +112,39 @@ const page = ref(0);
   justify-content: center;
   cursor: pointer;
   opacity: 0.5;
-  border: 1px solid var(--lh-c-text-3);
-  transition: var(--lh-transition-all);
+  border: 1px solid var(--alt-c-text-3);
+  transition: var(--alt-transition-all);
   pointer-events: auto;
 }
 
 .carousel-nav-button:hover {
   opacity: 0.7;
-  background-color: var(--lh-c-surface-2);
+  background-color: var(--alt-c-surface-2);
 }
 
 .carousel-indicators {
   position: absolute;
-  bottom: var(--lh-space-3);
+  bottom: var(--alt-space-3);
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
   z-index: 2;
-  padding: 0 var(--lh-space-4);
+  padding: 0 var(--alt-space-4);
 }
 
 .carousel-indicator {
   height: 4px;
-  background-color: var(--lh-c-surface-3);
+  background-color: var(--alt-c-surface-3);
   opacity: 0.5;
   cursor: pointer;
-  transition: var(--lh-transition-all);
+  transition: var(--alt-transition-all);
   flex: 1;
 }
 
 .carousel-indicator[data-current] {
-  background-color: var(--lh-c-brand-1-500);
+  background-color: var(--alt-c-brand-1-500);
   opacity: 1;
 }
 

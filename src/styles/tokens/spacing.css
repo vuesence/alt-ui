@@ -1,31 +1,31 @@
 :root {
   /* Spacing Scale */
-  --lh-space-1: 0.25rem;  /* 4px */
-  --lh-space-2: 0.5rem;   /* 8px */
-  --lh-space-3: 0.75rem;  /* 12px */
-  --lh-space-4: 1rem;     /* 16px */
-  --lh-space-5: 1.5rem;   /* 24px */
-  --lh-space-6: 2rem;     /* 32px */
-  --lh-space-7: 2.5rem;   /* 40px */
-  --lh-space-8: 3rem;     /* 48px */
-  --lh-space-9: 3.5rem;   /* 56px */
-  --lh-space-10: 4rem;    /* 64px */
-  --lh-space-11: 4.5rem;  /* 72px */
-  --lh-space-12: 5rem;    /* 80px */
+  --alt-space-1: 0.25rem;  /* 4px */
+  --alt-space-2: 0.5rem;   /* 8px */
+  --alt-space-3: 0.75rem;  /* 12px */
+  --alt-space-4: 1rem;     /* 16px */
+  --alt-space-5: 1.5rem;   /* 24px */
+  --alt-space-6: 2rem;     /* 32px */
+  --alt-space-7: 2.5rem;   /* 40px */
+  --alt-space-8: 3rem;     /* 48px */
+  --alt-space-9: 3.5rem;   /* 56px */
+  --alt-space-10: 4rem;    /* 64px */
+  --alt-space-11: 4.5rem;  /* 72px */
+  --alt-space-12: 5rem;    /* 80px */
 
   /* Border Radius */
-  --lh-radius-sm: 0.125rem;
-  --lh-radius-base: 0.25rem;
-  --lh-radius-md: 0.375rem;
-  --lh-radius-lg: 0.5rem;
-  --lh-radius-xl: 0.75rem;
-  --lh-radius-full: 9999px;
+  --alt-radius-sm: 0.125rem;
+  --alt-radius-base: 0.25rem;
+  --alt-radius-md: 0.375rem;
+  --alt-radius-lg: 0.5rem;
+  --alt-radius-xl: 0.75rem;
+  --alt-radius-full: 9999px;
 
   /* Layout */
-  /* --lh-layout-max-width: 1680px; */
-  --lh-layout-max-width: 1380px;
-  --lh-layout-content-width: 860px;
-  --lh-layout-sidebar-width: 272px;
-  --lh-layout-header-height: 4rem;
-  --lh-layout-footer-height: 3rem;
+  /* --alt-layout-max-width: 1680px; */
+  --alt-layout-max-width: 1380px;
+  --alt-layout-content-width: 860px;
+  --alt-layout-sidebar-width: 272px;
+  --alt-layout-header-height: 4rem;
+  --alt-layout-footer-height: 3rem;
 } 

@@ -59,11 +59,11 @@
 
 /* Animation Utilities */
 .animate-fade-in {
-  animation: fadeIn var(--lh-transition-base) var(--lh-ease-out);
+  animation: fadeIn var(--alt-transition-base) var(--alt-ease-out);
 }
 
 .animate-fade-out {
-  animation: fadeOut var(--lh-transition-base) var(--lh-ease-in);
+  animation: fadeOut var(--alt-transition-base) var(--alt-ease-in);
 }
 
 .animate-spin {

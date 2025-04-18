@@ -1,48 +1,48 @@
 :root[data-theme="contrast"] {
   /* Base Colors */
-  --lh-c-white: #ffffff;
-  --lh-c-black: #000000;
+  --alt-c-white: #ffffff;
+  --alt-c-black: #000000;
 
   /* Text Colors */
-  --lh-c-text-1: var(--lh-c-white);
-  --lh-c-text-2: var(--lh-c-white);
-  --lh-c-text-3: var(--lh-c-white);
+  --alt-c-text-1: var(--alt-c-white);
+  --alt-c-text-2: var(--alt-c-white);
+  --alt-c-text-3: var(--alt-c-white);
 
   /* Surface Colors */
-  --lh-c-surface-1: var(--lh-c-black);
-  --lh-c-surface-2: #121212;
-  --lh-c-surface-3: #1a1a1a;
-  --lh-c-surface-4: #242424;
-  --lh-c-surface-5: #2a2a2a;
+  --alt-c-surface-1: var(--alt-c-black);
+  --alt-c-surface-2: #121212;
+  --alt-c-surface-3: #1a1a1a;
+  --alt-c-surface-4: #242424;
+  --alt-c-surface-5: #2a2a2a;
 
   /* Brand Colors */
-  --lh-c-brand-1: #ffffff;
-  --lh-c-brand-1-50: #1a1a1a;
-  --lh-c-brand-1-100: #242424;
-  --lh-c-brand-1-200: #2a2a2a;
-  --lh-c-brand-1-300: #333333;
-  --lh-c-brand-1-400: #3a3a3a;
-  --lh-c-brand-1-500: #404040;
-  --lh-c-brand-1-600: #4a4a4a;
-  --lh-c-brand-1-700: #505050;
-  --lh-c-brand-1-800: #5a5a5a;
-  --lh-c-brand-1-900: #606060;
+  --alt-c-brand-1: #ffffff;
+  --alt-c-brand-1-50: #1a1a1a;
+  --alt-c-brand-1-100: #242424;
+  --alt-c-brand-1-200: #2a2a2a;
+  --alt-c-brand-1-300: #333333;
+  --alt-c-brand-1-400: #3a3a3a;
+  --alt-c-brand-1-500: #404040;
+  --alt-c-brand-1-600: #4a4a4a;
+  --alt-c-brand-1-700: #505050;
+  --alt-c-brand-1-800: #5a5a5a;
+  --alt-c-brand-1-900: #606060;
 
   /* Functional Colors */
-  --lh-c-success: #00ff00;
-  --lh-c-warning: #ffff00;
-  --lh-c-danger: #ff0000;
-  --lh-c-info: #00ffff;
+  --alt-c-success: #00ff00;
+  --alt-c-warning: #ffff00;
+  --alt-c-danger: #ff0000;
+  --alt-c-info: #00ffff;
 
   /* Background Colors */
-  --lh-c-bg: var(--lh-c-black);
-  --lh-c-bg-alt: #121212;
-  --lh-c-bg-soft: #1a1a1a;
+  --alt-c-bg: var(--alt-c-black);
+  --alt-c-bg-alt: #121212;
+  --alt-c-bg-soft: #1a1a1a;
 
   /* Border Colors */
-  --lh-c-border: var(--lh-c-white);
-  --lh-c-divider: var(--lh-c-white);
+  --alt-c-border: var(--alt-c-white);
+  --alt-c-divider: var(--alt-c-white);
 
   /* Overlay */
-  --lh-c-overlay: rgba(255, 255, 255, 0.1);
+  --alt-c-overlay: rgba(255, 255, 255, 0.1);
 }
