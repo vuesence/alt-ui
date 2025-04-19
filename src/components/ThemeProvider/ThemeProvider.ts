@@ -70,7 +70,7 @@ export class ThemeProvider {
   private setupSystemThemeListener(): void {
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', (e) => {
+      .addEventListener('change', () => {
         if (this.currentTheme === 'system') {
           this.applyTheme('system');
         }
