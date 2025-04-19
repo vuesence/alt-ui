@@ -42,82 +42,82 @@ function click(event: MouseEvent) {
 
 <style scoped>
 .base-button {
-  font-size: var(--lh-font-size-1);
+  font-size: var(--alt-font-size-1);
   font-variant-numeric: tabular-nums;
-  color: var(--lh-c-text-3);
+  color: var(--alt-c-text-3);
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--lh-space-3) var(--lh-space-6);
-  font-weight: var(--lh-font-weight-regular);
+  padding: var(--alt-space-3) var(--alt-space-6);
+  font-weight: var(--alt-font-weight-regular);
   line-height: 1;
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  background-color: var(--lh-c-surface-2);
-  border: 1px solid var(--lh-c-brand-1-200);
-  box-shadow: var(--lh-shadow-1);
-  border-radius: var(--lh-radius-base);
+  background-color: var(--alt-c-surface-2);
+  border: 1px solid var(--alt-c-brand-1-200);
+  box-shadow: var(--alt-shadow-1);
+  border-radius: var(--alt-radius-base);
   outline: 0;
   transition:
-    color var(--lh-transition-colors),
-    background-color var(--lh-transition-colors),
-    border-color var(--lh-transition-colors),
-    box-shadow var(--lh-transition-colors);
+    color var(--alt-transition-colors),
+    background-color var(--alt-transition-colors),
+    border-color var(--alt-transition-colors),
+    box-shadow var(--alt-transition-colors);
 
   &:hover:not(:disabled) {
-    background-color: var(--lh-c-surface-2);
-    border-color: var(--lh-c-brand-1-400);
+    background-color: var(--alt-c-surface-2);
+    border-color: var(--alt-c-brand-1-400);
   }
 
   &:focus-visible {
-    box-shadow: var(--lh-focus-ring);
+    box-shadow: var(--alt-focus-ring);
   }
 
   &.primary {
-    background-color: var(--lh-c-brand-1);
-    border-color: var(--lh-c-brand-1);
-    color: var(--lh-c-white);
+    background-color: var(--alt-c-brand-1);
+    border-color: var(--alt-c-brand-1);
+    color: var(--alt-c-white);
 
     &:hover:not(:disabled) {
-      background-color: var(--lh-c-brand-1-600);
-      border-color: var(--lh-c-brand-1-600);
+      background-color: var(--alt-c-brand-1-600);
+      border-color: var(--alt-c-brand-1-600);
     }
   }
 
   &.secondary {
-    background-color: var(--lh-c-surface-2);
-    border-color: var(--lh-c-brand-1-200);
-    color: var(--lh-c-text-2);
+    background-color: var(--alt-c-surface-2);
+    border-color: var(--alt-c-brand-1-200);
+    color: var(--alt-c-text-2);
 
     &:hover:not(:disabled) {
-      background-color: var(--lh-c-surface-3);
-      color: var(--lh-c-text-1);
+      background-color: var(--alt-c-surface-3);
+      color: var(--alt-c-text-1);
     }
   }
 
   &.text {
     background-color: transparent;
     border-color: transparent;
-    color: var(--lh-c-text-2);
-    padding: var(--lh-space-2) var(--lh-space-3);
+    color: var(--alt-c-text-2);
+    padding: var(--alt-space-2) var(--alt-space-3);
 
     &:hover:not(:disabled) {
-      background-color: var(--lh-c-surface-2);
-      color: var(--lh-c-text-1);
+      background-color: var(--alt-c-surface-2);
+      color: var(--alt-c-text-1);
     }
   }
 
   &.small {
-    font-size: var(--lh-font-size-0);
-    padding: var(--lh-space-2) var(--lh-space-4);
+    font-size: var(--alt-font-size-0);
+    padding: var(--alt-space-2) var(--alt-space-4);
   }
 
   &.large {
-    font-size: var(--lh-font-size-2);
-    padding: var(--lh-space-4) var(--lh-space-8);
+    font-size: var(--alt-font-size-2);
+    padding: var(--alt-space-4) var(--alt-space-8);
   }
 
   &.wide {
@@ -131,6 +131,6 @@ function click(event: MouseEvent) {
 }
 
 .spinner {
-  margin-left: var(--lh-space-2);
+  margin-left: var(--alt-space-2);
 }
 </style>

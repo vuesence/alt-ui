@@ -1,26 +1,26 @@
 /* Пользовательские стили для документации Alt-UI */
 
 :root {
-  --vp-c-brand-1: var(--lh-c-brand-1-500);
-  --vp-c-brand-2: var(--lh-c-brand-1-400);
-  --vp-c-brand-3: var(--lh-c-brand-1-600);
-  --vp-c-brand-soft: var(--lh-c-brand-1-100);
+  --vp-c-brand-1: var(--alt-c-brand-1-500);
+  --vp-c-brand-2: var(--alt-c-brand-1-400);
+  --vp-c-brand-3: var(--alt-c-brand-1-600);
+  --vp-c-brand-soft: var(--alt-c-brand-1-100);
 }
 
 /* Кастомные CSS переменные Lissa Health */
 :root {
   /* Бренд 1 - Основной бренд */
-  --lh-c-brand-1-50: #f0f9ff;
-  --lh-c-brand-1-100: #e0f2fe;
-  --lh-c-brand-1-200: #b9e6fe;
-  --lh-c-brand-1-300: #7cd4fd;
-  --lh-c-brand-1-400: #36bffa;
-  --lh-c-brand-1-500: #0ba5ec;
-  --lh-c-brand-1-600: #0086c9;
-  --lh-c-brand-1-700: #026aa2;
-  --lh-c-brand-1-800: #065986;
-  --lh-c-brand-1-900: #0b4a6e;
-  --lh-c-brand-1-950: #082f49;
+  --alt-c-brand-1-50: #f0f9ff;
+  --alt-c-brand-1-100: #e0f2fe;
+  --alt-c-brand-1-200: #b9e6fe;
+  --alt-c-brand-1-300: #7cd4fd;
+  --alt-c-brand-1-400: #36bffa;
+  --alt-c-brand-1-500: #0ba5ec;
+  --alt-c-brand-1-600: #0086c9;
+  --alt-c-brand-1-700: #026aa2;
+  --alt-c-brand-1-800: #065986;
+  --alt-c-brand-1-900: #0b4a6e;
+  --alt-c-brand-1-950: #082f49;
 }
 
 /* Дополнительные стили для блоков кода */

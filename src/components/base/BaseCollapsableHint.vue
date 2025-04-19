@@ -46,7 +46,7 @@ details {
   summary {
     /* font-size: 0.9em; */
     /* padding-right: 24px; */
-    color: var(--lh-c-text-3);
+    color: var(--alt-c-text-3);
     /* width: 100%; */
     position: relative;
     cursor: pointer;
@@ -54,11 +54,11 @@ details {
     outline: 0;
     transition: 300ms linear;
     &:hover {
-      color: var(--lh-c-text-1);
+      color: var(--alt-c-text-1);
     }
     /* margin-bottom: 1em; */
     &::marker {
-      color: var(--lh-c-brand-1-100);
+      color: var(--alt-c-brand-1-100);
     }
   }
   &[open] {
@@ -77,12 +77,12 @@ details {
   }
 }
 .content {
-  padding: var(--lh-space-3) var(--lh-space-4) var(--lh-space-4);
-  margin-left: var(--lh-space-4);
-  border: 1px solid var(--lh-c-brand-1-300);
-  border-radius: var(--lh-radius-md);
-  background-color: var(--lh-c-brand-1-50);
-  color: var(--lh-c-text-2);
+  padding: var(--alt-space-3) var(--alt-space-4) var(--alt-space-4);
+  margin-left: var(--alt-space-4);
+  border: 1px solid var(--alt-c-brand-1-300);
+  border-radius: var(--alt-radius-md);
+  background-color: var(--alt-c-brand-1-50);
+  color: var(--alt-c-text-2);
 }
 @keyframes open {
   0% {

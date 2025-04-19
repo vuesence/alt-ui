@@ -43,7 +43,7 @@ export default defineConfig({
       {
         text: "Другие ресурсы",
         items: [
-          { text: "GitHub", link: "https://github.com/lissa-health/alt-ui" },
+          { text: "GitHub", link: "https://github.com/vuesence/alt-ui" },
           { text: "Lissa Health", link: "https://lissa-health.com" },
         ],
       },

@@ -78,46 +78,46 @@ defineExpose({ show });
 
 <style scoped>
 .prompt-dialog {
-  padding: var(--lh-space-4);
+  padding: var(--alt-space-4);
   min-width: 300px;
 }
 
 .prompt-content {
   display: flex;
   flex-direction: column;
-  gap: var(--lh-space-4);
+  gap: var(--alt-space-4);
   text-align: center;
 }
 
 .prompt-input {
-  padding: var(--lh-space-2);
-  border: 1px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-base);
-  font-size: var(--lh-font-size-1);
+  padding: var(--alt-space-2);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-base);
+  font-size: var(--alt-font-size-1);
   width: 100%;
 }
 
 .prompt-actions {
   display: flex;
   justify-content: center;
-  gap: var(--lh-space-3);
-  margin-top: var(--lh-space-3);
+  gap: var(--alt-space-3);
+  margin-top: var(--alt-space-3);
 }
 
 .btn {
-  padding: var(--lh-space-2) var(--lh-space-4);
-  border-radius: var(--lh-radius-base);
+  padding: var(--alt-space-2) var(--alt-space-4);
+  border-radius: var(--alt-radius-base);
   border: none;
   cursor: pointer;
 }
 
 .btn-primary {
-  background-color: var(--lh-c-brand-1-500);
-  color: var(--lh-c-white);
+  background-color: var(--alt-c-brand-1-500);
+  color: var(--alt-c-white);
 }
 
 .btn-secondary {
-  background-color: var(--lh-c-surface-3);
-  color: var(--lh-c-text-1);
+  background-color: var(--alt-c-surface-3);
+  color: var(--alt-c-text-1);
 }
 </style>

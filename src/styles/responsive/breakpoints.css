@@ -1,44 +1,44 @@
 :root {
   /* Breakpoints */
-  --lh-bp-sm: 640px;
-  --lh-bp-md: 768px;
-  --lh-bp-lg: 1024px;
-  --lh-bp-xl: 1280px;
-  --lh-bp-2xl: 1536px;
+  --alt-bp-sm: 640px;
+  --alt-bp-md: 768px;
+  --alt-bp-lg: 1024px;
+  --alt-bp-xl: 1280px;
+  --alt-bp-2xl: 1536px;
 }
 
 /* Small devices (640px and up) */
 @media (min-width: 640px) {
   :root {
-    --lh-container-max: var(--lh-bp-sm);
+    --alt-container-max: var(--alt-bp-sm);
   }
 }
 
 /* Medium devices (768px and up) */
 @media (min-width: 768px) {
   :root {
-    --lh-container-max: var(--lh-bp-md);
+    --alt-container-max: var(--alt-bp-md);
   }
 }
 
 /* Large devices (1024px and up) */
 @media (min-width: 1024px) {
   :root {
-    --lh-container-max: var(--lh-bp-lg);
+    --alt-container-max: var(--alt-bp-lg);
   }
 }
 
 /* Extra large devices (1280px and up) */
 @media (min-width: 1280px) {
   :root {
-    --lh-container-max: var(--lh-bp-xl);
+    --alt-container-max: var(--alt-bp-xl);
   }
 }
 
 /* 2XL devices (1536px and up) */
 @media (min-width: 1536px) {
   :root {
-    --lh-container-max: var(--lh-bp-2xl);
+    --alt-container-max: var(--alt-bp-2xl);
   }
 }
 
@@ -49,7 +49,7 @@
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  max-width: var(--lh-container-max, 100%);
+  max-width: var(--alt-container-max, 100%);
 }
 
 /* Hide elements based on breakpoint */

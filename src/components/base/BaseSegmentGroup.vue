@@ -43,34 +43,34 @@ const modelValue = defineModel<string>();
   display: flex;
   align-items: flex-start;
   flex-direction: row;
-  border-bottom: 1px solid var(--lh-c-border);
+  border-bottom: 1px solid var(--alt-c-border);
   overflow-x: hidden;
   overflow-y: hidden;
   .mobile &,
   .tablet & {
     overflow-x: auto;
     width: 100%;
-    gap: var(--lh-space-2);
+    gap: var(--alt-space-2);
   }
 
   .indicator {
     transform: translateY(1px);
     width: var(--width);
     bottom: 0;
-    border-bottom: var(--lh-space-1) solid var(--lh-c-brand-1-500);
-    transition: var(--lh-transition-transform);
+    border-bottom: var(--alt-space-1) solid var(--alt-c-brand-1-500);
+    transition: var(--alt-transition-transform);
   }
 
   .item {
-    font-size: var(--lh-font-size-2);
-    font-weight: var(--lh-font-weight-medium);
-    line-height: var(--lh-line-height-2);
-    padding: var(--lh-space-2) var(--lh-space-3);
-    color: var(--lh-c-text-3);
+    font-size: var(--alt-font-size-2);
+    font-weight: var(--alt-font-weight-medium);
+    line-height: var(--alt-line-height-2);
+    padding: var(--alt-space-2) var(--alt-space-3);
+    color: var(--alt-c-text-3);
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
-    transition: var(--lh-transition-colors);
+    transition: var(--alt-transition-colors);
     user-select: none;
 
     flex-shrink: 0;
@@ -81,8 +81,8 @@ const modelValue = defineModel<string>();
     min-width: 5rem;
 
     &[data-state="checked"] {
-      color: var(--lh-c-text-1);
-      font-weight: var(--lh-font-weight-bold);
+      color: var(--alt-c-text-1);
+      font-weight: var(--alt-font-weight-bold);
     }
 
     &[data-disabled] {
@@ -91,19 +91,19 @@ const modelValue = defineModel<string>();
     }
 
     &:hover:not([data-disabled]) {
-      color: var(--lh-c-text-2);
+      color: var(--alt-c-text-2);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--lh-c-brand-1-500);
-      outline-offset: var(--lh-space-1);
+      outline: 2px solid var(--alt-c-brand-1-500);
+      outline-offset: var(--alt-space-1);
     }
   }
 
   .mobile & {
     .item {
-      padding: var(--lh-space-2) var(--lh-space-2);
-      font-size: var(--lh-font-size-1);
+      padding: var(--alt-space-2) var(--alt-space-2);
+      font-size: var(--alt-font-size-1);
       min-width: max-content;
     }
   }

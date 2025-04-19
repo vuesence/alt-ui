@@ -42,14 +42,7 @@ jobs:
 
       - name: Build documentation
         run: pnpm docs:build
-
-      # Деплой на GitHub Pages
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs/.vitepress/dist
-          branch: gh-pages
-
+        
       - name: Clean up the server dir
         uses: appleboy/ssh-action@master
         with:
@@ -65,7 +58,5 @@ jobs:
           SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ env.REMOTE_HOST }}
           REMOTE_USER: ${{ env.REMOTE_USER }}
-        env:
-          SOURCE: docs/.vitepress/dist
-          TARGET: ${{ env.TARGET_DIR }}
-          EXCLUDE: ".git, .github, .vscode, .gitignore"
+          SOURCE: ./docs-content/
+          TARGET: ${{ env.TARGET_DIR }} 

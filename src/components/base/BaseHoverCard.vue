@@ -112,7 +112,7 @@ const emit = defineEmits<{
 //     >
 //       <HoverCard.Trigger :style="triggerStyles" />
 //       <Teleport to="body">
-//         <HoverCard.Positioner :style="{ zIndex: 'var(--lh-z-tooltip)' }">
+//         <HoverCard.Positioner :style="{ zIndex: 'var(--alt-z-tooltip)' }">
 //           <HoverCard.Content class="hover-card__content">
 //             <!-- Content remains the same -->
 //           </HoverCard.Content>
@@ -184,28 +184,28 @@ const emit = defineEmits<{
 
 <style scoped>
 .content-wrapper {
-  background: var(--lh-c-surface-1);
-  border-radius: var(--lh-radius-md);
-  box-shadow: var(--lh-shadow-4);
+  background: var(--alt-c-surface-1);
+  border-radius: var(--alt-radius-md);
+  box-shadow: var(--alt-shadow-4);
   position: relative;
-  z-index: var(--lh-z-dropdown);
+  z-index: var(--alt-z-dropdown);
   &:is([open], [data-open], [data-state="open"]) {
-    animation: fadeIn var(--lh-transition-base) ease-out;
+    animation: fadeIn var(--alt-transition-base) ease-out;
   }
 
   &:is([closed], [data-closed], [data-state="closed"]) {
-    animation: fadeOut var(--lh-transition-fast) ease-out;
+    animation: fadeOut var(--alt-transition-fast) ease-out;
   }
 }
 
 .arrow {
   --arrow-size: 0.75rem;
-  --arrow-background: var(--lh-c-surface-1);
+  --arrow-background: var(--alt-c-surface-1);
 }
 
 .arrow-tip {
   border-top-width: 1px;
   border-left-width: 1px;
-  border-color: var(--lh-c-border);
+  border-color: var(--alt-c-border);
 }
 </style>

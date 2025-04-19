@@ -106,54 +106,54 @@ watch(
 
 <style scoped>
 .dialog-content {
-  padding: var(--lh-space-4);
+  padding: var(--alt-space-4);
   display: flex;
   flex-direction: column;
-  gap: var(--lh-space-4);
+  gap: var(--alt-space-4);
   min-width: 20rem;
 }
 
 .dialog-message {
   margin: 0;
-  color: var(--lh-c-text-1);
+  color: var(--alt-c-text-1);
 }
 
 .dialog-input {
-  padding: var(--lh-space-2);
-  border: 1px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-base);
-  font-size: var(--lh-font-size-1);
+  padding: var(--alt-space-2);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-base);
+  font-size: var(--alt-font-size-1);
   width: 100%;
 }
 
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--lh-space-2);
-  margin-top: var(--lh-space-2);
+  gap: var(--alt-space-2);
+  margin-top: var(--alt-space-2);
 }
 
 .dialog-button {
-  padding: var(--lh-space-2) var(--lh-space-4);
-  background-color: var(--lh-c-surface-2);
-  border: 1px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-base);
+  padding: var(--alt-space-2) var(--alt-space-4);
+  background-color: var(--alt-c-surface-2);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-base);
   cursor: pointer;
-  font-weight: var(--lh-font-weight-medium);
-  transition: var(--lh-transition-colors);
+  font-weight: var(--alt-font-weight-medium);
+  transition: var(--alt-transition-colors);
 }
 
 .dialog-button:hover {
-  background-color: var(--lh-c-surface-3);
+  background-color: var(--alt-c-surface-3);
 }
 
 .dialog-button.primary {
-  background-color: var(--lh-c-brand-1-500);
-  color: var(--lh-c-white);
+  background-color: var(--alt-c-brand-1-500);
+  color: var(--alt-c-white);
   border: none;
 }
 
 .dialog-button.primary:hover {
-  background-color: var(--lh-c-brand-1-600);
+  background-color: var(--alt-c-brand-1-600);
 }
 </style>

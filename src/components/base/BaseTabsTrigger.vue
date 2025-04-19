@@ -19,26 +19,26 @@ defineProps<{
   border-radius: 6px;
   border: none;
   background: transparent;
-  color: var(--lh-c-text-2);
-  font-family: var(--lh-font-family-base);
+  color: var(--alt-c-text-2);
+  font-family: var(--alt-font-family-base);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.25s;
 }
 
 .tab-trigger:hover {
-  color: var(--lh-c-text-1);
-  background-color: var(--lh-c-bg-alt);
+  color: var(--alt-c-text-1);
+  background-color: var(--alt-c-bg-alt);
 }
 
 .tab-trigger[data-selected] {
-  color: var(--lh-c-text-1);
-  background-color: var(--lh-c-bg);
-  box-shadow: var(--lh-shadow-1);
+  color: var(--alt-c-text-1);
+  background-color: var(--alt-c-bg);
+  box-shadow: var(--alt-shadow-1);
 }
 
 .tab-trigger:focus-visible {
   outline: none;
-  box-shadow: var(--lh-shadow-2);
+  box-shadow: var(--alt-shadow-2);
 }
 </style>
