@@ -62,18 +62,18 @@ The library uses CSS variables for consistent styling:
 ```css
 :root {
   /* Colors */
-  --lh-c-text-1: #18181b;
-  --lh-c-surface-1: #ffffff;
-  --lh-c-brand-1: #3b82f6;
+  --alt-c-text-1: #18181b;
+  --alt-c-surface-1: #ffffff;
+  --alt-c-brand-1: #3b82f6;
 
   /* Spacing */
-  --lh-space-1: 0.25rem;
-  --lh-space-2: 0.5rem;
-  --lh-space-3: 1rem;
+  --alt-space-1: 0.25rem;
+  --alt-space-2: 0.5rem;
+  --alt-space-3: 1rem;
 
   /* Typography */
-  --lh-font-size-1: 1rem;
-  --lh-font-weight-bold: 600;
+  --alt-font-size-1: 1rem;
+  --alt-font-weight-bold: 600;
 }
 ```
 

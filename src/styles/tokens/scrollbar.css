@@ -1,21 +1,21 @@
 
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: var(--lh-space-2);
-  height: var(--lh-space-2);
+  width: var(--alt-space-2);
+  height: var(--alt-space-2);
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--lh-c-scrollbar-track);
+  background: var(--alt-c-scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--lh-c-scrollbar-thumb);
-  border-radius: var(--lh-radius-full);
+  background: var(--alt-c-scrollbar-thumb);
+  border-radius: var(--alt-radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--lh-c-scrollbar-thumb-hover);
+  background: var(--alt-c-scrollbar-thumb-hover);
 } 
 
 .mobile {

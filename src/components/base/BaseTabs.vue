@@ -21,10 +21,10 @@ const value = ref("tab2");
   display: flex;
   gap: 2px;
   padding: 4px;
-  background-color: var(--lh-c-bg);
-  border: 1px solid var(--lh-c-border);
+  background-color: var(--alt-c-bg);
+  border: 1px solid var(--alt-c-border);
   border-radius: 8px;
   margin-bottom: 16px;
-  box-shadow: var(--lh-shadow-1);
+  box-shadow: var(--alt-shadow-1);
 }
 </style>

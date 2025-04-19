@@ -63,7 +63,7 @@ const checked = computed({
 .base-checkbox {
   display: inline-flex;
   align-items: center;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
   cursor: pointer;
   user-select: none;
 }
@@ -81,22 +81,22 @@ const checked = computed({
   height: 18px;
   min-width: 18px;
   min-height: 18px;
-  border: 1px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-sm);
-  background-color: var(--lh-c-surface-2);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-sm);
+  background-color: var(--alt-c-surface-2);
   transition:
-    background-color var(--lh-transition-colors),
-    border-color var(--lh-transition-colors);
+    background-color var(--alt-transition-colors),
+    border-color var(--alt-transition-colors);
   position: relative;
 }
 
 .checkbox-control[data-state="checked"],
 .checkbox-control[data-state="indeterminate"] {
-  border-color: var(--lh-c-brand-1-500);
+  border-color: var(--alt-c-brand-1-500);
 }
 
 .checkbox-icon {
-  color: var(--lh-c-brand-1-500);
+  color: var(--alt-c-brand-1-500);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -107,25 +107,25 @@ const checked = computed({
 }
 
 .checkbox-label {
-  color: var(--lh-c-text-2);
-  font-size: var(--lh-font-size-1);
+  color: var(--alt-c-text-2);
+  font-size: var(--alt-font-size-1);
   display: flex;
   align-items: center;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
 }
 
 .base-checkbox[data-disabled] .checkbox-label {
-  color: var(--lh-c-text-3);
+  color: var(--alt-c-text-3);
 }
 
 /* Focus styles */
 .checkbox-control[data-focus-visible] {
-  outline: 2px solid var(--lh-c-brand-1-500);
+  outline: 2px solid var(--alt-c-brand-1-500);
   outline-offset: 2px;
 }
 
 /* Hover styles */
 .checkbox-control[data-hover]:not([data-disabled]) {
-  border-color: var(--lh-c-brand-1-400);
+  border-color: var(--alt-c-brand-1-400);
 }
 </style>

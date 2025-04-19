@@ -60,58 +60,58 @@ const modelValue = defineModel<string | number | boolean>();
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--lh-space-1);
+  gap: var(--alt-space-1);
   width: 100%;
 }
 
 .input-label {
-  font-size: var(--lh-font-size-1);
-  color: var(--lh-c-text-2);
+  font-size: var(--alt-font-size-1);
+  color: var(--alt-c-text-2);
 }
 
 .required {
-  color: var(--lh-c-danger);
-  margin-left: var(--lh-space-1);
+  color: var(--alt-c-danger);
+  margin-left: var(--alt-space-1);
 }
 
 .base-input {
   width: 100%;
-  padding: var(--lh-space-2) var(--lh-space-3);
-  font-size: var(--lh-font-size-1);
-  border: 1px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-base);
-  background-color: var(--lh-c-surface-1);
-  color: var(--lh-c-text-1);
-  transition: var(--lh-transition-all);
+  padding: var(--alt-space-2) var(--alt-space-3);
+  font-size: var(--alt-font-size-1);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-base);
+  background-color: var(--alt-c-surface-1);
+  color: var(--alt-c-text-1);
+  transition: var(--alt-transition-all);
   outline: none;
 
   &:focus {
-    border-color: var(--lh-c-brand-1-500);
-    box-shadow: var(--lh-focus-ring);
+    border-color: var(--alt-c-brand-1-500);
+    box-shadow: var(--alt-focus-ring);
   }
 
   &::placeholder {
-    color: var(--lh-c-text-3);
-    font-size: var(--lh-font-size-0);
+    color: var(--alt-c-text-3);
+    font-size: var(--alt-font-size-0);
   }
 
   &:hover:not(.disabled) {
-    border-color: var(--lh-c-brand-1-400);
+    border-color: var(--alt-c-brand-1-400);
   }
 
   &.error {
-    border-color: var(--lh-c-danger);
+    border-color: var(--alt-c-danger);
     &:focus {
-      box-shadow: 0 0 0 3px var(--lh-c-danger);
+      box-shadow: 0 0 0 3px var(--alt-c-danger);
     }
   }
 
   &.success {
-    border-color: var(--lh-c-success);
+    border-color: var(--alt-c-success);
   }
 
   &.disabled {
-    background-color: var(--lh-c-surface-2);
+    background-color: var(--alt-c-surface-2);
     cursor: not-allowed;
     opacity: 0.7;
   }

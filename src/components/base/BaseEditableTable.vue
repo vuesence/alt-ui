@@ -133,23 +133,23 @@ function deleteRow(index: number) {
 
 <style scoped>
 .table-wrapper {
-  --lh-font-size-scale: 1;
-  --lh-spacing-scale: 1;
+  --alt-font-size-scale: 1;
+  --alt-spacing-scale: 1;
 
   .tooltip & {
-    --lh-font-size-scale: 0.8;
-    --lh-spacing-scale: 0.8;
+    --alt-font-size-scale: 0.8;
+    --alt-spacing-scale: 0.8;
   }
 
   overflow-x: auto;
   width: 100%;
   max-width: 90vw;
-  border-radius: var(--lh-radius-lg);
-  background-color: var(--lh-c-surface-1);
-  box-shadow: var(--lh-shadow-3);
+  border-radius: var(--alt-radius-lg);
+  background-color: var(--alt-c-surface-1);
+  box-shadow: var(--alt-shadow-3);
 
   .hover-card-content & {
-    font-size: calc(var(--lh-font-size-0) * var(--lh-spacing-scale));
+    font-size: calc(var(--alt-font-size-0) * var(--alt-spacing-scale));
   }
 }
 
@@ -158,16 +158,16 @@ function deleteRow(index: number) {
   border-spacing: 0;
   margin: 0;
   width: 100%;
-  border: 1px solid var(--lh-c-divider);
-  font-size: var(--lh-font-size-1);
+  border: 1px solid var(--alt-c-divider);
+  font-size: var(--alt-font-size-1);
 }
 
 .table th,
 .table td {
-  padding: calc(var(--lh-space-2) * var(--lh-spacing-scale))
-    calc(var(--lh-space-3) * var(--lh-spacing-scale));
+  padding: calc(var(--alt-space-2) * var(--alt-spacing-scale))
+    calc(var(--alt-space-3) * var(--alt-spacing-scale));
   position: relative;
-  color: var(--lh-c-text-2);
+  color: var(--alt-c-text-2);
   text-align: left;
 
   &:not(:last-child)::after {
@@ -177,15 +177,15 @@ function deleteRow(index: number) {
     right: 0;
     width: 1px;
     height: 60%;
-    background-color: var(--lh-c-border);
+    background-color: var(--alt-c-border);
   }
 }
 
 .table th {
-  padding: calc(var(--lh-space-3) * var(--lh-spacing-scale));
-  background-color: var(--lh-c-surface-1);
-  color: var(--lh-c-text-1);
-  font-weight: var(--lh-font-weight-bold);
+  padding: calc(var(--alt-space-3) * var(--alt-spacing-scale));
+  background-color: var(--alt-c-surface-1);
+  color: var(--alt-c-text-1);
+  font-weight: var(--alt-font-weight-bold);
   border-top: none;
 }
 
@@ -194,32 +194,32 @@ function deleteRow(index: number) {
 }
 
 .table tr:nth-child(even) {
-  background-color: var(--lh-c-surface-1);
+  background-color: var(--alt-c-surface-1);
 }
 
 .table tr:nth-child(odd) {
-  background-color: var(--lh-c-surface-2);
+  background-color: var(--alt-c-surface-2);
 }
 
 .table tr:hover {
-  background-color: var(--lh-c-surface-2);
+  background-color: var(--alt-c-surface-2);
 }
 
 .editable-cell {
   min-height: 1.2em;
   outline: none;
   cursor: text;
-  transition: var(--lh-transition-all);
-  padding: var(--lh-space-1) var(--lh-space-2);
-  border-radius: var(--lh-radius-base);
+  transition: var(--alt-transition-all);
+  padding: var(--alt-space-1) var(--alt-space-2);
+  border-radius: var(--alt-radius-base);
 
   &:hover {
-    background-color: var(--lh-c-surface-3);
+    background-color: var(--alt-c-surface-3);
   }
 
   &:focus {
-    background-color: var(--lh-c-surface-4);
-    box-shadow: var(--lh-focus-ring);
+    background-color: var(--alt-c-surface-4);
+    box-shadow: var(--alt-focus-ring);
   }
 }
 
@@ -244,21 +244,21 @@ function deleteRow(index: number) {
 .table-actions {
   display: flex;
   justify-content: flex-end;
-  padding: var(--lh-space-3);
-  border-top: 1px solid var(--lh-c-divider);
+  padding: var(--alt-space-3);
+  border-top: 1px solid var(--alt-c-divider);
 }
 
 .delete-icon {
   cursor: pointer;
-  color: var(--lh-c-text-3);
-  transition: var(--lh-transition-colors);
+  color: var(--alt-c-text-3);
+  transition: var(--alt-transition-colors);
 
   &:hover {
-    color: var(--lh-c-danger);
+    color: var(--alt-c-danger);
   }
 }
 
 .add-icon {
-  margin-right: var(--lh-space-2);
+  margin-right: var(--alt-space-2);
 }
 </style>

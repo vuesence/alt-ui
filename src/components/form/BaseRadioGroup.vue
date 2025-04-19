@@ -99,7 +99,7 @@ const emit = defineEmits<{
 <style scoped>
 .radioGroup__root {
   display: flex;
-  gap: var(--lh-space-4);
+  gap: var(--alt-space-4);
 }
 
 .radioGroup__root[data-orientation="vertical"] {
@@ -112,14 +112,14 @@ const emit = defineEmits<{
 }
 
 .radioGroup__label {
-  color: var(--lh-c-text-1);
-  font-weight: var(--lh-font-weight-medium);
+  color: var(--alt-c-text-1);
+  font-weight: var(--alt-font-weight-medium);
 }
 
 .radioGroup__item {
   display: flex;
   align-items: center;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
   cursor: pointer;
 }
 
@@ -131,32 +131,32 @@ const emit = defineEmits<{
 .radioGroup__itemControl {
   width: 16px;
   height: 16px;
-  border: 2px solid var(--lh-c-border);
-  border-radius: var(--lh-radius-full);
-  background-color: var(--lh-c-surface-1);
+  border: 2px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-full);
+  background-color: var(--alt-c-surface-1);
   transition:
-    border-color var(--lh-transition-colors),
-    background-color var(--lh-transition-colors);
+    border-color var(--alt-transition-colors),
+    background-color var(--alt-transition-colors);
 }
 
 .radioGroup__itemControl[data-state="checked"] {
-  border-color: var(--lh-c-brand-1-500);
-  background-color: var(--lh-c-brand-1-500);
-  box-shadow: inset 0 0 0 3px var(--lh-c-surface-1);
+  border-color: var(--alt-c-brand-1-500);
+  background-color: var(--alt-c-brand-1-500);
+  box-shadow: inset 0 0 0 3px var(--alt-c-surface-1);
 }
 
 .radioGroup__itemControl[data-focus-visible] {
-  outline: 2px solid var(--lh-c-brand-1-500);
+  outline: 2px solid var(--alt-c-brand-1-500);
   outline-offset: 2px;
 }
 
 .radioGroup__itemControl[data-hover]:not([data-disabled]) {
-  border-color: var(--lh-c-brand-1-400);
+  border-color: var(--alt-c-brand-1-400);
 }
 
 .radioGroup__itemText {
-  color: var(--lh-c-text-1);
-  font-size: var(--lh-font-size-1);
+  color: var(--alt-c-text-1);
+  font-size: var(--alt-font-size-1);
 }
 
 /* Size Variants */
@@ -171,10 +171,10 @@ const emit = defineEmits<{
 }
 
 .radioGroup__root--size_sm .radioGroup__itemText {
-  font-size: var(--lh-font-size-0);
+  font-size: var(--alt-font-size-0);
 }
 
 .radioGroup__root--size_lg .radioGroup__itemText {
-  font-size: var(--lh-font-size-2);
+  font-size: var(--alt-font-size-2);
 }
 </style>

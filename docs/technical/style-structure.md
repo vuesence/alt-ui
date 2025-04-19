@@ -99,15 +99,15 @@ src/assets/styles/
 
 ```css
 .component {
-  --component-padding: var(--lh-space-4);
+  --component-padding: var(--alt-space-4);
   
   padding: var(--component-padding);
-  background-color: var(--lh-c-surface-1);
-  border-radius: var(--lh-radius-base);
+  background-color: var(--alt-c-surface-1);
+  border-radius: var(--alt-radius-base);
   
   &__header {
-    font-size: var(--lh-font-size-4);
-    margin-bottom: var(--lh-space-2);
+    font-size: var(--alt-font-size-4);
+    margin-bottom: var(--alt-space-2);
   }
 }
 ```

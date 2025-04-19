@@ -2,94 +2,94 @@
 .content--markdown {
   /* Headings */
   h1, h2, h3, h4, h5, h6 {
-    font-weight: var(--lh-font-weight-bold);
-    line-height: var(--lh-line-height-0);
-    color: var(--lh-c-text-2);
+    font-weight: var(--alt-font-weight-bold);
+    line-height: var(--alt-line-height-0);
+    color: var(--alt-c-text-2);
   }
 
-  h1 { font-size: var(--lh-font-size-6); }
+  h1 { font-size: var(--alt-font-size-6); }
   h2 { 
-    font-size: var(--lh-font-size-5);
-    margin-top: var(--lh-space-9);
-    margin-bottom: var(--lh-space-6);
+    font-size: var(--alt-font-size-5);
+    margin-top: var(--alt-space-9);
+    margin-bottom: var(--alt-space-6);
   }
   h3 { 
-    font-size: var(--lh-font-size-4);
-    margin-top: var(--lh-space-7);
-    margin-bottom: var(--lh-space-4);
+    font-size: var(--alt-font-size-4);
+    margin-top: var(--alt-space-7);
+    margin-bottom: var(--alt-space-4);
   }
 
   h4 { 
-    font-size: var(--lh-font-size-3);
-    margin-top: var(--lh-space-6);
-    margin-bottom: var(--lh-space-3);
+    font-size: var(--alt-font-size-3);
+    margin-top: var(--alt-space-6);
+    margin-bottom: var(--alt-space-3);
   }
 
   p {
-    margin-top: var(--lh-space-4);
-    margin-bottom: var(--lh-space-4);
+    margin-top: var(--alt-space-4);
+    margin-bottom: var(--alt-space-4);
   }
 
   /* Lists */
   ul, ol {
-    padding-left: var(--lh-space-5);
-    margin: var(--lh-space-4) 0;
+    padding-left: var(--alt-space-5);
+    margin: var(--alt-space-4) 0;
   }
 
   ul { list-style-type: disc; }
   ol { list-style-type: decimal; }
 
   li {
-    margin-bottom: var(--lh-space-2);
+    margin-bottom: var(--alt-space-2);
   }
 
   /* Links */
   a {
-    color: var(--lh-c-brand-1);
+    color: var(--alt-c-brand-1);
     text-decoration: underline;
     
     &:hover {
-      color: var(--lh-c-brand-2);
+      color: var(--alt-c-brand-2);
     }
   }
 
   /* Code */
   code {
-    font-family: var(--lh-font-family-mono);
-    font-size: var(--lh-font-size-0);
-    background: var(--lh-c-bg-soft);
-    padding: var(--lh-space-1) var(--lh-space-2);
-    border-radius: var(--lh-radius-sm);
+    font-family: var(--alt-font-family-mono);
+    font-size: var(--alt-font-size-0);
+    background: var(--alt-c-bg-soft);
+    padding: var(--alt-space-1) var(--alt-space-2);
+    border-radius: var(--alt-radius-sm);
   }
 
   /* Tables */
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: var(--lh-space-6) 0;
+    margin: var(--alt-space-6) 0;
     
     th, td {
-      padding: var(--lh-space-3);
-      border: 1px solid var(--lh-c-border);
+      padding: var(--alt-space-3);
+      border: 1px solid var(--alt-c-border);
       text-align: left;
     }
 
     th {
-      background: var(--lh-c-surface-2);
-      font-weight: var(--lh-font-weight-bold);
+      background: var(--alt-c-surface-2);
+      font-weight: var(--alt-font-weight-bold);
     }
 
     tr:nth-child(even) {
-      background: var(--lh-c-surface-1);
+      background: var(--alt-c-surface-1);
     }
   }
 
   details {
-    margin: var(--lh-space-6) 0;
+    margin: var(--alt-space-6) 0;
     summary {
       /* font-size: 0.9em; */
       /* padding-right: 24px; */
-      color: var(--lh-c-text-3);
+      color: var(--alt-c-text-3);
       width: 100%;
       position: relative;
       cursor: pointer;
@@ -97,7 +97,7 @@
       outline: 0;
       transition: 300ms linear;
       &:hover {
-        color: var(--lh-c-text-1);
+        color: var(--alt-c-text-1);
       }
       /* margin-bottom: 1em; */
       &::-webkit-details-marker {
@@ -105,7 +105,7 @@
       }
       &:after {
         content: "+";
-        color: var(--lh-c-text-3);
+        color: var(--alt-c-text-3);
         position: absolute;
         font-size: 2rem;
         line-height: 0;
@@ -118,9 +118,9 @@
     }
     &[open] {
       p {
-        color: var(--lh-c-text-2);
-        font-size: var(--lh-font-size-0);
-        line-height: var(--lh-line-height-1);
+        color: var(--alt-c-text-2);
+        font-size: var(--alt-font-size-0);
+        line-height: var(--alt-line-height-1);
       }
       summary {
         margin-bottom: 1em;

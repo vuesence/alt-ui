@@ -28,6 +28,10 @@ export { default as FormField } from "./components/form/FormField.vue";
 export { useDialogs } from "./components/dialogs/useDialogs";
 export { default as DialogsManager } from "./components/dialogs/DialogsManager.vue";
 
+// Theme Components
+export { ThemeProvider, themeProvider } from "./components/ThemeProvider";
+export { ThemeToggle, ThemeToggleVue } from "./components/ThemeToggle";
+
 // Utils
 export { loadIcons } from "./utils/icons";
 export { getCssVar, setCssVar, toNumber } from "./utils/css";
@@ -35,3 +39,5 @@ export { toast, toaster } from "./utils/toaster";
 
 // Types - export from table
 export * from "./types/table";
+export type { ThemeName, ThemeProviderOptions } from "./components/ThemeProvider";
+export type { ThemeToggleOptions } from "./components/ThemeToggle";

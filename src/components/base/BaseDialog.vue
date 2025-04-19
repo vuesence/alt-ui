@@ -45,9 +45,9 @@ defineExpose({ show, close });
 <style scoped>
 dialog {
   padding: 0;
-  color: var(--lh-c-text-1);
-  border: 3px solid var(--lh-c-border);
-  background-color: var(--lh-c-surface-1);
+  color: var(--alt-c-text-1);
+  border: 3px solid var(--alt-c-border);
+  background-color: var(--alt-c-surface-1);
   opacity: 0;
   /* transform: scaleY(0.8); */
   transition: all 0.2s allow-discrete;
@@ -67,7 +67,7 @@ dialog {
   &[open] {
     opacity: 1;
     transform: translate(-50%, -50%) scaleY(1);
-    border-radius: var(--lh-radius-md);
+    border-radius: var(--alt-radius-md);
   }
 }
 
@@ -78,7 +78,7 @@ dialog {
   dialog[open] {
     opacity: 0;
     /* transform: translate(-50%, -50%) scaleY(0.8); */
-    border-radius: var(--lh-radius-md);
+    border-radius: var(--alt-radius-md);
   }
 }
 

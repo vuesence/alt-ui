@@ -55,23 +55,23 @@ defineProps({
 .menu-trigger {
   display: flex;
   align-items: center;
-  gap: var(--lh-space-2);
+  gap: var(--alt-space-2);
   cursor: pointer;
-  padding: var(--lh-space-2) var(--lh-space-3);
-  border-radius: var(--lh-radius-base);
-  transition: background-color var(--lh-transition-fast);
+  padding: var(--alt-space-2) var(--alt-space-3);
+  border-radius: var(--alt-radius-base);
+  transition: background-color var(--alt-transition-fast);
   &:focus-visible {
-    outline: 1px solid var(--lh-c-brand-2);
+    outline: 1px solid var(--alt-c-brand-2);
   }
 }
 
 .menu-trigger:hover {
-  background-color: var(--lh-c-surface-2);
+  background-color: var(--alt-c-surface-2);
 }
 
 .menu-indicator {
-  font-size: var(--lh-font-size-00);
-  transition: transform var(--lh-transition-fast);
+  font-size: var(--alt-font-size-00);
+  transition: transform var(--alt-transition-fast);
 }
 
 [data-expanded] .menu-indicator {
@@ -79,20 +79,20 @@ defineProps({
 }
 
 .menu-content {
-  background-color: var(--lh-c-surface-1);
-  border-radius: var(--lh-radius-base);
-  box-shadow: var(--lh-shadow-2);
+  background-color: var(--alt-c-surface-1);
+  border-radius: var(--alt-radius-base);
+  box-shadow: var(--alt-shadow-2);
   min-width: 180px;
   transform-origin: top;
-  animation: menuSlide var(--lh-transition-base);
+  animation: menuSlide var(--alt-transition-base);
   &:focus-visible {
-    outline: 1px solid var(--lh-c-brand-2);
+    outline: 1px solid var(--alt-c-brand-2);
   }
   .menu-item {
-    padding: var(--lh-space-2) var(--lh-space-3);
+    padding: var(--alt-space-2) var(--alt-space-3);
     cursor: pointer;
     &:hover {
-      background-color: var(--lh-c-surface-2);
+      background-color: var(--alt-c-surface-2);
     }
   }
 }

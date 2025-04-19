@@ -1,12 +1,12 @@
 # Базовые компоненты
 
-Базовые компоненты Alt-UI являются строительными блоками для создания пользовательских интерфейсов. Они разработаны с учетом принципов переиспользуемости, доступности и производительности.
+Базовые компоненты являются фундаментальными строительными блоками интерфейса Lissa Health. Они разработаны с учетом принципов переиспользуемости, доступности и производительности.
 
 ## Компоненты
 
 ### BaseButton
 
-Универсальный компонент кнопки с различными вариантами отображения и состояниями.
+Основной компонент для создания кнопок различных типов и состояний.
 
 ```vue
 <BaseButton variant="primary" size="md" :loading="false">
@@ -18,17 +18,17 @@
 
 | Prop | Тип | По умолчанию | Описание |
 |------|-----|--------------|-----------|
-| variant | 'primary' \| 'secondary' \| 'ghost' \| 'danger' \| 'small' | 'primary' | Вариант отображения |
+| variant | 'primary' \| 'secondary' \| 'ghost' | 'primary' | Вариант отображения |
 | size | 'sm' \| 'md' \| 'lg' | 'md' | Размер кнопки |
 | loading | boolean | false | Состояние загрузки |
 | disabled | boolean | false | Отключение кнопки |
 
 ### BaseIcon
 
-Компонент для отображения векторных иконок из предопределенного набора или пользовательских SVG.
+Компонент для отображения векторных иконок.
 
 ```vue
-<BaseIcon name="check" size="24" color="currentColor" />
+<BaseIcon name="check" size="md" />
 ```
 
 #### API
@@ -36,59 +36,41 @@
 | Prop | Тип | По умолчанию | Описание |
 |------|-----|--------------|-----------|
 | name | string | - | Название иконки |
-| size | string \| number | '24' | Размер иконки (пиксели) |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Размер иконки |
 | color | string | 'currentColor' | Цвет иконки |
 
 ### BaseDialog
 
-Модальное окно с настраиваемым содержимым.
+Модальное окно для отображения важной информации или форм.
 
 ```vue
-<script setup>
-import { ref } from 'vue';
-import { BaseDialog, BaseButton } from 'alt-ui';
-
-const dialog = ref(null);
-
-function openDialog() {
-  dialog.value.show();
-}
-
-function closeDialog() {
-  dialog.value.close();
-}
-</script>
-
-<template>
-  <BaseButton @click="openDialog">Открыть диалог</BaseButton>
-  
-  <BaseDialog ref="dialog">
-    <div class="dialog-content">
-      <h2>Заголовок</h2>
-      <p>Содержимое диалога</p>
-      <div class="dialog-footer">
-        <BaseButton @click="closeDialog">Закрыть</BaseButton>
-      </div>
-    </div>
-  </BaseDialog>
-</template>
+<BaseDialog v-model="isOpen" title="Заголовок">
+  <template #content>
+    Содержимое диалога
+  </template>
+  <template #footer>
+    <BaseButton @click="close">Закрыть</BaseButton>
+  </template>
+</BaseDialog>
 ```
 
 #### API
 
-| Метод | Описание |
-|------|-----------|
-| show() | Открывает диалог |
-| close() | Закрывает диалог |
+| Prop | Тип | По умолчанию | Описание |
+|------|-----|--------------|-----------|
+| modelValue | boolean | false | Управление видимостью |
+| title | string | - | Заголовок диалога |
+| closeable | boolean | true | Возможность закрытия |
 
 ### BaseTable
 
-Компонент для отображения табличных данных с поддержкой сортировки.
+Компонент для отображения табличных данных с поддержкой сортировки и фильтрации.
 
 ```vue
 <BaseTable 
-  :headers="headers"
-  :rows="tableData"
+  :columns="columns"
+  :data="tableData"
+  :sortable="true"
 />
 ```
 
@@ -96,53 +78,45 @@ function closeDialog() {
 
 | Prop | Тип | По умолчанию | Описание |
 |------|-----|--------------|-----------|
-| headers | TableHeader[] | [] | Конфигурация заголовков |
-| rows | TableRow[] | [] | Данные таблицы |
-
-#### TableHeader
-
-| Свойство | Тип | Описание |
-|----------|-----|-----------|
-| key | string | Ключ колонки |
-| text | string | Текст заголовка |
-| sortable | boolean | Возможность сортировки |
-| class | string | CSS класс |
+| columns | Column[] | [] | Конфигурация колонок |
+| data | any[] | [] | Данные таблицы |
+| sortable | boolean | false | Возможность сортировки |
 
 ### BaseEditableTable
 
-Таблица с возможностью редактирования ячеек.
+Расширенная версия таблицы с возможностью редактирования данных.
 
 ```vue
 <BaseEditableTable 
   v-model="tableData"
-  :headers="headers"
-  :editable="true"
+  :columns="columns"
+  @update:row="handleRowUpdate"
 />
 ```
 
-#### API
+### BaseToaster
 
-Включает те же пропсы, что и BaseTable, плюс:
-
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|-----------|
-| editable | boolean | false | Режим редактирования |
-| addButtonText | string | 'Add Row' | Текст кнопки добавления |
-
-### BaseSpinner
-
-Индикатор загрузки.
+Компонент для отображения уведомлений.
 
 ```vue
-<BaseSpinner size="24" color="currentColor" />
+<BaseToaster 
+  type="success"
+  title="Успех"
+  message="Операция выполнена успешно"
+/>
 ```
 
-#### API
+### BaseMenu
 
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|-----------|
-| size | string \| number | '24' | Размер спиннера |
-| color | string | 'currentColor' | Цвет спиннера |
+Выпадающее меню с поддержкой вложенных элементов.
+
+```vue
+<BaseMenu>
+  <BaseButton slot="trigger">Меню</BaseButton>
+  <BaseMenuItem>Пункт 1</BaseMenuItem>
+  <BaseMenuItem>Пункт 2</BaseMenuItem>
+</BaseMenu>
+```
 
 ### BaseTabs
 
@@ -150,21 +124,10 @@ function closeDialog() {
 
 ```vue
 <BaseTabs v-model="activeTab">
-  <template #tabs>
-    <div class="tab" :class="{ active: activeTab === 'tab1' }" @click="activeTab = 'tab1'">Вкладка 1</div>
-    <div class="tab" :class="{ active: activeTab === 'tab2' }" @click="activeTab = 'tab2'">Вкладка 2</div>
-  </template>
-  
-  <div v-if="activeTab === 'tab1'">Содержимое вкладки 1</div>
-  <div v-if="activeTab === 'tab2'">Содержимое вкладки 2</div>
+  <BaseTabsTrigger value="tab1">Вкладка 1</BaseTabsTrigger>
+  <BaseTabsTrigger value="tab2">Вкладка 2</BaseTabsTrigger>
 </BaseTabs>
 ```
-
-#### API
-
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|-----------|
-| modelValue | string | - | Активная вкладка |
 
 ### BaseHoverCard
 
@@ -176,119 +139,41 @@ function closeDialog() {
     <span>Наведите курсор</span>
   </template>
   <template #content>
-    <div class="hover-card-content">
-      Дополнительная информация
-    </div>
+    Дополнительная информация
   </template>
 </BaseHoverCard>
 ```
 
-### BaseMenu
+### BaseSpinner
 
-Выпадающее меню.
+Индикатор загрузки.
 
 ```vue
-<BaseMenu :items="menuItems" label-key="label" value-key="value">
-  <template #trigger>
-    <BaseButton>Открыть меню</BaseButton>
-  </template>
-  <template #item="{ item }">
-    {{ item.label }}
-  </template>
-</BaseMenu>
+<BaseSpinner size="md" />
 ```
 
-#### API
+## Диаграмма наследования компонентов
 
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|-----------|
-| items | MenuItem[] | [] | Элементы меню |
-| labelKey | string | 'label' | Ключ для отображения |
-| valueKey | string | 'value' | Ключ для значения |
-| showTriggerIndicator | boolean | false | Показывать индикатор |
-
-### BaseToaster
-
-Система уведомлений.
-
-```vue
-<script setup>
-import { toast } from 'alt-ui';
-
-function showToast() {
-  toast.success('Операция выполнена успешно');
+```plantuml
+@startuml
+package "Base Components" {
+  [BaseButton]
+  [BaseIcon]
+  [BaseDialog]
+  [BaseTable]
+  [BaseEditableTable]
+  [BaseToaster]
+  [BaseMenu]
+  [BaseTabs]
+  [BaseHoverCard]
+  [BaseSpinner]
 }
-</script>
 
-<template>
-  <BaseButton @click="showToast">Показать уведомление</BaseButton>
-</template>
-```
-
-#### API (toast)
-
-| Метод | Параметры | Описание |
-|-------|-----------|-----------|
-| success | (description, title?) | Успешное уведомление |
-| error | (description, title?) | Ошибка |
-| info | (description, title?) | Информация |
-| warning | (description, title?) | Предупреждение |
-| loading | (description, title?) | Загрузка |
-| dismiss | (id) | Закрыть уведомление |
-
-### BaseSegmentGroup
-
-Группа сегментов для выбора опций.
-
-```vue
-<BaseSegmentGroup v-model="selectedOption" :options="options" />
-```
-
-### BaseCarousel
-
-Карусель для отображения контента.
-
-```vue
-<BaseCarousel :items="carouselItems">
-  <template #item="{ item }">
-    <div class="carousel-slide">
-      {{ item.content }}
-    </div>
-  </template>
-</BaseCarousel>
-```
-
-### BaseCollapsableHint
-
-Сворачиваемая подсказка/информация.
-
-```vue
-<BaseCollapsableHint title="Подробнее">
-  Дополнительная информация, которая будет скрыта до клика
-</BaseCollapsableHint>
-```
-
-## Взаимосвязи компонентов
-
-```mermaid
-graph TD
-    BaseButton[BaseButton]
-    BaseIcon[BaseIcon]
-    BaseDialog[BaseDialog]
-    BaseTable[BaseTable]
-    BaseEditableTable[BaseEditableTable]
-    BaseToaster[BaseToaster]
-    BaseMenu[BaseMenu]
-    BaseTabs[BaseTabs]
-    BaseHoverCard[BaseHoverCard]
-    BaseSpinner[BaseSpinner]
-    
-    BaseTable --> BaseEditableTable
-    BaseButton --> BaseDialog
-    BaseIcon --> BaseButton
-    BaseIcon --> BaseMenu
-    BaseSpinner --> BaseButton
-    BaseToaster --> BaseIcon
+[BaseTable] <|-- [BaseEditableTable]
+[BaseDialog] --> [BaseButton]
+[BaseMenu] --> [BaseButton]
+[BaseTabs] --> [BaseButton]
+@enduml
 ```
 
 ## Лучшие практики
@@ -306,7 +191,7 @@ graph TD
    <BaseButton 
      :loading="isLoading"
      :disabled="!isValid"
-     @click="handleSubmit"
+     @click="handleClick"
    >
      Отправить
    </BaseButton>
@@ -314,30 +199,19 @@ graph TD
 
 3. **Использование слотов**
    ```vue
-   <BaseDialog ref="dialog">
-     <div class="custom-dialog">
-       <h2>Пользовательский заголовок</h2>
-       <div class="content">
-         Пользовательский контент
-       </div>
-       <div class="actions">
-         <BaseButton @click="dialog.close()">Закрыть</BaseButton>
-       </div>
-     </div>
+   <BaseDialog>
+     <template #title>
+       Пользовательский заголовок
+     </template>
+     <template #content>
+       Пользовательский контент
+     </template>
    </BaseDialog>
-   ```
-
-4. **Работа с событиями**
-   ```vue
-   <BaseMenu 
-     :items="menuItems"
-     @select="handleSelect"
-   />
    ```
 
 ## Рекомендации по использованию
 
-1. Предпочитайте базовые компоненты Alt-UI вместо стандартных HTML-элементов для консистентности
-2. Используйте TypeScript для полной типизации пропсов и событий
-3. Комбинируйте базовые компоненты для создания сложных интерфейсов
-4. Придерживайтесь единого стиля использования компонентов во всем проекте 
+1. Всегда используйте базовые компоненты вместо HTML-элементов
+2. Соблюдайте консистентность в использовании пропсов
+3. Используйте TypeScript для лучшей типизации
+4. Следите за производительностью при использовании сложных компонентов 
