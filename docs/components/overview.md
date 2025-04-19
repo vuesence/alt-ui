@@ -61,6 +61,6 @@ import { BaseButton, BaseIcon } from '@/ui'
 
 ## Дополнительная информация
 
-- [Базовые компоненты](/design-system/components/base-components)
-- [Компоненты форм](/design-system/components/form-components)
-- [Паттерны использования](/design-system/components/patterns) 
+- [Базовые компоненты](/components/base-components)
+- [Компоненты форм](/components/form-components)
+- [Паттерны использования](/components/patterns) 
