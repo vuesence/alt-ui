@@ -58,5 +58,5 @@ jobs:
           SSH_PRIVATE_KEY: ${{ env.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ env.REMOTE_HOST }}
           REMOTE_USER: ${{ env.REMOTE_USER }}
-          SOURCE: ./docs/.vitepress/dist
+          SOURCE: ./docs/.vitepress/dist/*
           TARGET: ${{ env.TARGET_DIR }} 
