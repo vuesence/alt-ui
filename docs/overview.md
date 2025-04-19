@@ -1,6 +1,6 @@
-# Система дизайна Alt-UI
+# Система дизайна
 
-Alt-UI построена на принципах современных дизайн-систем, обеспечивая последовательный и масштабируемый подход к стилизации компонентов.
+Наша система дизайна предоставляет последовательный и поддерживаемый подход к стилизации по всему приложению.
 
 ## Архитектура дизайн-системы
 
@@ -8,7 +8,7 @@ Alt-UI построена на принципах современных диз�
 
 ```mermaid
 graph TD
-    DS[Alt-UI Design System]
+    DS[Design System]
     Tokens[Design Tokens]
     Components[Components]
     Styles[Styles]
@@ -26,6 +26,8 @@ graph TD
     style Patterns fill:#f3e5f5,stroke:#4a148c
 ```
 
+<!-- diagram id="design-system-overview" caption="Общая структура дизайн-системы" -->
+
 ### Дизайн-токены
 
 ```mermaid
@@ -35,24 +37,20 @@ graph TD
     Typography[Typography]
     Spacing[Spacing]
     Shadows[Shadows]
-    Radius[Border Radius]
-    Transitions[Transitions]
 
     Tokens --> Colors
     Tokens --> Typography
     Tokens --> Spacing
     Tokens --> Shadows
-    Tokens --> Radius
-    Tokens --> Transitions
 
     style Tokens fill:#e1f5fe,stroke:#01579b
     style Colors fill:#e1f5fe,stroke:#01579b
     style Typography fill:#e1f5fe,stroke:#01579b
     style Spacing fill:#e1f5fe,stroke:#01579b
     style Shadows fill:#e1f5fe,stroke:#01579b
-    style Radius fill:#e1f5fe,stroke:#01579b
-    style Transitions fill:#e1f5fe,stroke:#01579b
 ```
+
+<!-- diagram id="design-tokens" caption="Структура дизайн-токенов" -->
 
 ### Компоненты
 
@@ -69,17 +67,10 @@ graph TD
     Base --> Icon[BaseIcon]
     Base --> Dialog[BaseDialog]
     Base --> Table[BaseTable]
-    Base --> Tabs[BaseTabs]
-    Base --> HoverCard[BaseHoverCard]
-    Base --> Menu[BaseMenu]
-    Base --> Toaster[BaseToaster]
     
     Form --> Input[BaseInput]
     Form --> Select[BaseSelect]
     Form --> Checkbox[BaseCheckbox]
-    Form --> RadioGroup[BaseRadioGroup]
-    Form --> ComboBox[BaseCombobox]
-    Form --> Switch[BaseSwitch]
 
     style Components fill:#e8f5e9,stroke:#1b5e20
     style Base fill:#e8f5e9,stroke:#1b5e20
@@ -88,17 +79,12 @@ graph TD
     style Icon fill:#e8f5e9,stroke:#1b5e20
     style Dialog fill:#e8f5e9,stroke:#1b5e20
     style Table fill:#e8f5e9,stroke:#1b5e20
-    style Tabs fill:#e8f5e9,stroke:#1b5e20
-    style HoverCard fill:#e8f5e9,stroke:#1b5e20
-    style Menu fill:#e8f5e9,stroke:#1b5e20
-    style Toaster fill:#e8f5e9,stroke:#1b5e20
     style Input fill:#e8f5e9,stroke:#1b5e20
     style Select fill:#e8f5e9,stroke:#1b5e20
     style Checkbox fill:#e8f5e9,stroke:#1b5e20
-    style RadioGroup fill:#e8f5e9,stroke:#1b5e20
-    style ComboBox fill:#e8f5e9,stroke:#1b5e20
-    style Switch fill:#e8f5e9,stroke:#1b5e20
 ```
+
+<!-- diagram id="components" caption="Структура компонентов" -->
 
 ### Стили и паттерны
 
@@ -129,17 +115,29 @@ graph TD
     style A11y fill:#f3e5f5,stroke:#4a148c
 ```
 
+<!-- diagram id="styles-patterns" caption="Стили и паттерны" -->
+
+## Техническая документация
+
+Техническая часть дизайн-системы описывает реализацию и практические аспекты использования стилей в приложении:
+
+- [Структура стилей](./technical/style-structure.md) - организация файлов CSS, методология и лучшие практики
+- [Система тем](./technical/themes.md) - управление темами, переключение между светлой и темной темой, а также миграция с alt-ui на theme переменные
+
+### Рекомендации по использованию
+
+- Всегда используйте переменные `--theme-*` вместо базовых дизайн-токенов `--alt-*`
+- Следуйте единым принципам оформления компонентов
+- Используйте композаблы для программного управления стилями
+
 ## Основные принципы
 
-- **Консистентность**: Используйте CSS переменные для унификации оформления
-- **Семантика**: Следуйте семантическим соглашениям об именовании
-- **Адаптивность**: Поддерживайте адаптивный дизайн для всех размеров экранов
-- **Модульность**: Создавайте модульные и переиспользуемые компоненты
-- **Доступность**: Обеспечивайте доступность для всех пользователей
+- Используйте пользовательские свойства CSS для токенов дизайна
+- Следуйте семантическим соглашениям об именовании
+- Поддерживайте адаптивный дизайн с помощью классов контрольных точек
+- Держите стили модульными и многократно используемыми
 
 ## Дизайн-токены
-
-Alt-UI использует систему токенов для обеспечения последовательности дизайна. Полный список токенов доступен в разделе [Дизайн-токены](/tokens/design-tokens).
 
 ### Типографика
 
@@ -225,7 +223,7 @@ Alt-UI использует систему токенов для обеспеч�
 
 ## Адаптивный дизайн
 
-Alt-UI поддерживает адаптивность через классы CSS на элементе `body`:
+Мы используем классы CSS на элементе `body` для применения адаптивных стилей:
 
 - `.mobile` - Мобильные устройства
 - `.tablet` - Планшеты
@@ -264,66 +262,80 @@ body.mobile .my-component {
 2. **Семантические имена классов**
    ```css
    /* ❌ Не делайте так */
-   .blue-button {
-     background-color: var(--alt-c-brand-1-500);
+   .red-box {
+     background: var(--alt-c-danger);
    }
 
    /* ✅ Делайте так */
-   .primary-button {
-     background-color: var(--alt-c-brand-1-500);
+   .alert-container {
+     background: var(--alt-c-danger);
    }
    ```
 
-3. **Используйте CSS nesting для организации стилей**
+3. **CSS-Наследование**
    ```css
-   .component {
-     display: flex;
-     
-     &__header {
-       font-weight: var(--alt-font-weight-bold);
-     }
-     
-     &__content {
-       padding: var(--alt-space-4);
-     }
-   }
-   ```
-
-4. **Адаптивные стили через классы, а не медиа-запросы**
-   ```css
-   /* ❌ Не делайте так */
-   @media (max-width: 768px) {
-     .component {
-       font-size: var(--alt-font-size-0);
-     }
-   }
-
    /* ✅ Делайте так */
-   body.mobile .component {
-     font-size: var(--alt-font-size-0);
+   .card {
+     padding: var(--alt-space-4);
+
+     &-header {
+       margin-bottom: var(--alt-space-2);
+     }
+
+     &-content {
+       color: var(--alt-c-text-2);
+     }
    }
    ```
 
-## Темы
+// Pure JavaScript equivalent of useHead({ title: () => t(route.meta.title) }):
+```js
+// Option 1: Simple title update
+document.title = translateFunction(routeMeta.title);
 
-Alt-UI поддерживает светлую и темную темы через CSS переменные. Подробнее в разделе [Темы](/technical/themes).
+// Update meta description
+// Option 1: Update existing meta tag
+let metaDescription = document.querySelector('meta[name="description"]');
+if (metaDescription) {
+  metaDescription.setAttribute('content', translateFunction(routeMeta.description));
+} else {
+  // Option 2: Create new meta tag if it doesn't exist
+  metaDescription = document.createElement('meta');
+  metaDescription.name = 'description';
+  metaDescription.content = translateFunction(routeMeta.description);
+  document.head.append(metaDescription);
+}
 
-## Примеры использования
-
-Компоненты Alt-UI спроектированы для гибкости и повторного использования:
-
-```vue
-<template>
-  <BaseButton variant="primary" size="lg">
-    Большая кнопка
-  </BaseButton>
+// Option 2: With reactivity
+function updateMetadata() {
+  const observer = new MutationObserver(() => {
+    document.title = translateFunction(routeMeta.title);
+    
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.append(metaDescription);
+    }
+    metaDescription.setAttribute('content', translateFunction(routeMeta.description));
+  });
   
-  <BaseInput 
-    v-model="username" 
-    placeholder="Имя пользователя"
-    :validation="usernameValidation" 
-  />
-</template>
+  observer.observe(document.body, { 
+    subtree: true, 
+    childList: true 
+  });
+  
+  // Initial set
+  document.title = translateFunction(routeMeta.title);
+  let metaDescription = document.querySelector('meta[name="description"]');
+  if (!metaDescription) {
+    metaDescription = document.createElement('meta');
+    metaDescription.name = 'description';
+    document.head.append(metaDescription);
+  }
+  metaDescription.setAttribute('content', translateFunction(routeMeta.description));
+  
+  // Cleanup on route change
+  return () => observer.disconnect();
+}
 ```
-
-Подробные примеры использования см. в разделе [Паттерны](/components/patterns). 

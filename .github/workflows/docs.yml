@@ -51,7 +51,7 @@ jobs:
         with:
           path: ./docs/.vitepress/dist
 
-  deploy:
+  deploy-github-pages:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -100,4 +100,32 @@ jobs:
           REMOTE_HOST: ${{ env.REMOTE_HOST }}
           REMOTE_USER: ${{ env.REMOTE_USER }}
           SOURCE: ./docs-content/
-          TARGET: ${{ env.TARGET_DIR }} 
+          TARGET: ${{ env.TARGET_DIR }}
+          
+      # - name: Backup deployed code
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ env.REMOTE_HOST }}
+      #     username: ${{ env.REMOTE_USER }}
+      #     key: ${{ env.SSH_PRIVATE_KEY }}
+      #     envs: TARGET_DIR
+      #     script: |
+      #       # backup the code
+      #       set -e
+      #       # Define the base directory as the parent of TARGET_DIR.
+      #       BASE_DIR=$(dirname "$TARGET_DIR")
+      #       # Directory for backups.
+      #       BACKUP_DIR="$BASE_DIR/backups"
+      #       mkdir -p "$BACKUP_DIR"
+      #       # Create a timestamp in the format YYYY-MM-DD_HH-MM-SS.
+      #       TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+      #       echo "Creating a backup in $BACKUP_DIR/$TIMESTAMP"
+      #       cp -r "$TARGET_DIR" "$BACKUP_DIR/$TIMESTAMP"
+      #       # Delete old backups if there are more than 5.
+      #       cd "$BACKUP_DIR"
+      #       COUNT=$(ls -1trd */ 2>/dev/null | wc -l)
+      #       if [ "$COUNT" -gt 5 ]; then
+      #         NUM_TO_DELETE=$(expr $COUNT - 5)
+      #         echo "Deleting $NUM_TO_DELETE old backups"
+      #         ls -1trd */ | head -n $NUM_TO_DELETE | xargs rm -rf
+      #       fi 
