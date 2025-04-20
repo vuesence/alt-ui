@@ -1,4 +1,4 @@
-import { dialogsState } from "./dialogState";
+import { dialogsState, FormField } from "./dialogState";
 
 /**
  * Показывает диалог с сообщением и кнопкой "OK"
@@ -42,6 +42,21 @@ function prompt(message: string, defaultValue = ""): Promise<string | null> {
 }
 
 /**
+ * Показывает диалог с формой ввода и кнопками "OK" и "Отмена"
+ * @param title Заголовок формы
+ * @param fields Поля формы
+ * @returns Promise, который резолвится с объектом данных формы или null (если нажата "Отмена")
+ */
+function form(title: string, fields: FormField[]): Promise<Record<string, string> | null> {
+  return new Promise<Record<string, string> | null>((resolve) => {
+    dialogsState.form.title = title;
+    dialogsState.form.fields = fields;
+    dialogsState.form.resolve = resolve;
+    dialogsState.form.isOpen = true;
+  });
+}
+
+/**
  * Хук для работы с диалогами
  * Возвращает методы для показа различных типов диалогов
  */
@@ -50,6 +65,7 @@ export function useDialogs() {
     alert,
     confirm,
     prompt,
+    form,
   };
 }
 

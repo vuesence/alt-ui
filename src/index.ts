@@ -25,8 +25,10 @@ export { default as BaseSwitch } from "./components/form/BaseSwitch.vue";
 export { default as FormField } from "./components/form/FormField.vue";
 
 // Dialogs
-export { useDialogs } from "./components/dialogs/useDialogs";
+export { useDialogs, dialogsService } from "./components/dialogs/useDialogs";
 export { default as DialogsManager } from "./components/dialogs/DialogsManager.vue";
+export { default as BaseFormDialog } from "./components/dialogs/BaseFormDialog.vue";
+export { default as BasePromptDialog } from "./components/dialogs/BasePromptDialog.vue";
 
 // Theme Components
 export { ThemeProvider, themeProvider } from "./components/ThemeProvider";
