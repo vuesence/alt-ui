@@ -30,6 +30,11 @@ export { default as DialogsManager } from "./components/dialogs/DialogsManager.v
 export { default as BaseFormDialog } from "./components/dialogs/BaseFormDialog.vue";
 export { default as BasePromptDialog } from "./components/dialogs/BasePromptDialog.vue";
 
+// Onboarding Components
+export { default as OnboardingTooltip } from "./components/Onboarding/OnboardingTooltip.vue";
+export { useOnboarding } from "./components/Onboarding/useOnboarding";
+export type { OnboardingTooltipConfig, TooltipPlacement } from "./components/Onboarding/useOnboarding";
+
 // Theme Components
 export { ThemeProvider, themeProvider } from "./components/ThemeProvider";
 export { ThemeToggle, ThemeToggleVue } from "./components/ThemeToggle";

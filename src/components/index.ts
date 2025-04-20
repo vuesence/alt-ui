@@ -10,6 +10,9 @@ export * from "./form";
 // Feedback Components
 // export * from "./feedback";
 
+// Onboarding Components
+export * from "./Onboarding";
+
 export { default as BaseIcon } from "./base/BaseIcon.vue";
 export { default as BaseButton } from "./base/BaseButton.vue";
 export { default as BaseCheckbox } from "./form/BaseCheckbox.vue";
