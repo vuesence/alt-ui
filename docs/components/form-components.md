@@ -1,6 +1,282 @@
+---
+title: Компоненты форм
+---
+
 # Компоненты форм
 
-Компоненты форм представляют собой специализированные элементы интерфейса для работы с пользовательским вводом. Все компоненты поддерживают валидацию, состояния ошибок и интеграцию с Vue форм-менеджерами.
+Компоненты форм предназначены для сбора и валидации данных от пользователей. Все компоненты поддерживают v-model и имеют консистентный API.
+
+## BaseInput
+
+### Описание
+Компонент текстового поля ввода с поддержкой различных типов и состояний.
+
+### Props
+
+| Название | Тип | По умолчанию | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| modelValue | String | "" | Нет | Значение поля ввода |
+| label | String | "" | Нет | Метка поля ввода |
+| placeholder | String | "" | Нет | Текст-подсказка |
+| type | String | "text" | Нет | Тип поля ввода (text, password, email, number, и т.д.) |
+| disabled | Boolean | false | Нет | Отключает поле ввода |
+| error | String | "" | Нет | Текст ошибки |
+| required | Boolean | false | Нет | Указывает, что поле обязательно для заполнения |
+
+### События
+
+| Название | Полезная нагрузка | Описание |
+|----------|-------------------|----------|
+| update:modelValue | String | Срабатывает при изменении значения поля |
+| focus | FocusEvent | Срабатывает при получении фокуса |
+| blur | FocusEvent | Срабатывает при потере фокуса |
+| input | Event | Срабатывает при вводе текста |
+
+### Пример использования
+
+```vue
+<template>
+  <BaseInput
+    v-model="username"
+    label="Имя пользователя"
+    placeholder="Введите имя пользователя"
+    :error="errors.username"
+    required
+  />
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+import { BaseInput } from 'alt-ui';
+
+const username = ref('');
+const errors = ref({
+  username: ''
+});
+
+function validate() {
+  if (!username.value) {
+    errors.value.username = 'Имя пользователя обязательно';
+    return false;
+  }
+  errors.value.username = '';
+  return true;
+}
+</script>
+```
+
+## BaseSelect
+
+### Описание
+Компонент выпадающего списка для выбора из предопределенных опций.
+
+### Props
+
+| Название | Тип | По умолчанию | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| modelValue | String, Number | undefined | Нет | Текущее выбранное значение |
+| options | Array | [] | Да | Массив опций для отображения |
+| label | String | "" | Нет | Метка для селекта |
+| placeholder | String | "" | Нет | Текст-подсказка, когда ничего не выбрано |
+| disabled | Boolean | false | Нет | Отключает селект |
+
+### События
+
+| Название | Полезная нагрузка | Описание |
+|----------|-------------------|----------|
+| update:modelValue | String, Number | Срабатывает при изменении выбранного значения |
+| change | String, Number | Срабатывает при изменении выбранного значения |
+
+### Пример использования
+
+```vue
+<template>
+  <BaseSelect
+    v-model="selectedCountry"
+    :options="countries"
+    label="Страна"
+    placeholder="Выберите страну"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { BaseSelect } from 'alt-ui';
+
+const selectedCountry = ref('');
+const countries = [
+  { value: 'ru', label: 'Россия' },
+  { value: 'us', label: 'США' },
+  { value: 'de', label: 'Германия' }
+];
+</script>
+```
+
+## BaseCheckbox
+
+### Описание
+Компонент флажка (чекбокса) для выбора опций.
+
+### Props
+
+| Название | Тип | По умолчанию | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| modelValue | Boolean | false | Нет | Текущее состояние чекбокса |
+| label | String | "" | Нет | Текст, связанный с чекбоксом |
+| disabled | Boolean | false | Нет | Отключает чекбокс |
+
+### События
+
+| Название | Полезная нагрузка | Описание |
+|----------|-------------------|----------|
+| update:modelValue | Boolean | Срабатывает при изменении состояния |
+
+### Пример использования
+
+```vue
+<template>
+  <BaseCheckbox v-model="agreeTerms" label="Я согласен с условиями использования" />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { BaseCheckbox } from 'alt-ui';
+
+const agreeTerms = ref(false);
+</script>
+```
+
+## BaseRadioGroup
+
+### Описание
+Компонент группы радио-кнопок для выбора одного варианта из нескольких.
+
+### Props
+
+| Название | Тип | По умолчанию | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| modelValue | String, Number | "" | Нет | Текущее выбранное значение |
+| options | Array | [] | Да | Массив опций для отображения |
+| name | String | "" | Нет | Имя группы радио-кнопок |
+| disabled | Boolean | false | Нет | Отключает все радио-кнопки в группе |
+| label | String | "" | Нет | Метка для группы |
+
+### События
+
+| Название | Полезная нагрузка | Описание |
+|----------|-------------------|----------|
+| update:modelValue | String, Number | Срабатывает при изменении выбранного значения |
+
+### Пример использования
+
+```vue
+<template>
+  <BaseRadioGroup
+    v-model="selectedGender"
+    :options="genderOptions"
+    label="Пол"
+    name="gender"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { BaseRadioGroup } from 'alt-ui';
+
+const selectedGender = ref('');
+const genderOptions = [
+  { value: 'male', label: 'Мужской' },
+  { value: 'female', label: 'Женский' },
+  { value: 'other', label: 'Другой' }
+];
+</script>
+```
+
+## BaseSwitch
+
+### Описание
+Компонент переключателя для включения/выключения опций.
+
+### Props
+
+| Название | Тип | По умолчанию | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| modelValue | Boolean | false | Нет | Текущее состояние переключателя |
+| label | String | "" | Нет | Текст, связанный с переключателем |
+| disabled | Boolean | false | Нет | Отключает переключатель |
+
+### События
+
+| Название | Полезная нагрузка | Описание |
+|----------|-------------------|----------|
+| update:modelValue | Boolean | Срабатывает при изменении состояния |
+
+### Пример использования
+
+```vue
+<template>
+  <BaseSwitch v-model="darkMode" label="Темная тема" />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { BaseSwitch } from 'alt-ui';
+
+const darkMode = ref(false);
+</script>
+```
+
+## FormField
+
+### Описание
+Контейнер для компонентов формы, предоставляющий унифицированное отображение меток, сообщений об ошибках и подсказок.
+
+### Props
+
+| Название | Тип | По умолчанию | Обязательный | Описание |
+|----------|-----|--------------|--------------|----------|
+| label | String | "" | Нет | Метка поля |
+| error | String | "" | Нет | Текст ошибки |
+| hint | String | "" | Нет | Подсказка для поля |
+| required | Boolean | false | Нет | Указывает, что поле обязательно для заполнения |
+
+### Слоты
+
+| Название | Данные скопа | Описание |
+|----------|--------------|----------|
+| default | - | Компонент формы |
+| label | - | Кастомная метка |
+| hint | - | Кастомная подсказка |
+| error | - | Кастомное сообщение об ошибке |
+
+### Пример использования
+
+```vue
+<template>
+  <FormField
+    label="Email"
+    :error="errors.email"
+    hint="Мы никогда не передадим вашу почту третьим лицам"
+    required
+  >
+    <BaseInput v-model="email" type="email" placeholder="example@example.com" />
+  </FormField>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { FormField, BaseInput } from 'alt-ui';
+
+const email = ref('');
+const errors = ref({
+  email: ''
+});
+
+function validateEmail() {
+  // Логика валидации email
+}
+</script>
+```
 
 ## Архитектура форм
 
@@ -226,30 +502,3 @@ const { handleSubmit, errors } = useForm({
      </FormField>
    </div>
    ```
-
-2. **Обработка ошибок**
-   ```vue
-   <FormField
-     :error="error"
-     :touched="touched"
-     @blur="handleBlur"
-   >
-     <BaseInput v-model="value" />
-   </FormField>
-   ```
-
-3. **Условная валидация**
-   ```vue
-   <BaseInput
-     v-model="phone"
-     :rules="isRequired ? 'required|phone' : 'phone'"
-   />
-   ```
-
-## Рекомендации по использованию
-
-1. Всегда оборачивайте поля ввода в `FormField`
-2. Используйте валидацию на уровне формы
-3. Обрабатывайте все состояния полей (focus, blur, error)
-4. Группируйте связанные поля
-5. Используйте TypeScript для типизации значений и опций 

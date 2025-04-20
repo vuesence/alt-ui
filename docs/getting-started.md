@@ -1,15 +1,12 @@
-# Начало работы
+---
+title: Установка и настройка
+---
 
-Это руководство поможет вам начать использовать Alt-UI в вашем Vue 3 проекте.
+# Установка и настройка
 
-## Установка
+## Установка пакета
 
-### Предварительные требования
-- Node.js 16.x или выше
-- Vue 3.0 или выше
-- npm/yarn/pnpm
-
-### Установка через npm/yarn/pnpm
+Вы можете установить Alt-UI с помощью npm, yarn или pnpm:
 
 ```bash
 # npm
@@ -22,69 +19,118 @@ yarn add alt-ui
 pnpm add alt-ui
 ```
 
-### Установка через Git Submodule
+## Требования
 
-Вы также можете использовать Alt-UI как Git подмодуль в вашем проекте:
+- Vue 3.2+
+- Vite или Vue CLI для сборки проекта
+- TypeScript (опционально, но рекомендуется)
 
-```bash
-# Клонирование репозитория как подмодуль
-git submodule add https://github.com/lissa-health/alt-ui.git submodules/alt-ui
-
-# Инициализация и обновление подмодуля
-git submodule update --init --recursive
-```
-
-Затем в package.json вашего проекта:
-
-```json
-{
-  "dependencies": {
-    "alt-ui": "file:submodules/alt-ui"
-  }
-}
-```
-
-## Интеграция в проект
+## Базовая настройка
 
 ### Импорт стилей
 
-Для использования Alt-UI вам необходимо импортировать основные стили компонентов. Добавьте следующую строку в ваш основной файл (например, main.ts):
+Импортируйте базовые стили библиотеки в точке входа вашего приложения:
 
-```typescript
-// Импорт основных стилей
-import 'alt-ui/styles';
+```js
+// main.js / main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import 'alt-ui/styles' // Импорт CSS
+
+const app = createApp(App)
+app.mount('#app')
 ```
 
-### Использование компонентов
+### Настройка провайдера темы
 
-Существует несколько способов использования компонентов Alt-UI:
+Для поддержки тем, подключите `ThemeProvider`:
 
-#### Глобальная регистрация компонентов
+```js
+// main.js / main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import { themeProvider } from 'alt-ui'
+import 'alt-ui/styles'
 
-```typescript
-import { createApp } from 'vue';
-import App from './App.vue';
-import { BaseButton, BaseInput } from 'alt-ui';
+// Настройка темы
+themeProvider.initialize({
+  defaultTheme: 'light', // 'light', 'dark' или 'system'
+  storageKey: 'app-theme', // ключ для localStorage
+})
 
-const app = createApp(App);
-
-app.component('BaseButton', BaseButton);
-app.component('BaseInput', BaseInput);
-
-app.mount('#app');
+const app = createApp(App)
+app.mount('#app')
 ```
 
-#### Локальный импорт в компонентах
+## Использование компонентов
+
+Компоненты можно импортировать напрямую из библиотеки:
 
 ```vue
 <script setup>
-import { BaseButton, BaseInput } from 'alt-ui';
+import { BaseButton, BaseInput } from 'alt-ui'
 </script>
 
 <template>
-  <BaseButton>Нажми меня</BaseButton>
-  <BaseInput placeholder="Введите текст" />
+  <div>
+    <BaseInput label="Имя пользователя" placeholder="Введите имя" />
+    <BaseButton>Отправить</BaseButton>
+  </div>
 </template>
+```
+
+## Настройка диалогов
+
+Для использования диалогов необходимо добавить компонент `DialogsManager` в корневой компонент приложения:
+
+```vue
+<script setup>
+import { DialogsManager } from 'alt-ui'
+</script>
+
+<template>
+  <div id="app">
+    <!-- Ваше приложение -->
+    <DialogsManager />
+  </div>
+</template>
+```
+
+После этого вы можете использовать диалоги через хук `useDialogs`:
+
+```vue
+<script setup>
+import { useDialogs } from 'alt-ui'
+
+const { alert, confirm, prompt, form } = useDialogs()
+
+function showAlert() {
+  alert('Операция выполнена успешно')
+}
+
+function confirmAction() {
+  confirm('Вы действительно хотите продолжить?').then(result => {
+    if (result) {
+      // Пользователь нажал "Да"
+      console.log('Пользователь подтвердил действие')
+    }
+  })
+}
+</script>
+```
+
+## Использование уведомлений (toasts)
+
+Библиотека предоставляет сервис для показа уведомлений:
+
+```vue
+<script setup>
+import { toast } from 'alt-ui'
+
+function showNotification() {
+  toast.success('Операция выполнена успешно')
+}
+</script>
 ```
 
 ## Настройка темы
