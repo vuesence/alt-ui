@@ -41,7 +41,7 @@ jobs:
         run: pnpm build
 
       - name: Build documentation
-        run: pnpm docs:build
+        run: pnpm build:docs
         
       - name: Clean up the server dir
         uses: appleboy/ssh-action@master
