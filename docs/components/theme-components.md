@@ -107,7 +107,7 @@ interface ThemeToggleOptions {
 
 | Метод | Параметры | Возвращаемое значение | Описание |
 |-------|-----------|------------------------|----------|
-| setup | options?: ThemeToggleOptions | { theme: Ref<ThemeName>, setTheme: Function, toggleTheme: Function } | Инициализирует хук для использования в компонентах |
+| setup | options?: ThemeToggleOptions | { theme: Ref\<ThemeName\>, setTheme: Function, toggleTheme: Function } | Инициализирует хук для использования в компонентах |
 
 ##### Пример использования
 
