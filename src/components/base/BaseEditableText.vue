@@ -13,7 +13,7 @@ const props = defineProps({
     default: "div",
   },
   variant: {
-    type: String as PropType<"text" | "textarea" | "list" | "tags">,
+    type: String as PropType<"text" | "textarea" | "list" | "tags" | "labResultsTable">,
     default: "text",
   },
   renderMarkdown: {
@@ -31,6 +31,10 @@ const props = defineProps({
   customClass: {
     type: [String, Array],
     default: "",
+  },
+  collapsed: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>
@@ -56,14 +60,42 @@ const props = defineProps({
     type="text"
     :placeholder="placeholder"
   />
+  <details
+    v-else-if="!props.isEditable && props.renderMarkdown && props.collapsed"
+    :open="false"
+    class="collapsible-content"
+  >
+    <summary class="content-summary">
+      {{ modelValue?.split("\n")[0] || "Click to expand" }}
+    </summary>
+    <div
+      class="content content--markdown"
+      v-html="props.renderedHtml"
+    />
+  </details>
   <div
     v-else-if="!props.isEditable && props.renderMarkdown"
     class="content content--markdown"
     v-html="props.renderedHtml"
   />
+  <details
+    v-else-if="!props.isEditable && props.collapsed"
+    :open="false"
+    class="collapsible-content"
+  >
+    <summary class="content-summary">
+      {{ modelValue?.split("\n")[0] || "Click to expand" }}
+    </summary>
+    <component
+      :is="props.elementType"
+      :class="['content', 'content--text', props.customClass]"
+    >
+      {{ modelValue }}
+    </component>
+  </details>
   <component
-    :is="props.elementType"
     v-else
+    :is="props.elementType"
     :class="['content', 'content--text', props.customClass]"
   >
     {{ modelValue }}
@@ -110,5 +142,22 @@ const props = defineProps({
 
 .content--text {
   white-space: pre-wrap;
+}
+
+.collapsible-content {
+  width: 100%;
+  color: var(--alt-c-text-1);
+}
+
+.content-summary {
+  cursor: pointer;
+  font-weight: var(--alt-font-weight-medium);
+  color: var(--alt-c-text-1);
+  padding: var(--alt-space-1) 0;
+  border-radius: var(--alt-radius-base);
+  
+  &:hover {
+    color: var(--alt-c-brand-1-500);
+  }
 }
 </style>
