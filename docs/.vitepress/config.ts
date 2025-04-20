@@ -54,7 +54,7 @@ export default defineConfig({
         text: "Введение",
         items: [
           { text: "О библиотеке", link: "/introduction" },
-          { text: "Начало работы", link: "/getting-started" },
+          { text: "Установка и настройка", link: "/getting-started" },
           { text: "Обзор", link: "/overview" },
         ],
       },
@@ -64,6 +64,9 @@ export default defineConfig({
           { text: "Обзор", link: "/components/overview" },
           { text: "Базовые компоненты", link: "/components/base-components" },
           { text: "Компоненты форм", link: "/components/form-components" },
+          { text: "Компоненты тем", link: "/components/theme-components" },
+          { text: "Диалоговые компоненты", link: "/components/dialog-components" },
+          { text: "Утилиты", link: "/components/utilities" },
           { text: "Паттерны использования", link: "/components/patterns" },
         ],
       },
@@ -88,6 +91,7 @@ export default defineConfig({
         items: [
           { text: "Структура стилей", link: "/technical/style-structure" },
           { text: "Темы", link: "/technical/themes" },
+          { text: "API", link: "/technical/api" },
         ],
       },
     ],

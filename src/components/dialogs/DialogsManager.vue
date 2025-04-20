@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import BaseAlertDialog from "./BaseAlertDialog.vue";
 import BaseConfirmDialog from "./BaseConfirmDialog.vue";
 import BasePromptDialog from "./BasePromptDialog.vue";
+import BaseFormDialog from "./BaseFormDialog.vue";
 import { dialogsState } from "./dialogState";
 
 // Пропсы для текстов кнопок
@@ -26,6 +27,7 @@ defineProps({
 const alertDialog = ref<InstanceType<typeof BaseAlertDialog> | null>(null);
 const confirmDialog = ref<InstanceType<typeof BaseConfirmDialog> | null>(null);
 const promptDialog = ref<InstanceType<typeof BasePromptDialog> | null>(null);
+const formDialog = ref<InstanceType<typeof BaseFormDialog> | null>(null);
 
 // Отслеживаем изменения состояния для alert диалога
 watch(
@@ -88,6 +90,28 @@ watch(
     }
   },
 );
+
+// Отслеживаем изменения состояния для form диалога
+watch(
+  () => dialogsState.form.isOpen,
+  async (isOpen) => {
+    if (isOpen && formDialog.value) {
+      try {
+        const result = await formDialog.value.show(
+          dialogsState.form.title,
+          dialogsState.form.fields,
+        );
+        // Вызываем резолв промиса с результатом
+        if (dialogsState.form.resolve) {
+          dialogsState.form.resolve(result);
+          dialogsState.form.resolve = null;
+        }
+      } finally {
+        dialogsState.form.isOpen = false;
+      }
+    }
+  },
+);
 </script>
 
 <template>
@@ -99,6 +123,11 @@ watch(
   />
   <BasePromptDialog
     ref="promptDialog"
+    :ok-text="okText"
+    :cancel-text="cancelText"
+  />
+  <BaseFormDialog
+    ref="formDialog"
     :ok-text="okText"
     :cancel-text="cancelText"
   />
