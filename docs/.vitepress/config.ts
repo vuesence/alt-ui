@@ -39,9 +39,10 @@ export default defineConfig({
     nav: [
       { text: "Начало работы", link: "/introduction" },
       { text: "Компоненты", link: "/components/overview" },
-      { text: "Дизайн-система", link: "/overview" },
+      { text: "Дизайн-система", link: "/foundation/overview" },
+      { text: "Техническая документация", link: "/technical/overview" },
       {
-        text: "Другие ресурсы",
+        text: "Ресурсы",
         items: [
           { text: "GitHub", link: "https://github.com/vuesence/alt-ui" },
           { text: "Lissa Health", link: "https://lissa-health.com" },
@@ -55,45 +56,63 @@ export default defineConfig({
         items: [
           { text: "О библиотеке", link: "/introduction" },
           { text: "Установка и настройка", link: "/getting-started" },
-          { text: "Обзор", link: "/overview" },
         ],
       },
       {
         text: "Компоненты",
+        collapsed: false,
         items: [
-          { text: "Обзор", link: "/components/overview" },
+          { text: "Обзор компонентов", link: "/components/overview" },
           { text: "Базовые компоненты", link: "/components/base-components" },
           { text: "Компоненты форм", link: "/components/form-components" },
+          { text: "Компоненты диалогов", link: "/components/dialog-components" },
           { text: "Компоненты тем", link: "/components/theme-components" },
-          { text: "Диалоговые компоненты", link: "/components/dialog-components" },
+          { 
+            text: "Интерактивные компоненты", 
+            collapsed: false,
+            items: [
+              { text: "Туры", link: "/components/tour" },
+              { text: "Онбординг", link: "/components/onboarding" },
+            ]
+          },
           { text: "Утилиты", link: "/components/utilities" },
-          { text: "Паттерны использования", link: "/components/patterns" },
         ],
       },
       {
-        text: "Основы",
+        text: "Дизайн-система",
+        collapsed: false,
         items: [
-          { text: "Цвета", link: "/foundation/colors" },
-          { text: "Типографика", link: "/foundation/typography" },
-          { text: "Отступы и макет", link: "/foundation/spacing-layout" },
-          { text: "Иконки", link: "/foundation/icons" },
+          { text: "Обзор", link: "/foundation/overview" },
+          { 
+            text: "Основы", 
+            collapsed: false,
+            items: [
+              { text: "Цвета", link: "/foundation/colors" },
+              { text: "Типографика", link: "/foundation/typography" },
+              { text: "Отступы и макет", link: "/foundation/spacing-layout" },
+              { text: "Иконки", link: "/foundation/icons" },
+            ]
+          },
+          { 
+            text: "Токены", 
+            collapsed: false,
+            items: [
+              { text: "Дизайн-токены", link: "/tokens/design-tokens" },
+              { text: "Токены компонентов", link: "/tokens/component-tokens" },
+            ]
+          },
         ],
       },
       {
-        text: "Токены",
+        text: "Техническая документация",
+        collapsed: false,
         items: [
-          { text: "Дизайн-токены", link: "/tokens/design-tokens" },
-          { text: "Токены компонентов", link: "/tokens/component-tokens" },
-        ],
-      },
-      {
-        text: "Техническая часть",
-        items: [
+          { text: "Обзор", link: "/technical/overview" },
           { text: "Структура стилей", link: "/technical/style-structure" },
           { text: "Темы", link: "/technical/themes" },
           { text: "API", link: "/technical/api" },
         ],
-      },
+      }
     ],
 
     socialLinks: [

@@ -1,12 +1,12 @@
-# Onboarding Components
+# Компоненты онбординга
 
-The Onboarding components provide a flexible way to create guided tours through your application's UI. These components help educate users about features and functionality in a contextual manner.
+Компоненты онбординга предоставляют гибкий способ создания интерактивных туров по пользовательскому интерфейсу вашего приложения. Эти компоненты помогают обучать пользователей возможностям и функциям в контекстной манере.
 
 ## OnboardingTooltip
 
-The `OnboardingTooltip` component displays a tooltip that highlights a specific element on the page as part of an onboarding tour.
+Компонент `OnboardingTooltip` отображает подсказку, которая выделяет определенный элемент на странице в рамках онбординг-тура.
 
-### Usage
+### Использование
 
 ```vue
 <script setup>
@@ -19,8 +19,8 @@ const {
   dismissCurrentTooltip
 } = useOnboarding((event) => {
   if (event === 'dismissed') {
-    // Handle dismissal
-    console.log('Onboarding tooltip dismissed');
+    // Обработка закрытия
+    console.log('Подсказка онбординга закрыта');
   }
 });
 
@@ -29,8 +29,8 @@ const startTour = () => {
     id: 'feature-introduction',
     targetElementClass: '.feature-button',
     placement: 'top',
-    title: 'New Feature',
-    content: 'Click here to try our new feature!'
+    title: 'Новая функция',
+    content: 'Нажмите здесь, чтобы попробовать нашу новую функцию!'
   });
 };
 </script>
@@ -38,11 +38,11 @@ const startTour = () => {
 <template>
   <div>
     <BaseButton class="feature-button" @click="doSomething">
-      Feature Button
+      Кнопка функции
     </BaseButton>
     
     <BaseButton @click="startTour">
-      Start Tour
+      Начать тур
     </BaseButton>
     
     <OnboardingTooltip @dismissed="onDismissed" />
@@ -50,31 +50,31 @@ const startTour = () => {
 </template>
 ```
 
-### Props
+### Пропсы
 
-The OnboardingTooltip component doesn't require any props as it receives all necessary data through the useOnboarding composable.
+Компонент OnboardingTooltip не требует никаких пропсов, так как получает все необходимые данные через композабл useOnboarding.
 
-### Events
+### События
 
-| Event | Description |
+| Событие | Описание |
 |-------|-------------|
-| dismissed | Emitted when the tooltip is dismissed |
+| dismissed | Вызывается при закрытии подсказки |
 
-## useOnboarding Composable
+## Композабл useOnboarding
 
-The `useOnboarding` composable provides the functionality to control the onboarding tour.
+Композабл `useOnboarding` предоставляет функциональность для управления онбординг-туром.
 
-### Interface
+### Интерфейс
 
 ```ts
 function useOnboarding(emit: (event: string) => void) {
-  // Returns
+  // Возвращает
   return {
-    displayTooltip,       // Function to display a tooltip
-    dismissCurrentTooltip, // Function to dismiss the current tooltip
-    currentTooltip,       // Current tooltip configuration
-    currentTargetElement, // Current target element
-    isOnboardingEnabled,  // Whether onboarding is currently active
+    displayTooltip,       // Функция для отображения подсказки
+    dismissCurrentTooltip, // Функция для закрытия текущей подсказки
+    currentTooltip,       // Текущая конфигурация подсказки
+    currentTargetElement, // Текущий целевой элемент
+    isOnboardingEnabled,  // Активен ли онбординг в данный момент
   };
 }
 ```
@@ -83,24 +83,24 @@ function useOnboarding(emit: (event: string) => void) {
 
 ```ts
 interface OnboardingTooltipConfig {
-  id: string;                   // Unique ID for the tooltip
-  targetElementClass: string;   // CSS selector for the target element
-  placement?: TooltipPlacement; // Placement of the tooltip (top, bottom, left, right)
-  condition?: () => boolean;    // Optional condition function
-  title?: string;               // Optional title for the tooltip
-  content?: string;             // Content of the tooltip
+  id: string;                   // Уникальный ID для подсказки
+  targetElementClass: string;   // CSS селектор для целевого элемента
+  placement?: TooltipPlacement; // Расположение подсказки (top, bottom, left, right)
+  condition?: () => boolean;    // Опциональная функция условия
+  title?: string;               // Опциональный заголовок для подсказки
+  content?: string;             // Содержимое подсказки
 }
 ```
 
-## Creating Onboarding Tours
+## Создание онбординг-туров
 
-To create a complete onboarding tour with multiple steps:
+Для создания полного онбординг-тура с несколькими шагами:
 
-1. Define an array of tooltip configurations
-2. Create a mechanism to progress through the tooltips
-3. Use the `displayTooltip` function to show each tooltip in sequence
+1. Определите массив конфигураций подсказок
+2. Создайте механизм для перехода между подсказками
+3. Используйте функцию `displayTooltip` для последовательного отображения каждой подсказки
 
-Example:
+Пример:
 
 ```ts
 const tourSteps = [
@@ -108,27 +108,27 @@ const tourSteps = [
     id: 'step1',
     targetElementClass: '.navigation-menu',
     placement: 'bottom',
-    title: 'Navigation',
-    content: 'This is the main navigation menu.'
+    title: 'Навигация',
+    content: 'Это главное навигационное меню.'
   },
   {
     id: 'step2',
     targetElementClass: '.user-profile',
     placement: 'left',
-    title: 'User Profile',
-    content: 'Access your profile settings here.'
+    title: 'Профиль пользователя',
+    content: 'Здесь вы можете получить доступ к настройкам профиля.'
   },
-  // More steps...
+  // Дополнительные шаги...
 ];
 
-// Function to advance to the next step
+// Функция для перехода к следующему шагу
 const goToNextStep = (currentStepIndex) => {
   const nextIndex = currentStepIndex + 1;
   if (nextIndex < tourSteps.length) {
     displayTooltip(tourSteps[nextIndex]);
     return nextIndex;
   } else {
-    // Tour complete
+    // Тур завершен
     return -1;
   }
 };

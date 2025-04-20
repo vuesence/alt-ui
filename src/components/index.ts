@@ -13,6 +13,9 @@ export * from "./form";
 // Onboarding Components
 export * from "./Onboarding";
 
+// Tour Components
+export * from "./Tour";
+
 export { default as BaseIcon } from "./base/BaseIcon.vue";
 export { default as BaseButton } from "./base/BaseButton.vue";
 export { default as BaseCheckbox } from "./form/BaseCheckbox.vue";

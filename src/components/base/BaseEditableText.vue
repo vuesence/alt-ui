@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { marked } from "marked";
 import type { PropType } from "vue";
 
 const modelValue = defineModel<string>();
@@ -20,6 +19,10 @@ const props = defineProps({
   renderMarkdown: {
     type: Boolean,
     default: false,
+  },
+  renderedHtml: {
+    type: String,
+    default: "",
   },
   placeholder: {
     type: String,
@@ -56,7 +59,7 @@ const props = defineProps({
   <div
     v-else-if="!props.isEditable && props.renderMarkdown"
     class="content content--markdown"
-    v-html="marked(modelValue || '')"
+    v-html="props.renderedHtml"
   />
   <component
     :is="props.elementType"

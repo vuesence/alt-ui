@@ -172,8 +172,8 @@ function confirm() {
 
 | Название | Данные скопа | Описание |
 |----------|--------------|----------|
-| header-{column.key} | { column } | Кастомный заголовок для колонки |
-| cell-{column.key} | { row, column, index } | Кастомная ячейка для колонки |
+| header-\{column.key\} | \{ column \} | Кастомный заголовок для колонки |
+| cell-\{column.key\} | \{ row, column, index \} | Кастомная ячейка для колонки |
 | empty | - | Содержимое при отсутствии данных |
 
 ### Пример использования
@@ -237,35 +237,38 @@ package "Base Components" {
 ## Лучшие практики
 
 1. **Композиция компонентов**
-   ```vue
-   <BaseButton>
-     <BaseIcon name="save" />
-     Сохранить
-   </BaseButton>
-   ```
+
+```vue
+<BaseButton>
+  <BaseIcon name="save" />
+  Сохранить
+</BaseButton>
+```
 
 2. **Обработка состояний**
-   ```vue
-   <BaseButton 
-     :loading="isLoading"
-     :disabled="!isValid"
-     @click="handleClick"
-   >
-     Отправить
-   </BaseButton>
-   ```
+
+```vue
+<BaseButton 
+  :loading="isLoading"
+  :disabled="!isValid"
+  @click="handleClick"
+>
+  Отправить
+</BaseButton>
+```
 
 3. **Использование слотов**
-   ```vue
-   <BaseDialog>
-     <template #title>
-       Пользовательский заголовок
-     </template>
-     <template #content>
-       Пользовательский контент
-     </template>
-   </BaseDialog>
-   ```
+
+```vue
+<BaseDialog>
+  <template #title>
+    Пользовательский заголовок
+  </template>
+  <template #content>
+    Пользовательский контент
+  </template>
+</BaseDialog>
+```
 
 ## Рекомендации по использованию
 

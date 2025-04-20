@@ -35,6 +35,14 @@ export { default as OnboardingTooltip } from "./components/Onboarding/Onboarding
 export { useOnboarding } from "./components/Onboarding/useOnboarding";
 export type { OnboardingTooltipConfig, TooltipPlacement } from "./components/Onboarding/useOnboarding";
 
+// Tour Components
+export { default as TourComponent } from "./components/Tour/TourComponent.vue";
+export { default as TourStepContent } from "./components/Tour/TourStepContent.vue";
+export { useTourManager } from "./components/Tour/useTourManager";
+export { useTourKeyboardEvents } from "./components/Tour/useTourKeyboardEvents";
+export { Tour } from "./components/Tour/Tour";
+export type { TourData, TourStepData, TourStepAction } from "./components/Tour/types";
+
 // Theme Components
 export { ThemeProvider, themeProvider } from "./components/ThemeProvider";
 export { ThemeToggle, ThemeToggleVue } from "./components/ThemeToggle";
