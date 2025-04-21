@@ -36,6 +36,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  collapsedText: {
+    type: String,
+    default: "Click to expand",
+  },
 });
 </script>
 
@@ -66,7 +70,7 @@ const props = defineProps({
     class="collapsible-content"
   >
     <summary class="content-summary">
-      {{ modelValue?.split("\n")[0] || "Click to expand" }}
+      {{ props.collapsedText }}
     </summary>
     <div
       class="content content--markdown"
@@ -84,7 +88,7 @@ const props = defineProps({
     class="collapsible-content"
   >
     <summary class="content-summary">
-      {{ modelValue?.split("\n")[0] || "Click to expand" }}
+      {{ props.collapsedText }}
     </summary>
     <component
       :is="props.elementType"
