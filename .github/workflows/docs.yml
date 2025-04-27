@@ -2,14 +2,14 @@ name: Build and Deploy Docs
 
 on:
   push:
-    branches: [main]
+    branches: [main1]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-alt-uidocs:
     runs-on: ubuntu-latest
     env:
       SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
