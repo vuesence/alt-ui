@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Carousel } from "@ark-ui/vue/carousel";
 import { ref } from "vue";
-import { BaseIcon } from "..";
+import { AltIcon } from "..";
 
 const props = defineProps({
   slideCount: {
@@ -56,14 +56,14 @@ const page = ref(0);
         <Carousel.Control>
           <Carousel.PrevTrigger class="carousel-nav-button prev">
             <slot name="prev-trigger">
-              <BaseIcon name="chevron-left" size="24" />
+              <AltIcon name="chevron-left" size="24" />
             </slot>
           </Carousel.PrevTrigger>
         </Carousel.Control>
         <Carousel.Control>
           <Carousel.NextTrigger class="carousel-nav-button next">
             <slot name="next-trigger">
-              <BaseIcon name="chevron-right" size="24" />
+              <AltIcon name="chevron-right" size="24" />
             </slot>
           </Carousel.NextTrigger>
         </Carousel.Control>

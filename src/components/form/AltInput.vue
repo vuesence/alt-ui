@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface BaseInputProps {
+interface AltInputProps {
   /**
    * The placeholder text for the input
    */
@@ -26,7 +26,7 @@ interface BaseInputProps {
   disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<BaseInputProps>(), {
+const props = withDefaults(defineProps<AltInputProps>(), {
   placeholder: "",
   type: "text",
   state: "default",

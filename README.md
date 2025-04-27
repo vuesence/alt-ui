@@ -32,7 +32,7 @@ pnpm add alt-ui
 
 ```vue
 <script setup>
-import { BaseButton, BaseInput, themeProvider } from 'alt-ui';
+import { AltButton, AltInput, themeProvider } from 'alt-ui';
 import 'alt-ui/styles';
 
 // Apply a theme
@@ -41,8 +41,8 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', or 'system'
 
 <template>
   <div>
-    <BaseInput label="Username" placeholder="Enter your username" />
-    <BaseButton variant="primary">Submit</BaseButton>
+    <AltInput label="Username" placeholder="Enter your username" />
+    <AltButton variant="primary">Submit</AltButton>
   </div>
 </template>
 ```
@@ -51,31 +51,31 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', or 'system'
 
 ### Base Components
 
-- `BaseButton`: Versatile button component with various styles and states
-- `BaseCarousel`: Content carousel with customizable navigation
-- `BaseCollapsableHint`: Expandable hint text container
-- `BaseDialog`: Modal dialog with customizable content
-- `BaseEditableTable`: Interactive table with editable cells
-- `BaseEditableText`: Text field that can be toggled between view and edit modes
-- `BaseHoverCard`: Rich content card that appears on hover
-- `BaseIcon`: Flexible icon component supporting various icon libraries
-- `BaseMenu`: Dropdown menu with customizable items
-- `BaseSegmentGroup`: Segmented control for selecting from mutually exclusive options
-- `BaseSpinner`: Loading spinner with customizable size and color
-- `BaseTable`: Data table with sorting and customization options
-- `BaseTabs`: Tab container for organizing content
-- `BaseTabsTrigger`: Individual tab trigger component
-- `BaseToaster`: Toast notification system
-- `BaseToggleGroup`: Button group for toggling between options
+- `AltButton`: Versatile button component with various styles and states
+- `AltCarousel`: Content carousel with customizable navigation
+- `AltCollapsableHint`: Expandable hint text container
+- `AltDialog`: Modal dialog with customizable content
+- `AltEditableTable`: Interactive table with editable cells
+- `AltEditableText`: Text field that can be toggled between view and edit modes
+- `AltHoverCard`: Rich content card that appears on hover
+- `AltIcon`: Flexible icon component supporting various icon libraries
+- `AltMenu`: Dropdown menu with customizable items
+- `AltSegmentGroup`: Segmented control for selecting from mutually exclusive options
+- `AltSpinner`: Loading spinner with customizable size and color
+- `AltTable`: Data table with sorting and customization options
+- `AltTabs`: Tab container for organizing content
+- `AltTabsTrigger`: Individual tab trigger component
+- `AltToaster`: Toast notification system
+- `AltToggleGroup`: Button group for toggling between options
 
 ### Form Components
 
-- `BaseCheckbox`: Checkbox input with label and indeterminate state
-- `BaseCombobox`: Combobox input with autocomplete support
-- `BaseInput`: Text input with various states and validation
-- `BaseRadioGroup`: Radio button group with customizable items
-- `BaseSelect`: Select dropdown with customizable options
-- `BaseSwitch`: Toggle switch with label
+- `AltCheckbox`: Checkbox input with label and indeterminate state
+- `AltCombobox`: Combobox input with autocomplete support
+- `AltInput`: Text input with various states and validation
+- `AltRadioGroup`: Radio button group with customizable items
+- `AltSelect`: Select dropdown with customizable options
+- `AltSwitch`: Toggle switch with label
 - `FormField`: Container for form elements with label and description
 
 ### Theme Components

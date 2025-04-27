@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { OnboardingTooltip, useOnboarding, BaseButton } from '../components';
+import { OnboardingTooltip, useOnboarding, AltButton } from '../components';
 
 const tooltipRef = ref();
 const demoComplete = ref(false);
@@ -30,19 +30,19 @@ const startDemo = () => {
     <h2>Onboarding Demo</h2>
     
     <div class="demo-container">
-      <BaseButton 
+      <AltButton 
         v-if="!isOnboardingEnabled && !demoComplete" 
         class="primary target-element"
         @click="startDemo"
       >
         Start Onboarding Tour
-      </BaseButton>
+      </AltButton>
 
       <div v-else-if="demoComplete" class="demo-completed">
         <p>Onboarding completed!</p>
-        <BaseButton class="primary" @click="demoComplete = false">
+        <AltButton class="primary" @click="demoComplete = false">
           Reset Demo
-        </BaseButton>
+        </AltButton>
       </div>
     </div>
 

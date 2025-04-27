@@ -12,7 +12,7 @@ interface RadioItem {
   disabled?: boolean;
 }
 
-interface BaseRadioGroupProps {
+interface AltRadioGroupProps {
   /**
    * Current selected value
    */
@@ -43,7 +43,7 @@ interface BaseRadioGroupProps {
   size?: "sm" | "md" | "lg";
 }
 
-const props = withDefaults(defineProps<BaseRadioGroupProps>(), {
+const props = withDefaults(defineProps<AltRadioGroupProps>(), {
   orientation: "vertical",
   size: "md",
 });

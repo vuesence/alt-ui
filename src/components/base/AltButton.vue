@@ -2,7 +2,7 @@
 import { useRouter } from "vue-router";
 // import { router } from "@/app/router";
 // import type { ButtonProps } from "../types/components";
-import BaseSpinner from "./BaseSpinner.vue";
+import AltSpinner from "./AltSpinner.vue";
 
 const router = useRouter();
 
@@ -36,7 +36,7 @@ function click(event: MouseEvent) {
 <template>
   <button class="base-button" :disabled="disabled" @click="click">
     <slot />
-    <BaseSpinner v-if="loading" class="spinner" />
+    <AltSpinner v-if="loading" class="spinner" />
   </button>
 </template>
 

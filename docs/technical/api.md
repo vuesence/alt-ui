@@ -13,21 +13,21 @@ title: API
 ```typescript
 // Импорт базовых компонентов
 import { 
-  BaseButton,
-  BaseIcon,
-  BaseDialog,
-  BaseHoverCard,
-  BaseMenu,
-  BaseSpinner,
-  BaseTable,
-  BaseTabs,
-  BaseToggleGroup,
-  BaseSegmentGroup,
-  BaseCollapsableHint,
-  BaseCarousel,
-  BaseEditableTable,
-  BaseEditableText,
-  BaseToaster
+  AltButton,
+  AltIcon,
+  AltDialog,
+  AltHoverCard,
+  AltMenu,
+  AltSpinner,
+  AltTable,
+  AltTabs,
+  AltToggleGroup,
+  AltSegmentGroup,
+  AltCollapsableHint,
+  AltCarousel,
+  AltEditableTable,
+  AltEditableText,
+  AltToaster
 } from 'alt-ui';
 ```
 
@@ -36,12 +36,12 @@ import {
 ```typescript
 // Импорт компонентов форм
 import { 
-  BaseInput,
-  BaseCheckbox,
-  BaseCombobox,
-  BaseRadioGroup,
-  BaseSelect,
-  BaseSwitch,
+  AltInput,
+  AltCheckbox,
+  AltCombobox,
+  AltRadioGroup,
+  AltSelect,
+  AltSwitch,
   FormField
 } from 'alt-ui';
 ```
@@ -54,8 +54,8 @@ import {
   DialogsManager,
   useDialogs,
   dialogsService,
-  BaseFormDialog,
-  BasePromptDialog
+  AltFormDialog,
+  AltPromptDialog
 } from 'alt-ui';
 ```
 
@@ -149,7 +149,7 @@ app.mount('#app');
 ```typescript
 // DialogExample.vue
 import { ref } from 'vue';
-import { useDialogs, BaseButton } from 'alt-ui';
+import { useDialogs, AltButton } from 'alt-ui';
 
 // Настройка хука диалогов
 const { alert, confirm, prompt, form } = useDialogs();
@@ -244,22 +244,22 @@ function toggleTheme() {
 
 ```vue
 <template>
-  <BaseDialog v-model="isOpen" title="Кастомный диалог">
+  <AltDialog v-model="isOpen" title="Кастомный диалог">
     <div class="custom-content">
       <slot></slot>
     </div>
     <template #footer>
       <div class="custom-actions">
-        <BaseButton @click="cancel">Отмена</BaseButton>
-        <BaseButton @click="confirm" class="primary">Подтвердить</BaseButton>
+        <AltButton @click="cancel">Отмена</AltButton>
+        <AltButton @click="confirm" class="primary">Подтвердить</AltButton>
       </div>
     </template>
-  </BaseDialog>
+  </AltDialog>
 </template>
 
 <script setup lang="ts">
 import { ref, defineEmits, computed } from 'vue';
-import { BaseDialog, BaseButton } from 'alt-ui';
+import { AltDialog, AltButton } from 'alt-ui';
 
 const props = defineProps({
   modelValue: {

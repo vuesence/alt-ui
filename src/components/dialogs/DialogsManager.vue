@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import BaseAlertDialog from "./BaseAlertDialog.vue";
-import BaseConfirmDialog from "./BaseConfirmDialog.vue";
-import BasePromptDialog from "./BasePromptDialog.vue";
-import BaseFormDialog from "./BaseFormDialog.vue";
+import AltAlertDialog from "./AltAlertDialog.vue";
+import AltConfirmDialog from "./AltConfirmDialog.vue";
+import AltPromptDialog from "./AltPromptDialog.vue";
+import AltFormDialog from "./AltFormDialog.vue";
 import { dialogsState } from "./dialogState";
 
 // Пропсы для текстов кнопок
@@ -24,10 +24,10 @@ defineProps({
 });
 
 // Ссылки на компоненты диалогов
-const alertDialog = ref<InstanceType<typeof BaseAlertDialog> | null>(null);
-const confirmDialog = ref<InstanceType<typeof BaseConfirmDialog> | null>(null);
-const promptDialog = ref<InstanceType<typeof BasePromptDialog> | null>(null);
-const formDialog = ref<InstanceType<typeof BaseFormDialog> | null>(null);
+const alertDialog = ref<InstanceType<typeof AltAlertDialog> | null>(null);
+const confirmDialog = ref<InstanceType<typeof AltConfirmDialog> | null>(null);
+const promptDialog = ref<InstanceType<typeof AltPromptDialog> | null>(null);
+const formDialog = ref<InstanceType<typeof AltFormDialog> | null>(null);
 
 // Отслеживаем изменения состояния для alert диалога
 watch(
@@ -115,18 +115,18 @@ watch(
 </script>
 
 <template>
-  <BaseAlertDialog ref="alertDialog" :ok-text="okText" />
-  <BaseConfirmDialog
+  <AltAlertDialog ref="alertDialog" :ok-text="okText" />
+  <AltConfirmDialog
     ref="confirmDialog"
     :cancel-text="cancelText"
     :confirm-text="confirmText"
   />
-  <BasePromptDialog
+  <AltPromptDialog
     ref="promptDialog"
     :ok-text="okText"
     :cancel-text="cancelText"
   />
-  <BaseFormDialog
+  <AltFormDialog
     ref="formDialog"
     :ok-text="okText"
     :cancel-text="cancelText"

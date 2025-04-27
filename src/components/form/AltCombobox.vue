@@ -18,7 +18,7 @@ interface InputChangeDetails {
   inputValue: string;
 }
 
-interface BaseComboboxProps {
+interface AltComboboxProps {
   /**
    * Title text for the combobox
    */
@@ -66,7 +66,7 @@ interface BaseComboboxProps {
 }
 
 // Props
-const props = withDefaults(defineProps<BaseComboboxProps>(), {
+const props = withDefaults(defineProps<AltComboboxProps>(), {
   title: "Select",
   inputPlaceholder: "Search",
   labelKey: "label",
@@ -131,7 +131,7 @@ const collection = computed(() =>
 // }
 
 function handleInputChange(details: InputChangeDetails) {
-  console.log("BaseCombobox: handleValueChange called", details);
+  console.log("AltCombobox: handleValueChange called", details);
 
   // selectedItemKeys.value = details.value;
 
@@ -147,7 +147,7 @@ function handleInputChange(details: InputChangeDetails) {
 }
 
 function handleItemSelect(item: ComboboxItem) {
-  console.log("BaseCombobox: handleItemSelect called", item);
+  console.log("AltCombobox: handleItemSelect called", item);
   emit("onItemSelect", item);
 
   // Ensure the item is selected in selectedItemKeys

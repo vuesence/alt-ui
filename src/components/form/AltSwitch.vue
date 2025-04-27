@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { Switch } from "@ark-ui/vue/switch";
 
-interface BaseSwitchProps {
+interface AltSwitchProps {
   /**
    * Label text for the switch
    */
   label?: string;
 }
 
-const props = withDefaults(defineProps<BaseSwitchProps>(), {
+const props = withDefaults(defineProps<AltSwitchProps>(), {
   label: "",
 });
 

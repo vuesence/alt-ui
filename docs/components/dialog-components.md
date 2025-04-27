@@ -61,12 +61,12 @@ interface FormField {
 
 ```vue
 <template>
-  <BaseButton @click="confirmAction">Удалить</BaseButton>
+  <AltButton @click="confirmAction">Удалить</AltButton>
 </template>
 
 <script setup>
 import { useDialogs } from 'alt-ui';
-import { BaseButton } from 'alt-ui';
+import { AltButton } from "alt-ui";
 
 const { confirm } = useDialogs();
 
@@ -87,12 +87,12 @@ async function confirmAction() {
 
 ```vue
 <template>
-  <BaseButton @click="renameItem">Переименовать</BaseButton>
+  <AltButton @click="renameItem">Переименовать</AltButton>
 </template>
 
 <script setup>
 import { useDialogs } from 'alt-ui';
-import { BaseButton } from 'alt-ui';
+import { AltButton } from "alt-ui";
 
 const { prompt } = useDialogs();
 
@@ -114,12 +114,12 @@ async function renameItem() {
 
 ```vue
 <template>
-  <BaseButton @click="showUserForm">Добавить пользователя</BaseButton>
+  <AltButton @click="showUserForm">Добавить пользователя</AltButton>
 </template>
 
 <script setup>
 import { useDialogs } from 'alt-ui';
-import { BaseButton } from 'alt-ui';
+import { AltButton } from "alt-ui";
 
 const { form } = useDialogs();
 
@@ -151,7 +151,7 @@ async function showUserForm() {
 </script>
 ```
 
-## BaseDialog
+## AltDialog
 
 ### Описание
 Базовый компонент диалога, который может использоваться для создания кастомных диалогов.
@@ -186,25 +186,25 @@ async function showUserForm() {
 
 ```vue
 <template>
-  <BaseButton @click="showDialog = true">
+  <AltButton @click="showDialog = true">
     Показать диалог
-  </BaseButton>
+  </AltButton>
   
-  <BaseDialog v-model="showDialog" title="Кастомный диалог">
+  <AltDialog v-model="showDialog" title="Кастомный диалог">
     <p>Это пример кастомного диалога с произвольным содержимым.</p>
     
     <template #footer>
       <div class="dialog-actions">
-        <BaseButton @click="showDialog = false">Закрыть</BaseButton>
-        <BaseButton @click="handleAction">Действие</BaseButton>
+        <AltButton @click="showDialog = false">Закрыть</AltButton>
+        <AltButton @click="handleAction">Действие</AltButton>
       </div>
     </template>
-  </BaseDialog>
+  </AltDialog>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { BaseDialog, BaseButton } from 'alt-ui';
+import { AltDialog, AltButton } from 'alt-ui';
 
 const showDialog = ref(false);
 

@@ -1,7 +1,7 @@
-export { default as BaseInput } from "./BaseInput.vue";
-export { default as BaseSelect } from "./BaseSelect.vue";
-export { default as BaseCheckbox } from "./BaseCheckbox.vue";
-export { default as BaseRadioGroup } from "./BaseRadioGroup.vue";
-export { default as BaseSwitch } from "./BaseSwitch.vue";
-export { default as BaseCombobox } from "./BaseCombobox.vue";
+export { default as AltInput } from "./AltInput.vue";
+export { default as AltSelect } from "./AltSelect.vue";
+export { default as AltCheckbox } from "./AltCheckbox.vue";
+export { default as AltRadioGroup } from "./AltRadioGroup.vue";
+export { default as AltSwitch } from "./AltSwitch.vue";
+export { default as AltCombobox } from "./AltCombobox.vue";
 export { default as FormField } from "./FormField.vue";

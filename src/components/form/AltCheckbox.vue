@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Checkbox, type CheckboxCheckedState } from "@ark-ui/vue/checkbox";
 import { computed } from "vue";
-import { BaseIcon } from "../base";
+import { AltIcon } from "../base";
 
-interface BaseCheckboxProps {
+interface AltCheckboxProps {
   /**
    * Current checked state
    */
@@ -18,7 +18,7 @@ interface BaseCheckboxProps {
   indeterminate?: boolean;
 }
 
-const props = withDefaults(defineProps<BaseCheckboxProps>(), {
+const props = withDefaults(defineProps<AltCheckboxProps>(), {
   modelValue: false,
   disabled: false,
   indeterminate: false,
@@ -46,10 +46,10 @@ const checked = computed({
   >
     <Checkbox.Control class="checkbox-control">
       <Checkbox.Indicator>
-        <BaseIcon name="check" size="18" class="checkbox-icon" />
+        <AltIcon name="check" size="18" class="checkbox-icon" />
       </Checkbox.Indicator>
       <Checkbox.Indicator indeterminate>
-        <BaseIcon name="minus" size="18" class="checkbox-icon" />
+        <AltIcon name="minus" size="18" class="checkbox-icon" />
       </Checkbox.Indicator>
     </Checkbox.Control>
     <Checkbox.Label class="checkbox-label">

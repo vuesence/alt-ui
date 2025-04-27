@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import BaseDialog from "../base/BaseDialog.vue";
+import AltDialog from "../base/AltDialog.vue";
 
 interface FormField {
   id: string;
@@ -17,7 +17,7 @@ interface FormDialogProps {
 
 const props = defineProps<FormDialogProps>();
 
-const dialog = ref<InstanceType<typeof BaseDialog> | null>(null);
+const dialog = ref<InstanceType<typeof AltDialog> | null>(null);
 const title = ref("");
 const fields = ref<FormField[]>([]);
 const resolvePromise = ref<((result: Record<string, string> | null) => void) | null>(null);
@@ -51,7 +51,7 @@ defineExpose({ show });
 </script>
 
 <template>
-  <BaseDialog ref="dialog">
+  <AltDialog ref="dialog">
     <div class="form-dialog" data-testid="form-dialog">
       <div class="form-content">
         <h3 class="form-title">{{ title }}</h3>
@@ -95,7 +95,7 @@ defineExpose({ show });
         </div>
       </div>
     </div>
-  </BaseDialog>
+  </AltDialog>
 </template>
 
 <style scoped>

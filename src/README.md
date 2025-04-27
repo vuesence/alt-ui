@@ -15,17 +15,17 @@ A modern, accessible, and themeable UI component library built with Vue 3 and Ty
 
 ### Form Components
 
-- `BaseInput`: Text input component with various states and validation
-- `BaseSelect`: Select dropdown with options
-- `BaseCheckbox`: Checkbox with indeterminate state support
-- `BaseRadioGroup`: Radio button group with customizable items
-- `BaseSwitch`: Toggle switch with label support
+- `AltInput`: Text input component with various states and validation
+- `AltSelect`: Select dropdown with options
+- `AltCheckbox`: Checkbox with indeterminate state support
+- `AltRadioGroup`: Radio button group with customizable items
+- `AltSwitch`: Toggle switch with label support
 
 ### Data Display Components
 
-- `BaseTable`: Data table with sorting and editable cells
-- `BaseSegmentGroup`: Segmented control for mutually exclusive options
-- `BaseMenu`: Menu component for navigation or actions
+- `AltTable`: Data table with sorting and editable cells
+- `AltSegmentGroup`: Segmented control for mutually exclusive options
+- `AltMenu`: Menu component for navigation or actions
 
 ## Usage
 
@@ -33,7 +33,7 @@ Import components and styles:
 
 ```javascript
 // Import components
-import { BaseInput, BaseSelect, BaseTable } from '../';
+import { AltInput, AltSelect, AltTable } from '../';
 
 // Import utilities
 import { cn, cssVar, pxToRem } from '../';

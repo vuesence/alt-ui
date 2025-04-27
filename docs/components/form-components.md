@@ -6,7 +6,7 @@ title: Компоненты форм
 
 Компоненты форм предназначены для сбора и валидации данных от пользователей. Все компоненты поддерживают v-model и имеют консистентный API.
 
-## BaseInput
+## AltInput
 
 ### Описание
 Компонент текстового поля ввода с поддержкой различных типов и состояний.
@@ -36,7 +36,7 @@ title: Компоненты форм
 
 ```vue
 <template>
-  <BaseInput
+  <AltInput
     v-model="username"
     label="Имя пользователя"
     placeholder="Введите имя пользователя"
@@ -47,7 +47,7 @@ title: Компоненты форм
 
 <script setup>
 import { ref, computed } from 'vue';
-import { BaseInput } from 'alt-ui';
+import { AltInput } from "alt-ui";
 
 const username = ref('');
 const errors = ref({
@@ -65,7 +65,7 @@ function validate() {
 </script>
 ```
 
-## BaseSelect
+## AltSelect
 
 ### Описание
 Компонент выпадающего списка для выбора из предопределенных опций.
@@ -91,7 +91,7 @@ function validate() {
 
 ```vue
 <template>
-  <BaseSelect
+  <AltSelect
     v-model="selectedCountry"
     :options="countries"
     label="Страна"
@@ -101,7 +101,7 @@ function validate() {
 
 <script setup>
 import { ref } from 'vue';
-import { BaseSelect } from 'alt-ui';
+import { AltSelect } from "alt-ui";
 
 const selectedCountry = ref('');
 const countries = [
@@ -112,7 +112,7 @@ const countries = [
 </script>
 ```
 
-## BaseCheckbox
+## AltCheckbox
 
 ### Описание
 Компонент флажка (чекбокса) для выбора опций.
@@ -135,18 +135,18 @@ const countries = [
 
 ```vue
 <template>
-  <BaseCheckbox v-model="agreeTerms" label="Я согласен с условиями использования" />
+  <AltCheckbox v-model="agreeTerms" label="Я согласен с условиями использования" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { BaseCheckbox } from 'alt-ui';
+import { AltCheckbox } from "alt-ui";
 
 const agreeTerms = ref(false);
 </script>
 ```
 
-## BaseRadioGroup
+## AltRadioGroup
 
 ### Описание
 Компонент группы радио-кнопок для выбора одного варианта из нескольких.
@@ -171,7 +171,7 @@ const agreeTerms = ref(false);
 
 ```vue
 <template>
-  <BaseRadioGroup
+  <AltRadioGroup
     v-model="selectedGender"
     :options="genderOptions"
     label="Пол"
@@ -181,7 +181,7 @@ const agreeTerms = ref(false);
 
 <script setup>
 import { ref } from 'vue';
-import { BaseRadioGroup } from 'alt-ui';
+import { AltRadioGroup } from "alt-ui";
 
 const selectedGender = ref('');
 const genderOptions = [
@@ -192,7 +192,7 @@ const genderOptions = [
 </script>
 ```
 
-## BaseSwitch
+## AltSwitch
 
 ### Описание
 Компонент переключателя для включения/выключения опций.
@@ -215,12 +215,12 @@ const genderOptions = [
 
 ```vue
 <template>
-  <BaseSwitch v-model="darkMode" label="Темная тема" />
+  <AltSwitch v-model="darkMode" label="Темная тема" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { BaseSwitch } from 'alt-ui';
+import { AltSwitch } from "alt-ui";
 
 const darkMode = ref(false);
 </script>
@@ -259,13 +259,13 @@ const darkMode = ref(false);
     hint="Мы никогда не передадим вашу почту третьим лицам"
     required
   >
-    <BaseInput v-model="email" type="email" placeholder="example@example.com" />
+    <AltInput v-model="email" type="email" placeholder="example@example.com" />
   </FormField>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { FormField, BaseInput } from 'alt-ui';
+import { FormField, AltInput } from 'alt-ui';
 
 const email = ref('');
 const errors = ref({
@@ -282,12 +282,12 @@ function validateEmail() {
 
 ```mermaid
 graph TD
-    A[FormField] --> B[BaseInput]
-    A --> C[BaseSelect]
-    A --> D[BaseCheckbox]
-    A --> E[BaseRadioGroup]
-    A --> F[BaseSwitch]
-    A --> G[BaseCombobox]
+    A[FormField] --> B[AltInput]
+    A --> C[AltSelect]
+    A --> D[AltCheckbox]
+    A --> E[AltRadioGroup]
+    A --> F[AltSwitch]
+    A --> G[AltCombobox]
     
     B --> H[Валидация]
     C --> H
@@ -311,7 +311,7 @@ graph TD
   :error="errors.username"
   required
 >
-  <BaseInput v-model="username" />
+  <AltInput v-model="username" />
 </FormField>
 ```
 
@@ -323,12 +323,12 @@ graph TD
 | error | string | - | Текст ошибки |
 | required | boolean | false | Обязательное поле |
 
-### BaseInput
+### AltInput
 
 Текстовое поле ввода с поддержкой различных типов.
 
 ```vue
-<BaseInput
+<AltInput
   v-model="value"
   type="text"
   placeholder="Введите текст"
@@ -345,12 +345,12 @@ graph TD
 | placeholder | string | - | Подсказка |
 | error | string | - | Текст ошибки |
 
-### BaseSelect
+### AltSelect
 
 Выпадающий список с поддержкой поиска.
 
 ```vue
-<BaseSelect
+<AltSelect
   v-model="selected"
   :options="options"
   placeholder="Выберите опцию"
@@ -365,12 +365,12 @@ graph TD
 | options | Option[] | [] | Массив опций |
 | searchable | boolean | false | Возможность поиска |
 
-### BaseCheckbox
+### AltCheckbox
 
 Чекбокс с поддержкой промежуточного состояния.
 
 ```vue
-<BaseCheckbox
+<AltCheckbox
   v-model="checked"
   label="Согласен с условиями"
 />
@@ -384,12 +384,12 @@ graph TD
 | label | string | - | Текст метки |
 | indeterminate | boolean | false | Промежуточное состояние |
 
-### BaseRadioGroup
+### AltRadioGroup
 
 Группа радио-кнопок.
 
 ```vue
-<BaseRadioGroup
+<AltRadioGroup
   v-model="selected"
   :options="options"
   orientation="horizontal"
@@ -404,12 +404,12 @@ graph TD
 | options | Option[] | [] | Массив опций |
 | orientation | 'horizontal' \| 'vertical' | 'vertical' | Ориентация |
 
-### BaseSwitch
+### AltSwitch
 
 Переключатель.
 
 ```vue
-<BaseSwitch
+<AltSwitch
   v-model="enabled"
   label="Включить уведомления"
 />
@@ -423,12 +423,12 @@ graph TD
 | label | string | - | Текст метки |
 | size | 'sm' \| 'md' \| 'lg' | 'md' | Размер |
 
-### BaseCombobox
+### AltCombobox
 
 Комбинированное поле ввода с выпадающим списком и поддержкой автодополнения.
 
 ```vue
-<BaseCombobox
+<AltCombobox
   v-model="value"
   :options="options"
   :loading="isLoading"
@@ -468,7 +468,7 @@ const { handleSubmit, errors } = useForm({
       :error="errors.username"
       required
     >
-      <BaseInput
+      <AltInput
         v-model="username"
         name="username"
       />
@@ -479,7 +479,7 @@ const { handleSubmit, errors } = useForm({
       :error="errors.email"
       required
     >
-      <BaseInput
+      <AltInput
         v-model="email"
         type="email"
         name="email"
@@ -495,10 +495,10 @@ const { handleSubmit, errors } = useForm({
    ```vue
    <div class="form-group">
      <FormField>
-       <BaseInput v-model="firstName" label="Имя" />
+       <AltInput v-model="firstName" label="Имя" />
      </FormField>
      <FormField>
-       <BaseInput v-model="lastName" label="Фамилия" />
+       <AltInput v-model="lastName" label="Фамилия" />
      </FormField>
    </div>
    ```

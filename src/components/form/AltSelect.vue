@@ -7,7 +7,7 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-interface BaseSelectProps {
+interface AltSelectProps {
   /**
    * Current selected value
    */
@@ -30,7 +30,7 @@ interface BaseSelectProps {
   disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<BaseSelectProps>(), {
+const props = withDefaults(defineProps<AltSelectProps>(), {
   modelValue: undefined,
   label: "",
   placeholder: "",

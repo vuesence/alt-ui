@@ -1,34 +1,34 @@
 // Base Components
-export { default as BaseButton } from "./components/base/BaseButton.vue";
-export { default as BaseIcon } from "./components/base/BaseIcon.vue";
-export { default as BaseDialog } from "./components/base/BaseDialog.vue";
-export { default as BaseHoverCard } from "./components/base/BaseHoverCard.vue";
-export { default as BaseMenu } from "./components/base/BaseMenu.vue";
-export { default as BaseSpinner } from "./components/base/BaseSpinner.vue";
-export { default as BaseTable } from "./components/base/BaseTable.vue";
-export { default as BaseTabs } from "./components/base/BaseTabs.vue";
-export { default as BaseToggleGroup } from "./components/base/BaseToggleGroup.vue";
-export { default as BaseSegmentGroup } from "./components/base/BaseSegmentGroup.vue";
-export { default as BaseCollapsableHint } from "./components/base/BaseCollapsableHint.vue";
-export { default as BaseCarousel } from "./components/base/BaseCarousel.vue";
-export { default as BaseEditableTable } from "./components/base/BaseEditableTable.vue";
-export { default as BaseEditableText } from "./components/base/BaseEditableText.vue";
-export { default as BaseToaster } from "./components/base/BaseToaster.vue";
+export { default as AltButton } from "./components/base/AltButton.vue";
+export { default as AltIcon } from "./components/base/AltIcon.vue";
+export { default as AltDialog } from "./components/base/AltDialog.vue";
+export { default as AltHoverCard } from "./components/base/AltHoverCard.vue";
+export { default as AltMenu } from "./components/base/AltMenu.vue";
+export { default as AltSpinner } from "./components/base/AltSpinner.vue";
+export { default as AltTable } from "./components/base/AltTable.vue";
+export { default as AltTabs } from "./components/base/AltTabs.vue";
+export { default as AltToggleGroup } from "./components/base/AltToggleGroup.vue";
+export { default as AltSegmentGroup } from "./components/base/AltSegmentGroup.vue";
+export { default as AltCollapsableHint } from "./components/base/AltCollapsableHint.vue";
+export { default as AltCarousel } from "./components/base/AltCarousel.vue";
+export { default as AltEditableTable } from "./components/base/AltEditableTable.vue";
+export { default as AltEditableText } from "./components/base/AltEditableText.vue";
+export { default as AltToaster } from "./components/base/AltToaster.vue";
 
 // Form Components
-export { default as BaseInput } from "./components/form/BaseInput.vue";
-export { default as BaseCheckbox } from "./components/form/BaseCheckbox.vue";
-export { default as BaseCombobox } from "./components/form/BaseCombobox.vue";
-export { default as BaseRadioGroup } from "./components/form/BaseRadioGroup.vue";
-export { default as BaseSelect } from "./components/form/BaseSelect.vue";
-export { default as BaseSwitch } from "./components/form/BaseSwitch.vue";
+export { default as AltInput } from "./components/form/AltInput.vue";
+export { default as AltCheckbox } from "./components/form/AltCheckbox.vue";
+export { default as AltCombobox } from "./components/form/AltCombobox.vue";
+export { default as AltRadioGroup } from "./components/form/AltRadioGroup.vue";
+export { default as AltSelect } from "./components/form/AltSelect.vue";
+export { default as AltSwitch } from "./components/form/AltSwitch.vue";
 export { default as FormField } from "./components/form/FormField.vue";
 
 // Dialogs
 export { useDialogs, dialogsService } from "./components/dialogs/useDialogs";
 export { default as DialogsManager } from "./components/dialogs/DialogsManager.vue";
-export { default as BaseFormDialog } from "./components/dialogs/BaseFormDialog.vue";
-export { default as BasePromptDialog } from "./components/dialogs/BasePromptDialog.vue";
+export { default as AltFormDialog } from "./components/dialogs/AltFormDialog.vue";
+export { default as AltPromptDialog } from "./components/dialogs/AltPromptDialog.vue";
 
 // Onboarding Components
 export { default as OnboardingTooltip } from "./components/Onboarding/OnboardingTooltip.vue";

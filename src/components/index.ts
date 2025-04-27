@@ -16,19 +16,19 @@ export * from "./Onboarding";
 // Tour Components
 export * from "./Tour";
 
-export { default as BaseIcon } from "./base/BaseIcon.vue";
-export { default as BaseButton } from "./base/BaseButton.vue";
-export { default as BaseCheckbox } from "./form/BaseCheckbox.vue";
-export { default as BaseRadioGroup } from "./form/BaseRadioGroup.vue";
-export { default as BaseSelect } from "./form/BaseSelect.vue";
-export { default as BaseEditableText } from "./base/BaseEditableText.vue";
-export { default as BaseEditableTable } from "./base/BaseEditableTable.vue";
-export { default as BaseToaster } from "./base/BaseToaster.vue";
-export { default as BaseCollapsableHint } from "./base/BaseCollapsableHint.vue";
+export { default as AltIcon } from "./base/AltIcon.vue";
+export { default as AltButton } from "./base/AltButton.vue";
+export { default as AltCheckbox } from "./form/AltCheckbox.vue";
+export { default as AltRadioGroup } from "./form/AltRadioGroup.vue";
+export { default as AltSelect } from "./form/AltSelect.vue";
+export { default as AltEditableText } from "./base/AltEditableText.vue";
+export { default as AltEditableTable } from "./base/AltEditableTable.vue";
+export { default as AltToaster } from "./base/AltToaster.vue";
+export { default as AltCollapsableHint } from "./base/AltCollapsableHint.vue";
 export { toast, toaster } from "../utils/toaster";
 
-export { default as BaseDialog } from "./base/BaseDialog.vue";
-// export { default as BaseAlertDialog } from "./dialogs/BaseAlertDialog.vue";
-// export { default as BaseConfirmDialog } from "./base/BaseConfirmDialog.vue";
-// export { default as BasePromptDialog } from "./dialogs/BasePromptDialog.vue";
+export { default as AltDialog } from "./base/AltDialog.vue";
+// export { default as AltAlertDialog } from "./dialogs/AltAlertDialog.vue";
+// export { default as AltConfirmDialog } from "./base/AltConfirmDialog.vue";
+// export { default as AltPromptDialog } from "./dialogs/AltPromptDialog.vue";
 export { useDialogs } from "./dialogs/useDialogs";

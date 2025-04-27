@@ -2,7 +2,7 @@
 import { HoverCard } from "@ark-ui/vue/hover-card";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useOnboarding } from '../Onboarding/useOnboarding';
-import { BaseButton } from "../../components/base";
+import { AltButton } from "../../components/base";
 
 const emit = defineEmits<{
   (e: "dismissed"): void;
@@ -90,9 +90,9 @@ onUnmounted(() => {
               {{ currentTooltip?.content }}
             </p>
             <div class="actions">
-              <BaseButton class="small primary" @click="handleDismiss">
+              <AltButton class="small primary" @click="handleDismiss">
                 Close
-              </BaseButton>
+              </AltButton>
             </div>
           </HoverCard.Content>
         </HoverCard.Positioner>

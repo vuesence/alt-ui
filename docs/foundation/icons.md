@@ -14,7 +14,7 @@
 - Поддерживают форматы PNG и другие форматы изображений
 - Динамически загружаются и кэшируются
 
-## Компонент BaseIcon
+## Компонент AltIcon
 
 Универсальный компонент для отображения иконок с несколькими параметрами конфигурации:
 
@@ -34,12 +34,12 @@
 
 #### Базовая SVG-иконка
 ```vue
-<BaseIcon name="database" />
+<AltIcon name="database" />
 ```
 
 #### Настроенная иконка
 ```vue
-<BaseIcon 
+<AltIcon 
   name="database" 
   size="32" 
   color="var(--alt-c-brand-2)" 
@@ -49,7 +49,7 @@
 
 #### Изображенческая иконка
 ```vue
-<BaseIcon 
+<AltIcon 
   name="logo" 
   type="image" 
   width="100" 

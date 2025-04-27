@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BaseButton } from "../../components/base";
+import { AltButton } from "../../components/base";
 
 /**
  * Props for TourStepContent component
@@ -59,25 +59,25 @@ const emit = defineEmits<{
 
     <!-- Navigation buttons -->
     <div class="actions">
-      <BaseButton
+      <AltButton
         v-if="hasPrevStep"
         class="small secondary"
         @click="emit('prev')"
       >
         {{ prevText }}
-      </BaseButton>
+      </AltButton>
 
-      <BaseButton class="small text" @click="emit('dismiss')">
+      <AltButton class="small text" @click="emit('dismiss')">
         {{ closeText }}
-      </BaseButton>
+      </AltButton>
 
-      <BaseButton
+      <AltButton
         v-if="hasNextStep"
         class="small primary"
         @click="emit('next')"
       >
         {{ nextText }}
-      </BaseButton>
+      </AltButton>
     </div>
   </div>
 </template>

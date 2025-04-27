@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BaseButton, BaseIcon, type TableHeader, type TableRow } from "../";
+import { AltButton, AltIcon, type TableHeader, type TableRow } from "../";
 import type { PropType } from "vue";
 
 const modelValue = defineModel<TableRow[]>();
@@ -104,7 +104,7 @@ function deleteRow(index: number) {
             </template>
           </td>
           <td v-if="editable" class="actions-column">
-            <BaseIcon
+            <AltIcon
               name="delete"
               size="18"
               color="currentColor"
@@ -117,9 +117,9 @@ function deleteRow(index: number) {
     </table>
   </div>
   <div v-if="editable" class="table-actions">
-    <BaseButton variant="small" @click="addRow">
+    <AltButton variant="small" @click="addRow">
       {{ addButtonText }}
-    </BaseButton>
+    </AltButton>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 // Common Types
-export interface BaseProps {
+export interface AltProps {
   class?: string;
   style?: Record<string, string>;
 }

@@ -1,7 +1,7 @@
-import type { BaseProps } from "./index";
+import type { AltProps } from "./index";
 import type { RouteLocationRaw } from "vue-router";
 // Button Props
-// export interface ButtonProps extends BaseProps {
+// export interface ButtonProps extends AltProps {
 //   // variant?: "primary" | "secondary" | "text";
 //   // size?: "small" | "medium" | "large";
 //   disabled?: boolean;
@@ -10,7 +10,7 @@ import type { RouteLocationRaw } from "vue-router";
 // }
 
 // Input Props
-export interface InputProps extends BaseProps {
+export interface InputProps extends AltProps {
   type?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -26,7 +26,7 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-export interface SelectProps extends BaseProps {
+export interface SelectProps extends AltProps {
   options: SelectOption[];
   placeholder?: string;
   disabled?: boolean;
@@ -35,7 +35,7 @@ export interface SelectProps extends BaseProps {
 }
 
 // Icon Props
-export interface IconProps extends BaseProps {
+export interface IconProps extends AltProps {
   name: string;
   size?: string | number;
   color?: string;

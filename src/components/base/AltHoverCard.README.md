@@ -1,6 +1,6 @@
-# BaseHoverCard - Руководство по использованию
+# AltHoverCard - Руководство по использованию
 
-`BaseHoverCard` - это компонент-обертка над `@ark-ui/vue/hover-card`, который предоставляет унифицированное API для создания тултипов и выпадающих карточек в приложении.
+`AltHoverCard` - это компонент-обертка над `@ark-ui/vue/hover-card`, который предоставляет унифицированное API для создания тултипов и выпадающих карточек в приложении.
 
 ## Важные нюансы работы с HoverCard
 
@@ -31,7 +31,7 @@
 ### Базовое использование
 
 ```vue
-<BaseHoverCard 
+<AltHoverCard 
   :model-value="isVisible"
   :positioning="{ placement: 'bottom', gutter: 10 }"
   :show-arrow="true"
@@ -44,13 +44,13 @@
       Содержимое карточки при наведении
     </div>
   </template>
-</BaseHoverCard>
+</AltHoverCard>
 ```
 
 ### Центрированный тултип (без целевого элемента)
 
 ```vue
-<BaseHoverCard 
+<AltHoverCard 
   :model-value="isVisible"
   :positioning="{ 
     placement: 'bottom', 
@@ -68,7 +68,7 @@
   <template #content>
     <div>Центрированное сообщение</div>
   </template>
-</BaseHoverCard>
+</AltHoverCard>
 ```
 
 ### Синхронизация анимаций
@@ -130,4 +130,4 @@ HoverCard использует систему позиционирования F
 - Изменении размеров окна
 - Скролле (если strategy: 'fixed')
 
-Понимание этих принципов поможет эффективно использовать BaseHoverCard в различных сценариях.
+Понимание этих принципов поможет эффективно использовать AltHoverCard в различных сценариях.

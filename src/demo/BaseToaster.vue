@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Toast, Toaster } from "@ark-ui/vue/toast";
-import { BaseIcon, toaster } from "../";
+import { AltIcon, toaster } from "../";
 </script>
 
 <template>
@@ -12,7 +12,7 @@ import { BaseIcon, toaster } from "../";
       :data-testid="`${toast.type}-toast`"
     >
       <div class="content-wrapper">
-        <BaseIcon :name="toast.type" class="icon" size="20" />
+        <AltIcon :name="toast.type" class="icon" size="20" />
         <div class="content">
           <Toast.Title v-if="toast.title" class="title">
             {{ toast.title }}

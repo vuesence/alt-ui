@@ -68,13 +68,13 @@ app.mount('#app')
 
 ```vue
 <script setup>
-import { BaseButton, BaseInput } from 'alt-ui'
+import { AltButton, AltInput } from 'alt-ui'
 </script>
 
 <template>
   <div>
-    <BaseInput label="Имя пользователя" placeholder="Введите имя" />
-    <BaseButton>Отправить</BaseButton>
+    <AltInput label="Имя пользователя" placeholder="Введите имя" />
+    <AltButton>Отправить</AltButton>
   </div>
 </template>
 ```

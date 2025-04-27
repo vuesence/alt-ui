@@ -6,7 +6,7 @@ title: Базовые компоненты
 
 Базовые компоненты представляют собой фундаментальные элементы интерфейса, которые используются как строительные блоки для создания более сложных компонентов и интерфейсов.
 
-## BaseButton
+## AltButton
 
 ### Описание
 Компонент кнопки с поддержкой различных вариантов отображения, состояний и возможностью интеграции с Vue Router.
@@ -35,17 +35,17 @@ title: Базовые компоненты
 
 ```vue
 <template>
-  <BaseButton @click="handleClick" :disabled="isDisabled" :loading="isLoading">
+  <AltButton @click="handleClick" :disabled="isDisabled" :loading="isLoading">
     Нажми меня
-  </BaseButton>
+  </AltButton>
   
-  <BaseButton to="/dashboard">
+  <AltButton to="/dashboard">
     Перейти в панель управления
-  </BaseButton>
+  </AltButton>
 </template>
 
 <script setup>
-import { BaseButton } from 'alt-ui';
+import { AltButton } from "alt-ui";
 import { ref } from 'vue';
 
 const isDisabled = ref(false);
@@ -69,7 +69,7 @@ function handleClick() {
 - `--alt-c-surface-2` - цвет фона
 - `--alt-c-brand-1-200` - цвет рамки
 
-## BaseIcon
+## AltIcon
 
 ### Описание
 Компонент для отображения SVG иконок с поддержкой кастомизации размера и цвета.
@@ -86,16 +86,16 @@ function handleClick() {
 
 ```vue
 <template>
-  <BaseIcon name="check" size="16" color="#4CAF50" />
-  <BaseIcon name="close" :size="24" />
+  <AltIcon name="check" size="16" color="#4CAF50" />
+  <AltIcon name="close" :size="24" />
 </template>
 
 <script setup>
-import { BaseIcon } from 'alt-ui';
+import { AltIcon } from "alt-ui";
 </script>
 ```
 
-## BaseDialog
+## AltDialog
 
 ### Описание
 Модальный диалог с настраиваемым содержимым, заголовком и действиями.
@@ -128,23 +128,23 @@ import { BaseIcon } from 'alt-ui';
 
 ```vue
 <template>
-  <BaseButton @click="showDialog = true">
+  <AltButton @click="showDialog = true">
     Открыть диалог
-  </BaseButton>
+  </AltButton>
   
-  <BaseDialog v-model="showDialog" title="Подтверждение">
+  <AltDialog v-model="showDialog" title="Подтверждение">
     <p>Вы уверены, что хотите продолжить?</p>
     
     <template #footer>
-      <BaseButton @click="showDialog = false">Отмена</BaseButton>
-      <BaseButton @click="confirm">Подтвердить</BaseButton>
+      <AltButton @click="showDialog = false">Отмена</AltButton>
+      <AltButton @click="confirm">Подтвердить</AltButton>
     </template>
-  </BaseDialog>
+  </AltDialog>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { BaseDialog, BaseButton } from 'alt-ui';
+import { AltDialog, AltButton } from 'alt-ui';
 
 const showDialog = ref(false);
 
@@ -155,7 +155,7 @@ function confirm() {
 </script>
 ```
 
-## BaseTable
+## AltTable
 
 ### Описание
 Компонент таблицы с поддержкой кастомизации ячеек, сортировки и других функций.
@@ -180,16 +180,16 @@ function confirm() {
 
 ```vue
 <template>
-  <BaseTable :columns="columns" :data="users" :loading="loading">
+  <AltTable :columns="columns" :data="users" :loading="loading">
     <template #cell-actions="{ row }">
-      <BaseButton @click="editUser(row)">Редактировать</BaseButton>
+      <AltButton @click="editUser(row)">Редактировать</AltButton>
     </template>
-  </BaseTable>
+  </AltTable>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { BaseTable, BaseButton } from 'alt-ui';
+import { AltTable, AltButton } from 'alt-ui';
 
 const loading = ref(false);
 const columns = [
@@ -215,22 +215,22 @@ function editUser(user) {
 ```plantuml
 @startuml
 package "Base Components" {
-  [BaseButton]
-  [BaseIcon]
-  [BaseDialog]
-  [BaseTable]
-  [BaseEditableTable]
-  [BaseToaster]
-  [BaseMenu]
-  [BaseTabs]
-  [BaseHoverCard]
-  [BaseSpinner]
+  [AltButton]
+  [AltIcon]
+  [AltDialog]
+  [AltTable]
+  [AltEditableTable]
+  [AltToaster]
+  [AltMenu]
+  [AltTabs]
+  [AltHoverCard]
+  [AltSpinner]
 }
 
-[BaseTable] <|-- [BaseEditableTable]
-[BaseDialog] --> [BaseButton]
-[BaseMenu] --> [BaseButton]
-[BaseTabs] --> [BaseButton]
+[AltTable] <|-- [AltEditableTable]
+[AltDialog] --> [AltButton]
+[AltMenu] --> [AltButton]
+[AltTabs] --> [AltButton]
 @enduml
 ```
 
@@ -239,35 +239,35 @@ package "Base Components" {
 1. **Композиция компонентов**
 
 ```vue
-<BaseButton>
-  <BaseIcon name="save" />
+<AltButton>
+  <AltIcon name="save" />
   Сохранить
-</BaseButton>
+</AltButton>
 ```
 
 2. **Обработка состояний**
 
 ```vue
-<BaseButton 
+<AltButton 
   :loading="isLoading"
   :disabled="!isValid"
   @click="handleClick"
 >
   Отправить
-</BaseButton>
+</AltButton>
 ```
 
 3. **Использование слотов**
 
 ```vue
-<BaseDialog>
+<AltDialog>
   <template #title>
     Пользовательский заголовок
   </template>
   <template #content>
     Пользовательский контент
   </template>
-</BaseDialog>
+</AltDialog>
 ```
 
 ## Рекомендации по использованию

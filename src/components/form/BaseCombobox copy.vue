@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// Документация по работе BaseCombobox:
+// Документация по работе AltCombobox:
 /*
- * Основные характеристики BaseCombobox:
+ * Основные характеристики AltCombobox:
  *
  * 1. Модель (v-model):
  *    - Принимает массив строк
@@ -44,7 +44,7 @@ interface ComboboxItem {
   disabled?: boolean;
 }
 
-interface BaseComboboxProps {
+interface AltComboboxProps {
   /**
    * Title text for the combobox
    */
@@ -91,7 +91,7 @@ interface BaseComboboxProps {
 }
 
 // Props
-const props = withDefaults(defineProps<BaseComboboxProps>(), {
+const props = withDefaults(defineProps<AltComboboxProps>(), {
   title: "Select",
   inputPlaceholder: "Search",
   labelKey: "label",

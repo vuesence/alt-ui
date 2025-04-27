@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import BaseDialog from "../base/BaseDialog.vue";
+import AltDialog from "../base/AltDialog.vue";
 
 defineProps({
   cancelText: {
@@ -13,7 +13,7 @@ defineProps({
   },
 });
 
-const dialog = ref<InstanceType<typeof BaseDialog> | null>(null);
+const dialog = ref<InstanceType<typeof AltDialog> | null>(null);
 const message = ref("");
 const resolvePromise = ref<((result: boolean) => void) | null>(null);
 
@@ -35,7 +35,7 @@ defineExpose({ show });
 </script>
 
 <template>
-  <BaseDialog ref="dialog">
+  <AltDialog ref="dialog">
     <div class="confirm-dialog" data-testid="confirm-dialog">
       <div class="confirm-content">
         <p>{{ message }}</p>
@@ -57,7 +57,7 @@ defineExpose({ show });
         </div>
       </div>
     </div>
-  </BaseDialog>
+  </AltDialog>
 </template>
 
 <style scoped>

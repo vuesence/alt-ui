@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import {
-  BaseCheckbox,
-  BaseInput,
-  BaseMenu,
-  BaseRadioGroup,
-  BaseSegmentGroup,
-  BaseSelect,
-  BaseSpinner,
-  BaseSwitch,
-  BaseTable,
+  AltCheckbox,
+  AltInput,
+  AltMenu,
+  AltRadioGroup,
+  AltSegmentGroup,
+  AltSelect,
+  AltSpinner,
+  AltSwitch,
+  AltTable,
   type TableColumnDefinition,
   type TableRowData,
 } from "../";
@@ -92,37 +92,37 @@ const menuItems = [
     <section>
       <h2>Input</h2>
       <div class="component-group">
-        <BaseInput v-model="inputValue" placeholder="Basic input" />
-        <BaseInput
+        <AltInput v-model="inputValue" placeholder="Basic input" />
+        <AltInput
           v-model="inputWithLabel"
           label="Input with label"
           placeholder="Type something..."
         />
-        <BaseInput
+        <AltInput
           v-model="inputWithError"
           label="Input with error"
           placeholder="Error state"
           state="error"
         />
-        <BaseInput
+        <AltInput
           v-model="inputWithSuccess"
           label="Input with success"
           placeholder="Success state"
           state="success"
         />
-        <BaseInput placeholder="Disabled input" disabled />
+        <AltInput placeholder="Disabled input" disabled />
       </div>
     </section>
 
     <section>
       <h2>Select</h2>
       <div class="component-group">
-        <BaseSelect
+        <AltSelect
           v-model="selectValue"
           :options="selectOptions"
           placeholder="Select an option"
         />
-        <BaseSelect
+        <AltSelect
           :options="selectOptions"
           placeholder="Disabled select"
           disabled
@@ -133,54 +133,54 @@ const menuItems = [
     <section>
       <h2>Checkbox</h2>
       <div class="component-group">
-        <BaseCheckbox v-model="checkboxValue" label="Basic checkbox" />
-        <BaseCheckbox
+        <AltCheckbox v-model="checkboxValue" label="Basic checkbox" />
+        <AltCheckbox
           v-model="indeterminateCheckbox"
           label="Indeterminate checkbox"
           :indeterminate="true"
         />
-        <BaseCheckbox label="Disabled checkbox" disabled />
+        <AltCheckbox label="Disabled checkbox" disabled />
       </div>
     </section>
 
     <section>
       <h2>Radio Group</h2>
       <div class="component-group">
-        <BaseRadioGroup
+        <AltRadioGroup
           v-model="radioValue"
           :items="radioItems"
           name="demo-radio"
         />
-        <BaseRadioGroup :items="radioItems" name="disabled-radio" disabled />
+        <AltRadioGroup :items="radioItems" name="disabled-radio" disabled />
       </div>
     </section>
 
     <section>
       <h2>Switch</h2>
       <div class="component-group">
-        <BaseSwitch v-model="switchValue" label="Basic switch" />
-        <BaseSwitch label="Disabled switch" disabled />
+        <AltSwitch v-model="switchValue" label="Basic switch" />
+        <AltSwitch label="Disabled switch" disabled />
       </div>
     </section>
 
     <section>
       <h2>Table</h2>
       <div class="component-group">
-        <BaseTable :columns="tableColumns" :data="tableItems" />
+        <AltTable :columns="tableColumns" :data="tableItems" />
       </div>
     </section>
 
     <section>
       <h2>Segment Group</h2>
       <div class="component-group">
-        <BaseSegmentGroup v-model="segmentValue" :items="segmentItems" />
+        <AltSegmentGroup v-model="segmentValue" :items="segmentItems" />
       </div>
     </section>
 
     <section>
       <h2>Menu</h2>
       <div class="component-group">
-        <BaseMenu :items="menuItems" />
+        <AltMenu :items="menuItems" />
       </div>
     </section>
   </div>

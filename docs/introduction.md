@@ -11,35 +11,35 @@ Alt-UI — современная библиотека компонентов п
 Библиотека включает следующие компоненты:
 
 **Базовые компоненты**:
-- BaseButton
-- BaseIcon
-- BaseDialog
-- BaseHoverCard
-- BaseMenu
-- BaseSpinner
-- BaseTable
-- BaseTabs
-- BaseToggleGroup
-- BaseSegmentGroup
-- BaseCollapsableHint
-- BaseCarousel
-- BaseEditableTable
-- BaseEditableText
-- BaseToaster
+- AltButton
+- AltIcon
+- AltDialog
+- AltHoverCard
+- AltMenu
+- AltSpinner
+- AltTable
+- AltTabs
+- AltToggleGroup
+- AltSegmentGroup
+- AltCollapsableHint
+- AltCarousel
+- AltEditableTable
+- AltEditableText
+- AltToaster
 
 **Компоненты форм**:
-- BaseInput
-- BaseCheckbox
-- BaseCombobox
-- BaseRadioGroup
-- BaseSelect
-- BaseSwitch
+- AltInput
+- AltCheckbox
+- AltCombobox
+- AltRadioGroup
+- AltSelect
+- AltSwitch
 - FormField
 
 **Диалоги**:
 - DialogsManager
-- BaseFormDialog
-- BasePromptDialog
+- AltFormDialog
+- AltPromptDialog
 
 **Компоненты тем**:
 - ThemeProvider
@@ -81,7 +81,7 @@ pnpm add alt-ui
 
 ```vue
 <script setup>
-import { BaseButton, BaseInput, themeProvider } from 'alt-ui';
+import { AltButton, AltInput, themeProvider } from 'alt-ui';
 import 'alt-ui/styles';
 
 // Применяем тему
@@ -90,8 +90,8 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', или 'syste
 
 <template>
   <div>
-    <BaseInput label="Имя пользователя" placeholder="Введите имя пользователя" />
-    <BaseButton variant="primary">Отправить</BaseButton>
+    <AltInput label="Имя пользователя" placeholder="Введите имя пользователя" />
+    <AltButton variant="primary">Отправить</AltButton>
   </div>
 </template>
 ```

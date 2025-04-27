@@ -52,7 +52,7 @@ if (container) {
 
 | Функция | Параметры | Возвращаемое значение | Описание |
 |---------|-----------|------------------------|----------|
-| loadIcons | options: IconsOptions | Promise\<void\> | Загружает иконки для использования в компоненте BaseIcon |
+| loadIcons | options: IconsOptions | Promise\<void\> | Загружает иконки для использования в компоненте AltIcon |
 
 ```typescript
 interface IconsOptions {
@@ -180,14 +180,14 @@ function clearAllToasts() {
 ```vue
 <template>
   <div>
-    <BaseButton @click="showSuccessToast">Показать успех</BaseButton>
-    <BaseButton @click="showErrorToast">Показать ошибку</BaseButton>
-    <BaseButton @click="clearAllToasts">Очистить все</BaseButton>
+    <AltButton @click="showSuccessToast">Показать успех</AltButton>
+    <AltButton @click="showErrorToast">Показать ошибку</AltButton>
+    <AltButton @click="clearAllToasts">Очистить все</AltButton>
   </div>
 </template>
 
 <script setup>
-import { BaseButton } from 'alt-ui';
+import { AltButton } from "alt-ui";
 import { toast, toaster } from 'alt-ui';
 
 function showSuccessToast() {

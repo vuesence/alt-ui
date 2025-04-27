@@ -11,7 +11,7 @@
 ```vue
 <script setup>
 import { ref } from 'vue';
-import { OnboardingTooltip, useOnboarding, BaseButton } from 'alt-ui';
+import { OnboardingTooltip, useOnboarding, AltButton } from 'alt-ui';
 
 const {
   displayTooltip,
@@ -37,13 +37,13 @@ const startTour = () => {
 
 <template>
   <div>
-    <BaseButton class="feature-button" @click="doSomething">
+    <AltButton class="feature-button" @click="doSomething">
       Кнопка функции
-    </BaseButton>
+    </AltButton>
     
-    <BaseButton @click="startTour">
+    <AltButton @click="startTour">
       Начать тур
-    </BaseButton>
+    </AltButton>
     
     <OnboardingTooltip @dismissed="onDismissed" />
   </div>

@@ -63,14 +63,14 @@ graph TD
     Components --> Base
     Components --> Form
     
-    Base --> Button[BaseButton]
-    Base --> Icon[BaseIcon]
-    Base --> Dialog[BaseDialog]
-    Base --> Table[BaseTable]
+    Base --> Button[AltButton]
+    Base --> Icon[AltIcon]
+    Base --> Dialog[AltDialog]
+    Base --> Table[AltTable]
     
-    Form --> Input[BaseInput]
-    Form --> Select[BaseSelect]
-    Form --> Checkbox[BaseCheckbox]
+    Form --> Input[AltInput]
+    Form --> Select[AltSelect]
+    Form --> Checkbox[AltCheckbox]
 
     style Components fill:#e8f5e9,stroke:#1b5e20
     style Base fill:#e8f5e9,stroke:#1b5e20

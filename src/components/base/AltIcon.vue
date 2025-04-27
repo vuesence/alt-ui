@@ -7,7 +7,7 @@ import { isNumeric } from "../../utils/string-helpers";
 type IconType = "svg" | "image";
 
 // Define props with more explicit typing
-interface BaseIconProps {
+interface AltIconProps {
   name: string;
   size?: string | number;
   color?: string;
@@ -17,7 +17,7 @@ interface BaseIconProps {
   type?: IconType;
 }
 
-const props = withDefaults(defineProps<BaseIconProps>(), {
+const props = withDefaults(defineProps<AltIconProps>(), {
   name: "",
   size: 24,
   color: "default",
