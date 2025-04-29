@@ -45,7 +45,6 @@ export default defineConfig({
         text: "Ресурсы",
         items: [
           { text: "GitHub", link: "https://github.com/vuesence/alt-ui" },
-          { text: "Lissa Health", link: "https://lissa-health.com" },
         ],
       },
     ],
@@ -121,7 +120,7 @@ export default defineConfig({
 
     footer: {
       message: "Документация по Alt-UI",
-      copyright: "© 2024 Lissa Health",
+      copyright: "© 2024 Startup Tools",
     },
   },
 }); 
