@@ -60,7 +60,7 @@ const selectedLabel = computed(() => {
 
 <template>
   <div
-    class="base-select"
+    class="base-select alt-select"
     :class="{
       'base-select--disabled': props.disabled,
     }"
@@ -78,7 +78,7 @@ const selectedLabel = computed(() => {
       <select
         v-model="selectedValue"
         :disabled="props.disabled"
-        class="base-select__native"
+        class="base-select__native alt-select__native"
       >
         <option v-if="props.placeholder" value="" disabled hidden>
           {{ props.placeholder }}
