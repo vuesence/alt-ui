@@ -112,8 +112,8 @@ onMounted(() => {
     width: 0.5rem;
     height: 0.5rem;
     border-style: solid;
-    border-width: 0 0.125rem 0.125rem 0;
-    border-color: var(--alt-c-brand-1-100);
+    border-width: 0 0.16rem 0.16rem 0;
+    border-color: var(--alt-c-text-3);
     transform: translateY(-50%) rotate(-45deg);
     transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
   }
