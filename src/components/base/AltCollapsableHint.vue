@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps({
+import { ref, watch, onMounted } from 'vue';
+
+const props = defineProps({
   title: {
     type: String,
     default: "",
@@ -8,16 +10,48 @@ defineProps({
     type: String,
     default: "",
   },
+  modelValue: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const isOpen = ref(props.modelValue);
+
+// Watch for external changes to modelValue
+watch(() => props.modelValue, (newValue) => {
+  if (newValue !== isOpen.value) {
+    isOpen.value = newValue;
+  }
+});
+
+// Handle toggle
+function handleToggle() {
+  isOpen.value = !isOpen.value;
+  emit('update:modelValue', isOpen.value);
+}
+
+onMounted(() => {
+  isOpen.value = props.modelValue;
 });
 </script>
 
 <template>
-  <details class="collapsable-hint">
-    <summary>{{ title }}</summary>
-    <slot name="content">
-      <div class="content" v-html="content" />
-    </slot>
-  </details>
+  <div class="collapsable-hint">
+    <div class="summary" @click="handleToggle">
+      <div class="summary-icon" :class="{ 'is-open': isOpen }"></div>
+      <div class="summary-title">{{ title }}</div>
+    </div>
+    <div class="content-container" :class="{ 'is-open': isOpen }">
+      <div class="content-inner">
+        <slot name="content">
+          <div class="content" v-html="content" />
+        </slot>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>
@@ -41,41 +75,70 @@ defineProps({
 </style>
 
 <style scoped>
-details {
+.collapsable-hint {
   max-width: 40rem;
-  summary {
-    /* font-size: 0.9em; */
-    /* padding-right: 24px; */
-    color: var(--alt-c-text-3);
-    /* width: 100%; */
-    position: relative;
-    cursor: pointer;
-    /* list-style: none; */
-    outline: 0;
-    transition: 300ms linear;
-    &:hover {
-      color: var(--alt-c-text-1);
-    }
-    /* margin-bottom: 1em; */
-    &::marker {
-      color: var(--alt-c-brand-1-100);
-    }
-  }
-  &[open] {
-    summary {
-      margin-bottom: 1em;
-      &:after {
-        transform: rotate(45deg);
-        right: -2px;
-        top: calc(50% + 1px);
-      }
-      & ~ * {
-        opacity: 1;
-        animation: open 0.3s ease-in-out;
-      }
-    }
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--alt-c-text-3);
+  position: relative;
+  cursor: pointer;
+  outline: 0;
+  transition: color 200ms ease;
+  margin-bottom: 0.5rem;
+  
+  &:hover {
+    color: var(--alt-c-text-1);
   }
 }
+
+.summary-title {
+  font-weight: var(--alt-font-weight-medium);
+}
+
+.summary-icon {
+  position: relative;
+  width: 0.875rem;
+  height: 0.875rem;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-style: solid;
+    border-width: 0 0.125rem 0.125rem 0;
+    border-color: var(--alt-c-brand-1-100);
+    transform: translateY(-50%) rotate(-45deg);
+    transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+  
+  &.is-open::before {
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+
+.content-container {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  overflow: hidden;
+  
+  &.is-open {
+    grid-template-rows: 1fr;
+    margin-bottom: 1rem;
+  }
+}
+
+.content-inner {
+  min-height: 0;
+}
+
 .content {
   padding: var(--alt-space-3) var(--alt-space-4) var(--alt-space-4);
   margin-left: var(--alt-space-4);
@@ -83,13 +146,5 @@ details {
   border-radius: var(--alt-radius-md);
   background-color: var(--alt-c-brand-1-50);
   color: var(--alt-c-text-2);
-}
-@keyframes open {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 </style>
