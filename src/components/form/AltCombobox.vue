@@ -1,313 +1,129 @@
 <script setup lang="ts">
-import {
-  Combobox,
-  createListCollection,
-} from "@ark-ui/vue/combobox";
-import { computed, nextTick } from "vue";
+// biome-ignore lint/style/useImportType: <explanation>
+import { Combobox, createListCollection } from '@ark-ui/vue/combobox'
+import { computed, ref, watch } from 'vue'
 
-// Types
-interface ComboboxItem {
-  [key: string]: any;
-  // label: string;
-  // value: any;
-  // id: string;
-  // disabled?: boolean;
-}
-
-interface InputChangeDetails {
-  inputValue: string;
-}
-
-interface AltComboboxProps {
-  /**
-   * Title text for the combobox
-   */
-  title?: string;
-  /**
-   * Placeholder text for the input
-   */
-  inputPlaceholder?: string;
-  /**
-   * Key to use for item labels
-   */
-  labelKey?: string;
-  /**
-   * Whether the combobox is disabled
-   */
-  disabled?: boolean;
-  // /**
-  //  * Whether the combobox is required
-  //  */
-  // required?: boolean;
-  multiple?: boolean;
-  /**
-   * Whether to show the select/clear all buttons
-   */
-  showActions?: boolean;
-  /**
-   * Maximum height of the dropdown in rem
-   */
-  maxHeight?: number;
-  /**
-   * Custom positioning options
-   */
-  positioning?: {
-    placement?:
-      | "top"
-      | "top-start"
-      | "top-end"
-      | "bottom"
-      | "bottom-start"
-      | "bottom-end";
-    flip?: boolean;
-    overlap?: boolean;
-    sameWidth?: boolean;
-  };
-}
+// Define type for items
+type Item = string | Record<string, any>
 
 // Props
-const props = withDefaults(defineProps<AltComboboxProps>(), {
-  title: "Select",
-  inputPlaceholder: "Search",
-  labelKey: "label",
-  disabled: false,
-  required: false,
-  showActions: false,
-  maxHeight: 37.5,
-  positioning: () => ({
-    placement: "bottom-start",
-    flip: true,
-    overlap: false,
-    sameWidth: true,
-  }),
-});
+const props = defineProps({
+  title: {
+    type: String,
+    default: 'Select'
+  },
+  inputPlaceholder: {
+    type: String,
+    default: 'Search...'
+  },
+  items: {
+    type: Array as () => Item[],
+    default: () => []
+  },
+  modelValue: {
+    type: String,
+    default: ''
+  },
+  labelKey: {
+    type: String,
+    default: 'label'
+  },
+  allowCustomValues: {
+    type: Boolean,
+    default: true
+  }
+})
 
 // Emits
-const emit = defineEmits<{
-  "update:selectedItemKeys": [value: string[]];
-  // "update:selectedItems": [items: ComboboxItem[]];
-  change: [items: ComboboxItem[]];
-  // search: [query: string];
-  onItemSelect: [item: ComboboxItem];
-}>();
+const emit = defineEmits(['update:modelValue', 'onItemSelect', 'update:inputValue'])
 
-// Models
-const items = defineModel<any[]>("items", { default: [] });
-const selectedItemKeys = defineModel<string[]>("selectedItemKeys", {
-  default: [],
-});
-const inputValue = defineModel<string>("inputValue", { default: "" });
-// const inputValue1 = ref("");
-// const selectedItems = defineModel<ComboboxItem[]>("selectedItems", {
-//   default: () => [],
-// });
+// State
+const allItems = ref<Item[]>(props.items)
+const filteredItems = ref<Item[]>(props.items)
+const inputValue = ref(props.modelValue || '')
 
-// Refs
-// const filteredItems = ref<ComboboxItem[]>([]);
-// const comboboxRef = ref<InstanceType<typeof Combobox.Root> | null>(null);
+// Initialize state when props change
+watch(() => props.items, (newItems) => {
+  allItems.value = newItems
+  filteredItems.value = newItems
+})
 
-// setInterval(() => {
-//   console.log("inputValue", inputValue.value);
-// }, 1000);
+watch(() => props.modelValue, (newValue) => {
+  inputValue.value = newValue || ''
+}, { immediate: true })
 
-// Computed
-const collection = computed(() =>
-  createListCollection({
-    items: items.value,
-    itemToString: (item) => item[props.labelKey],
-    itemToValue: (item) => item[props.labelKey],
-  }),
-);
+// Create collection
+const collection = computed(() => createListCollection({ 
+  items: filteredItems.value,
+  itemToString: (item: Item) => typeof item === 'string' ? item : item[props.labelKey] || ''
+}))
 
-// const selectedItems = computed(() =>
-//   filteredItems.value.filter((item) => selectedItemKeys.value.includes(item.id)),
-// );
-
-// Methods
-// function handleInputChange(details: Combobox.InputValueChangeDetails) {
-//   // console.log("inputValue", details.inputValue);
-//   inputValue.value = details.inputValue;
-//   emit("update:inputValue", details.inputValue);
-// }
-
-function handleInputChange(details: InputChangeDetails) {
-  console.log("AltCombobox: handleValueChange called", details);
-
-  // selectedItemKeys.value = details.value;
-
-  // Update selectedItems based on the new selectedItemKeys
-  // const newSelectedItems = items.value.filter((item) =>
-  //   selectedItemKeys.value.includes(item[props.labelKey]),
-  // );
-  // selectedItems.value = newSelectedItems;
-
-  nextTick(() => {
-    // emit("change", newSelectedItems);
-  });
+// Handle input change
+const handleInputChange = (details: Combobox.InputValueChangeDetails) => {
+  const value = details.inputValue
+  inputValue.value = value
+  emit('update:inputValue', value)
+  emit('update:modelValue', value)
+  
+  // Не фильтруем элементы, всегда показываем полный список
+  filteredItems.value = allItems.value
 }
 
-function handleItemSelect(item: ComboboxItem) {
-  console.log("AltCombobox: handleItemSelect called", item);
-  emit("onItemSelect", item);
-
-  // Ensure the item is selected in selectedItemKeys
-  const itemKey = item[props.labelKey];
-  if (!selectedItemKeys.value.includes(itemKey)) {
-    selectedItemKeys.value.push(itemKey);
+// Handle value change when selecting from dropdown
+const handleValueChange = (details: Combobox.ValueChangeDetails) => {
+  if (details.value && details.value.length > 0) {
+    const item = details.value[0]
+    const value = typeof item === 'string' ? item : item[props.labelKey]
+    emit('update:modelValue', value)
+    emit('onItemSelect', item)
   }
-
-  // Emit the selected item
-  // emit("on-item-select", item);
 }
 
-// function selectAll() {
-//   if (!props.disabled) {
-//     selectedItemKeys.value = filteredItems.value
-//       .filter((item) => !item.disabled)
-//       .map((item) => item.id);
-//   }
-// }
-
-// function clearAll() {
-//   if (!props.disabled) {
-//     selectedItemKeys.value = [];
-//     selectedItems.value = [];
-//     inputValue.value = "";
-//     emit("change", []);
-//   }
-// }
-
-// function buildItems() {
-//   filteredItems.value = (items.value || []).map((item, index) => ({
-//     label: item[props.labelKey],
-//     value: item,
-//     id: String(index),
-//     disabled: item.disabled,
-//   }));
-// }
-
-// Watchers
-// watch(
-//   () => items.value?.length,
-//   () => {
-//     buildItems();
-//     // Update selected items based on active state
-//     selectedItemKeys.value = filteredItems.value
-//       .filter((item) => item.value.active)
-//       .map((item) => item.id);
-//   },
-//   { immediate: true },
-// );
-
-// watch(selectedItemKeys, () => {
-//   filteredItems.value.forEach((item) => {
-//     item.value.active = selectedItemKeys.value.includes(item.id);
-//   });
-// });
+// Handle blur event to ensure custom value is preserved
+const handleBlur = () => {
+  if (inputValue.value) {
+    emit('update:modelValue', inputValue.value)
+  }
+}
 </script>
 
 <template>
-  <!-- ref="comboboxRef" -->
-  <!-- v-model="selectedItemKeys" -->
-  <!-- :input-value="inputValue" -->
-  <!-- v-model:input-value="inputValue" -->
-  <Combobox.Root
+  <Combobox.Root 
+    class="alt-combobox"
+    :collection="collection" 
     :input-value="inputValue"
-    :collection="collection"
-    :multiple="false"
-    selection-behavior="preserve"
-    class="cb"
-    :disabled="disabled"
-    :positioning="positioning"
+    :allow-custom-value="allowCustomValues"
     @input-value-change="handleInputChange"
+    @value-change="handleValueChange"
   >
-    <!-- @input-value-change="handleInputChange" -->
-    <!-- @value-change="handleValueChange" -->
-    <Combobox.Label class="cb-label">
-      {{ props.title }}
-      <!-- <span v-if="required" class="cb-required" aria-hidden="true">*</span> -->
-    </Combobox.Label>
-
-    <Combobox.Control
-      class="cb-control"
-      :class="{ 'cb-control--disabled': disabled }"
-    >
-      <div class="cb-input-wrapper">
-        <!-- :value="inputValue" -->
-        <Combobox.Input
-          class="cb-input"
-          placeholder="hello"
-          :aria-disabled="disabled"
-        />
-        <!-- :placeholder="props.inputPlaceholder" -->
-        <Combobox.ClearTrigger
-          v-if="selectedItemKeys.length > 0 && !disabled"
-          class="cb-clear-trigger"
-          aria-label="Clear selection"
-        >
-          ×
-        </Combobox.ClearTrigger>
-        <Combobox.Trigger class="cb-trigger" aria-label="Toggle dropdown">
-          ▼
-        </Combobox.Trigger>
-      </div>
+    <Combobox.Label class="alt-combobox-label">{{ title }}</Combobox.Label>
+    <Combobox.Control class="alt-combobox-control">
+      <Combobox.Input 
+        class="alt-combobox-input" 
+        :placeholder="inputPlaceholder" 
+        @blur="handleBlur"
+      />
+      <Combobox.ClearTrigger class="alt-combobox-clear-trigger">×</Combobox.ClearTrigger>
+      <Combobox.Trigger class="alt-combobox-trigger">▼</Combobox.Trigger>
     </Combobox.Control>
-
     <Teleport to="body">
-      <Combobox.Positioner class="cb-positioner">
-        <Combobox.Content
-          class="cb-content"
-          :style="{ maxHeight: `${props.maxHeight}rem` }"
-        >
-          <!-- <div v-if="props.showActions" class="cb-actions">
-            <button
-              class="cb-action-btn"
-              type="button"
-              :disabled="disabled"
-              aria-label="Select all items"
-              @click="selectAll"
-            >
-              Select All
-            </button>
-            <button
-              class="cb-action-btn"
-              type="button"
-              :disabled="disabled"
-              aria-label="Clear all selections"
-              @click="clearAll"
-            >
-              Clear All
-            </button>
-          </div> -->
-
-          <Combobox.ItemGroup class="cb-item-group">
-            <Combobox.Item
-              v-for="item in collection.items"
-              :key="item.id"
+      <Combobox.Positioner class="alt-combobox-positioner">
+        <Combobox.Content class="alt-combobox-content">
+          <Combobox.ItemGroup class="alt-combobox-item-group">
+            <Combobox.Item 
+              class="alt-combobox-item"
+              v-for="item in collection.items" 
+              :key="typeof item === 'string' ? item : item[labelKey]" 
               :item="item"
-              class="cb-item"
-              :class="{
-                'cb-item--disabled': item.disabled,
-              }"
-              @click="handleItemSelect(item)"
             >
-              <!-- @select="handleItemSelect(item)" -->
-              <div class="cb-item-content">
-                <!-- <slot name="itemIcon" :item="item.value" /> -->
-                <Combobox.ItemText>
-                  <slot name="itemLabel" :item="item">
-                    {{ item[labelKey] }}
-                  </slot>
-                </Combobox.ItemText>
-              </div>
-              <!-- <Combobox.ItemIndicator
-                v-if="item.value.active"
-                class="cb-item-indicator"
-                aria-hidden="true"
-              >
-                ✓
-              </Combobox.ItemIndicator> -->
+              <Combobox.ItemText class="alt-combobox-item-text">
+                {{ typeof item === 'string' ? item : item[labelKey] }}
+              </Combobox.ItemText>
+              <!-- <Combobox.ItemIndicator class="alt-combobox-item-indicator">✓</Combobox.ItemIndicator> -->
             </Combobox.Item>
+            <!-- <div v-if="collection.items.length === 0" class="empty-message">
+              No results found
+            </div> -->
           </Combobox.ItemGroup>
         </Combobox.Content>
       </Combobox.Positioner>
@@ -316,178 +132,135 @@ function handleItemSelect(item: ComboboxItem) {
 </template>
 
 <style scoped>
-.cb {
+.empty-message {
+  padding: 8px 12px;
+  color: #999;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Combobox base styles */
+:deep(.ark-combobox__root),
+.alt-combobox {
+  position: relative;
   width: 100%;
-  max-width: 20rem;
 }
 
-.cb-label {
-  display: inline-flex;
-  gap: var(--alt-space-1);
-  margin-bottom: var(--alt-space-1);
-  font-size: var(--alt-font-size-0);
-  color: var(--alt-c-text-2);
+:deep(.ark-combobox__label),
+.alt-combobox-label {
+  display: block;
+  margin-bottom: var(--alt-space-2);
+  font-weight: var(--alt-font-weight-medium);
 }
 
-.cb-required {
-  color: var(--alt-c-danger);
-}
-
-.cb-control {
+:deep(.ark-combobox__control),
+.alt-combobox-control {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--alt-space-2);
   width: 100%;
-  padding: var(--alt-space-2);
+  height: 40px;
   border: 1px solid var(--alt-c-border);
   border-radius: var(--alt-radius-base);
-  background-color: var(--alt-c-surface-1);
-  transition: all var(--alt-transition-base);
-}
-
-.cb-control:focus-within:not(.cb-control--disabled) {
-  border-color: var(--alt-c-brand-1);
-  box-shadow: var(--alt-shadow-1);
-}
-
-.cb-control--disabled {
-  background-color: var(--alt-c-surface-2);
-  cursor: not-allowed;
-}
-
-.cb-input-wrapper {
-  display: flex;
-  flex: 1;
-  min-width: 7.5rem;
-  max-width: 100%;
-  align-items: center;
-  gap: var(--alt-space-1);
+  background: var(--alt-c-surface-1);
   overflow: hidden;
 }
 
-.cb-input {
+:deep(.ark-combobox__input),
+.alt-combobox-input {
   flex: 1;
-  height: 1.5rem;
-  padding: 0;
+  height: 100%;
+  padding: 0 var(--alt-space-3);
   border: none;
   background: transparent;
-  font-size: var(--alt-font-size-0);
   color: var(--alt-c-text-1);
-  min-width: 0;
+  font-size: var(--alt-font-size-1);
 }
 
-.cb-input::placeholder {
-  color: var(--alt-c-text-3);
+:deep(.ark-combobox__input:focus),
+.alt-combobox-input:focus {
+  outline: none;
 }
 
-.cb-input:disabled {
-  cursor: not-allowed;
-}
-
-.cb-trigger,
-.cb-clear-trigger {
+:deep(.ark-combobox__trigger),
+.alt-combobox-trigger {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  padding: 0;
+  width: 40px;
+  height: 100%;
   border: none;
   background: transparent;
-  color: var(--alt-c-text-3);
+  color: var(--alt-c-text-2);
   cursor: pointer;
-  transition: color var(--alt-transition-base);
 }
 
-.cb-trigger:hover:not(:disabled),
-.cb-clear-trigger:hover:not(:disabled) {
-  color: var(--alt-c-text-1);
+:deep(.ark-combobox__clear-trigger),
+.alt-combobox-clear-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--alt-c-text-2);
+  cursor: pointer;
 }
 
-.cb-trigger:disabled,
-.cb-clear-trigger:disabled {
-  cursor: not-allowed;
-}
-
-.cb-positioner {
-  margin-top: var(--alt-space-1);
-  z-index: var(--alt-z-dropdown);
-}
-
-.cb-content {
-  background-color: var(--alt-c-surface-1);
+:deep(.ark-combobox__content),
+.alt-combobox-content {
+  /* width: var(--width, 260px); */
+  /* max-height: var(--height, 360px); */
+  overflow-y: auto;
   border: 1px solid var(--alt-c-border);
   border-radius: var(--alt-radius-base);
-  box-shadow: var(--alt-shadow-3);
-  padding: var(--alt-space-1);
-  overflow-y: auto;
+  background: var(--alt-c-surface-1);
+  box-shadow: var(--alt-shadow-md);
+  z-index: 1000;
 }
 
-.cb-actions {
-  display: flex;
-  gap: var(--alt-space-2);
-  padding: var(--alt-space-2);
-  border-bottom: 1px solid var(--alt-c-border);
+:deep(.ark-combobox__item-group),
+.alt-combobox-item-group {
+  padding: var(--alt-space-1) 0;
 }
 
-.cb-action-btn {
-  flex: 1;
-  padding: var(--alt-space-1) var(--alt-space-2);
-  border: none;
-  background: var(--alt-c-surface-2);
+:deep(.ark-combobox__item-group-label) {
+  padding: var(--alt-space-1) var(--alt-space-3);
+  font-size: var(--alt-font-size-0);
+  font-weight: var(--alt-font-weight-medium);
   color: var(--alt-c-text-2);
-  border-radius: var(--alt-radius-sm);
-  cursor: pointer;
-  transition: all var(--alt-transition-base);
 }
 
-.cb-action-btn:hover:not(:disabled) {
-  background: var(--alt-c-surface-3);
-  color: var(--alt-c-text-1);
-}
-
-.cb-action-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.cb-item {
-  position: relative;
+:deep(.ark-combobox__item),
+.alt-combobox-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: var(--alt-space-2) var(--alt-space-3);
-  border-radius: var(--alt-radius-sm);
+  background: transparent;
+  border: none;
+  text-align: left;
   cursor: pointer;
-  user-select: none;
-  color: var(--alt-c-text-2);
-  background-color: var(--alt-c-surface-1);
-  transition: all var(--alt-transition-base);
 }
 
-.cb-item[data-highlighted]:not(.cb-item--disabled) {
-  background-color: var(--alt-c-surface-2);
+:deep(.ark-combobox__item[data-selected]),
+.alt-combobox-item[data-selected] {
+  background: var(--alt-c-surface-2);
+}
+
+:deep(.ark-combobox__item[data-highlighted]),
+.alt-combobox-item[data-highlighted] {
+  background: var(--alt-c-surface-2);
+}
+
+:deep(.ark-combobox__item-text),
+.alt-combobox-item-text {
   color: var(--alt-c-text-1);
+  font-size: var(--alt-font-size-1);
 }
 
-.cb-item[data-selected]:not(.cb-item--disabled) {
-  color: var(--alt-c-text-1);
-}
-
-.cb-item--disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.cb-item-content {
-  display: flex;
-  align-items: center;
-  gap: var(--alt-space-3);
-}
-
-.cb-item-indicator {
-  color: var(--alt-c-brand-1);
-  font-size: var(--alt-font-size-00);
+:deep(.ark-combobox__item-indicator),
+.alt-combobox-item-indicator {
+  color: var(--alt-c-brand-1-500);
 }
 </style>
