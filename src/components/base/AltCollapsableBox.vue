@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+// import { ref, watch, onMounted } from 'vue';
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     default: "",
@@ -10,39 +10,43 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  modelValue: {
-    type: Boolean,
-    default: true,
-  },
+  // modelValue: {
+  //   type: Boolean,
+  //   default: true,
+  // },
 });
 
-const emit = defineEmits(['update:modelValue']);
+// const emit = defineEmits(['update:modelValue']);
 
-const isOpen = ref(props.modelValue);
+const isOpen = defineModel<boolean>('modelValue', { required: true });
 
 // Watch for external changes to modelValue
-watch(() => props.modelValue, (newValue) => {
-  if (newValue !== isOpen.value) {
-    isOpen.value = newValue;
-  }
-});
+// watch(() => props.modelValue, (newValue) => {
+//   if (newValue !== isOpen.value) {
+//     isOpen.value = newValue;
+//   }
+// });
 
 // Handle toggle
-function handleToggle() {
-  isOpen.value = !isOpen.value;
-  emit('update:modelValue', isOpen.value);
-}
+// function handleToggle() {
+//   isOpen.value = !isOpen.value;
+//   // emit('update:modelValue', isOpen.value);
+// }
 
-onMounted(() => {
-  isOpen.value = props.modelValue;
-});
+// onMounted(() => {
+//   isOpen.value = props.modelValue;
+// });
 </script>
 
 <template>
-  <div class="collapsable-hint">
-    <div class="summary" @click="handleToggle">
-      <div class="summary-icon" :class="{ 'is-open': isOpen }"></div>
-      <div class="summary-title">{{ title }}</div>
+  <div class="collapsable-box">
+    <div @click="isOpen = !isOpen" :class="{ 'is-open': isOpen }">
+      <slot name="title">
+        <div class="summary">
+          <div class="summary-icon"></div>
+          <div class="summary-title">{{ title }}</div>
+        </div>
+      </slot>
     </div>
     <div class="content-container" :class="{ 'is-open': isOpen }">
       <div class="content-inner">
@@ -55,7 +59,7 @@ onMounted(() => {
 </template>
 
 <style>
-.collapsable-hint {
+.collapsable-box {
   h2 {
     margin-top: 0;
   }
@@ -75,7 +79,7 @@ onMounted(() => {
 </style>
 
 <style scoped>
-.collapsable-hint {
+.collapsable-box {
   max-width: 40rem;
 }
 
@@ -118,7 +122,7 @@ onMounted(() => {
     transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
   }
   
-  &.is-open::before {
+  &.is-open &::before {
     transform: translateY(-50%) rotate(45deg);
   }
 }

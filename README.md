@@ -53,7 +53,7 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', or 'system'
 
 - `AltButton`: Versatile button component with various styles and states
 - `AltCarousel`: Content carousel with customizable navigation
-- `AltCollapsableHint`: Expandable hint text container
+- `AltCollapsableBox`: Expandable hint text container
 - `AltDialog`: Modal dialog with customizable content
 - `AltEditableTable`: Interactive table with editable cells
 - `AltEditableText`: Text field that can be toggled between view and edit modes

@@ -8,5 +8,5 @@ export { default as AltTable } from "./AltTable.vue";
 export { default as AltTabs } from "./AltTabs.vue";
 export { default as AltToggleGroup } from "./AltToggleGroup.vue";
 export { default as AltSegmentGroup } from "./AltSegmentGroup.vue";
-export { default as AltCollapsableHint } from "./AltCollapsableHint.vue";
+export { default as AltCollapsableBox } from "./AltCollapsableBox.vue";
 export { default as AltCarousel } from "./AltCarousel.vue";

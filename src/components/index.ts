@@ -24,7 +24,7 @@ export { default as AltSelect } from "./form/AltSelect.vue";
 export { default as AltEditableText } from "./base/AltEditableText.vue";
 export { default as AltEditableTable } from "./base/AltEditableTable.vue";
 export { default as AltToaster } from "./base/AltToaster.vue";
-export { default as AltCollapsableHint } from "./base/AltCollapsableHint.vue";
+export { default as AltCollapsableBox } from "./base/AltCollapsableBox.vue";
 export { toast, toaster } from "../utils/toaster";
 
 export { default as AltDialog } from "./base/AltDialog.vue";
