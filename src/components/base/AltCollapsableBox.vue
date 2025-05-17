@@ -40,7 +40,7 @@ const isOpen = defineModel<boolean>('modelValue', { required: true });
 
 <template>
   <div class="collapsable-box">
-    <div @click="isOpen = !isOpen" :class="{ 'is-open': isOpen }">
+    <div @click="isOpen = !isOpen" class="summary-container" :class="{ 'is-open': isOpen }">
       <slot name="title">
         <div class="summary">
           <div class="summary-icon"></div>
