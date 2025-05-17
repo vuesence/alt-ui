@@ -23,6 +23,17 @@ function loadIcons() {
     const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
     imageResources.set(name, module as string);
   }
+
+  // Add WebP image loading
+  modules = import.meta.glob("@/assets/images/**/*.webp", {
+    query: "?url",
+    import: "default",
+    eager: true,
+  });
+  for (const [fileName, module] of Object.entries(modules)) {
+    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -5);
+    imageResources.set(name, module as string);
+  }
 }
 
 function getSvgIcon(name: string): string | undefined {
