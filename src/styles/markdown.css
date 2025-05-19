@@ -10,18 +10,18 @@
   h1 { font-size: var(--alt-font-size-6); }
   h2 { 
     font-size: var(--alt-font-size-5);
-    margin-top: var(--alt-space-9);
+    margin-top: var(--alt-space-4);
     margin-bottom: var(--alt-space-6);
   }
   h3 { 
     font-size: var(--alt-font-size-4);
-    margin-top: var(--alt-space-7);
+    margin-top: var(--alt-space-4);
     margin-bottom: var(--alt-space-4);
   }
 
   h4 { 
     font-size: var(--alt-font-size-3);
-    margin-top: var(--alt-space-6);
+    margin-top: var(--alt-space-4);
     margin-bottom: var(--alt-space-3);
   }
 
@@ -88,7 +88,8 @@
   details {
     margin: var(--alt-space-2) 0;    
     &[open] .ds {
-      color: var(--alt-c-text-1);
+      /* color: var(--alt-c-text-1); */
+      color: var(--alt-c-brand-1-600);
     }
     & > div {
       margin-top: var(--alt-space-4);
@@ -97,9 +98,14 @@
   
   details .ds { 
     font-size: var(--alt-font-size-3);
-    color: var(--alt-c-text-3);
+    color: var(--alt-c-brand-1-900);
     margin-top: var(--alt-space-1);
     margin-bottom: var(--alt-space-1);      
+    
+  }
+  
+  details summary:hover {
+    color: var(--alt-c-brand-1-300);
   }
 
   /* Summary styling */
@@ -126,10 +132,6 @@
     transition: transform 0.3s ease;
   }
 
-  details summary:hover {
-    color: var(--alt-c-text-1);
-  }
-
   /* Arrow rotation */
   details[open] summary::before {
     transform: rotate(90deg);
@@ -154,5 +156,6 @@
   details[open] > div {
     grid-template-rows: 1fr;
     opacity: 1;
+    margin-bottom: var(--alt-space-6);
   }
 }
