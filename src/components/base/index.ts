@@ -2,6 +2,7 @@ export { default as AltButton } from "./AltButton.vue";
 export { default as AltIcon } from "./AltIcon.vue";
 export { default as AltDialog } from "./AltDialog.vue";
 export { default as AltHoverCard } from "./AltHoverCard.vue";
+export { default as AltInfoTooltip } from "./AltInfoTooltip.vue";
 export { default as AltMenu } from "./AltMenu.vue";
 export { default as AltSpinner } from "./AltSpinner.vue";
 export { default as AltTable } from "./AltTable.vue";
