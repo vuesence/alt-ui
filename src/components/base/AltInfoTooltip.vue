@@ -74,7 +74,7 @@ defineProps<AltInfoTooltipProps>();
 // Состояние для мобильных устройств
 const isTooltipOpen = ref(false);
 const isTouchDevice = ref(false);
-const triggerRef = ref<HTMLElement>();
+const triggerRef = ref<HTMLElement | null>(null);
 
 // Определение тач-устройства
 onMounted(() => {
@@ -90,16 +90,24 @@ const handleTouchStart = (event: TouchEvent) => {
 };
 
 const handleClickOutside = (event: Event) => {
-  if (isTooltipOpen.value && triggerRef.value && !triggerRef.value.contains(event.target as Node)) {
-    isTooltipOpen.value = false;
+  if (isTooltipOpen.value && triggerRef.value) {
+    const target = event.target as Node;
+    const triggerElement = (triggerRef.value as any)?.$el || triggerRef.value;
+    
+    if (triggerElement && typeof triggerElement.contains === 'function' && !triggerElement.contains(target)) {
+      isTooltipOpen.value = false;
+    }
   }
 };
 
 // Добавляем обработчики только для тач-устройств
 onMounted(() => {
   if (isTouchDevice.value) {
-    document.addEventListener('touchstart', handleClickOutside, { passive: true });
-    document.addEventListener('click', handleClickOutside);
+    // Используем setTimeout чтобы избежать немедленного закрытия
+    setTimeout(() => {
+      document.addEventListener('touchstart', handleClickOutside, { passive: true });
+      document.addEventListener('click', handleClickOutside);
+    }, 100);
   }
 });
 
