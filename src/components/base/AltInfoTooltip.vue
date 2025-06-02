@@ -1,21 +1,114 @@
 <script setup lang="ts">
+/**
+ * @fileoverview Компонент информационного тултипа с иконкой
+ * @component AltInfoTooltip
+ * @example
+ * <AltInfoTooltip 
+ *   text="Подсказка для пользователя" 
+ *   :positioning="{ placement: 'top' }"
+ * />
+ */
+
 import { Tooltip } from "@ark-ui/vue/tooltip";
+import { ref, onMounted, onUnmounted } from "vue";
 import AltIcon from "./AltIcon.vue";
 
-defineProps<{
+/**
+ * Props для компонента AltInfoTooltip
+ */
+export interface AltInfoTooltipProps {
+  /**
+   * Текст тултипа для отображения
+   * @default undefined
+   */
   text?: string;
+  
+  /**
+   * Настройки позиционирования тултипа
+   * @default undefined
+   */
   positioning?: {
+    /** Позиция тултипа относительно триггера */
     placement?: "top" | "bottom" | "left" | "right";
+    /** Отступ от триггера в пикселях */
     gutter?: number;
+    /** Стратегия позиционирования */
     strategy?: "absolute" | "fixed";
+    /** Дополнительные отступы */
     offset?: { mainAxis?: number; crossAxis?: number };
   };
+  
+  /**
+   * Задержка перед показом тултипа (мс)
+   * @default 100
+   */
   openDelay?: number;
+  
+  /**
+   * Задержка перед скрытием тултипа (мс)
+   * @default 300
+   */
   closeDelay?: number;
+  
+  /**
+   * Показывать ли стрелку тултипа
+   * @default false
+   */
   showArrow?: boolean;
+  
+  /**
+   * Размер иконки в пикселях
+   * @default 16
+   */
   size?: number;
+  
+  /**
+   * Цвет иконки (CSS переменная или hex)
+   * @default 'var(--alt-c-text-3)'
+   */
   iconColor?: string;
-}>();
+}
+
+defineProps<AltInfoTooltipProps>();
+
+// Состояние для мобильных устройств
+const isTooltipOpen = ref(false);
+const isTouchDevice = ref(false);
+const triggerRef = ref<HTMLElement>();
+
+// Определение тач-устройства
+onMounted(() => {
+  isTouchDevice.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+});
+
+// Обработчики для мобильных устройств
+const handleTouchStart = (event: TouchEvent) => {
+  if (isTouchDevice.value) {
+    event.preventDefault();
+    isTooltipOpen.value = !isTooltipOpen.value;
+  }
+};
+
+const handleClickOutside = (event: Event) => {
+  if (isTooltipOpen.value && triggerRef.value && !triggerRef.value.contains(event.target as Node)) {
+    isTooltipOpen.value = false;
+  }
+};
+
+// Добавляем обработчики только для тач-устройств
+onMounted(() => {
+  if (isTouchDevice.value) {
+    document.addEventListener('touchstart', handleClickOutside, { passive: true });
+    document.addEventListener('click', handleClickOutside);
+  }
+});
+
+onUnmounted(() => {
+  if (isTouchDevice.value) {
+    document.removeEventListener('touchstart', handleClickOutside);
+    document.removeEventListener('click', handleClickOutside);
+  }
+});
 </script>
 
 <template>
@@ -23,8 +116,14 @@ defineProps<{
     :positioning="positioning"
     :open-delay="openDelay || 100"
     :close-delay="closeDelay || 300"
+    :open="isTouchDevice ? isTooltipOpen : undefined"
   >
-    <Tooltip.Trigger class="info-tooltip-trigger">
+    <Tooltip.Trigger 
+      ref="triggerRef"
+      class="info-tooltip-trigger"
+      @touchstart="handleTouchStart"
+      @click="isTouchDevice ? (event: Event) => event.preventDefault() : undefined"
+    >
       <AltIcon
         name="info"
         :size="size || 16"
@@ -58,8 +157,17 @@ defineProps<{
   padding: 0;
   margin: 0;
   transition: color var(--alt-transition-colors);
+  /* Улучшенная поддержка тач-устройств */
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
   
   &:hover .info-icon {
+    color: var(--alt-c-text-2);
+  }
+  
+  /* Поддержка тач-устройств */
+  &:active .info-icon {
     color: var(--alt-c-text-2);
   }
   
@@ -67,6 +175,12 @@ defineProps<{
     outline: 2px solid var(--alt-c-border);
     outline-offset: 2px;
     border-radius: var(--alt-radius-sm);
+  }
+
+  /* Увеличенная область касания для мобильных */
+  @media (pointer: coarse) {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 
@@ -93,6 +207,8 @@ defineProps<{
   font-size: var(--alt-font-size-0);
   color: var(--alt-c-text-2);
   line-height: var(--alt-line-height-2);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .arrow {
