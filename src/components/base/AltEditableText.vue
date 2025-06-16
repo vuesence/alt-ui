@@ -159,6 +159,7 @@ const props = defineProps({
   color: var(--alt-c-text-1);
   padding: var(--alt-space-1) 0;
   border-radius: var(--alt-radius-base);
+  margin-bottom: var(--alt-space-4);
   
   &:hover {
     color: var(--alt-c-brand-1-500);

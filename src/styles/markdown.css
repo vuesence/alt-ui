@@ -53,6 +53,10 @@
     }
   }
 
+  pre {
+    line-height: 0.7;
+  }
+
   /* Code */
   code {
     font-family: var(--alt-font-family-mono);
