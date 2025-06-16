@@ -19,11 +19,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  type: {
+    type: String as () => "button" | "submit" | "reset",
+    default: "button",
+  },
 });
 
 const emit = defineEmits(["click"]);
 
 function click(event: MouseEvent) {
+  // If this is a submit button, don't interfere with normal submit behavior
+  // The form's @submit.prevent will handle preventing default
+  if (props.type === "submit") {
+    return;
+  }
+  
   if (props.to) {
     const to = typeof props.to === "object" ? props.to : { name: props.to };
     router.push(to);
@@ -34,7 +44,7 @@ function click(event: MouseEvent) {
 </script>
 
 <template>
-  <button class="base-button" :disabled="disabled" @click="click">
+  <button :type="type" class="base-button alt-button" :disabled="disabled" @click="click">
     <slot />
     <AltSpinner v-if="loading" class="spinner" />
   </button>

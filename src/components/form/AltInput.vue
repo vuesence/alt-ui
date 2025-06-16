@@ -50,7 +50,7 @@ const modelValue = defineModel<string | number | boolean>();
       :placeholder="props.placeholder"
       :required="props.required"
       :disabled="props.disabled"
-      class="base-input"
+      class="base-input alt-input"
       :class="[props.state, { disabled: props.disabled }]"
     />
   </div>

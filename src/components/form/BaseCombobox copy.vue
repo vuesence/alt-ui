@@ -129,7 +129,7 @@ const collection = computed(() =>
     items: filteredItems.value,
     itemToString: (item) => item.label,
     itemToValue: (item) => item.id,
-    getDisabled: (item) => item.disabled ?? false,
+    // getDisabled: (item) => item.disabled ?? false,
   }),
 );
 

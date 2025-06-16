@@ -23,7 +23,7 @@ import {
   AltTabs,
   AltToggleGroup,
   AltSegmentGroup,
-  AltCollapsableHint,
+  AltCollapsableBox,
   AltCarousel,
   AltEditableTable,
   AltEditableText,

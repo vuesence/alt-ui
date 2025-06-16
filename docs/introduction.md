@@ -21,7 +21,7 @@ Alt-UI — современная библиотека компонентов п
 - AltTabs
 - AltToggleGroup
 - AltSegmentGroup
-- AltCollapsableHint
+- AltCollapsableBox
 - AltCarousel
 - AltEditableTable
 - AltEditableText
