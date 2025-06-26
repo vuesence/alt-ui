@@ -18,7 +18,7 @@ defineProps({
 
 // const emit = defineEmits(['update:modelValue']);
 
-const isOpen = defineModel<boolean>('modelValue', { required: true });
+const isOpen = defineModel<boolean>('modelValue');
 
 // Watch for external changes to modelValue
 // watch(() => props.modelValue, (newValue) => {
