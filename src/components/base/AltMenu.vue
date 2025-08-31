@@ -23,29 +23,36 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  closeOnSelect: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>
 
 <template>
-  <Menu.Root>
+  <Menu.Root :close-on-select="closeOnSelect">
     <Menu.Trigger class="menu-trigger">
       <slot name="trigger" />
       <Menu.Indicator v-if="showTriggerIndicator" class="menu-indicator"
         >▼</Menu.Indicator
       >
     </Menu.Trigger>
-    <Menu.Positioner>
+    <Menu.Positioner class="menu-positioner">
       <Menu.Content class="menu-content">
-        <Menu.Item
-          v-for="item in items"
-          :key="item[labelKey]"
-          :value="item[valueKey]"
-          class="menu-item"
-        >
-          <slot :item="item">
-            {{ item[labelKey] }}
-          </slot>
-        </Menu.Item>
+        <!-- Use custom content slot if provided, otherwise use default items rendering -->
+        <slot name="content">
+          <Menu.Item
+            v-for="item in items"
+            :key="item[labelKey]"
+            :value="item[valueKey]"
+            class="menu-item"
+          >
+            <slot :item="item">
+              {{ item[labelKey] }}
+            </slot>
+          </Menu.Item>
+        </slot>
       </Menu.Content>
     </Menu.Positioner>
   </Menu.Root>
@@ -78,13 +85,20 @@ defineProps({
   transform: rotate(180deg);
 }
 
+.menu-positioner {
+  position: relative;
+  z-index: var(--alt-z-dropdown);
+}
+
 .menu-content {
   background-color: var(--alt-c-surface-1);
   border-radius: var(--alt-radius-base);
-  box-shadow: var(--alt-shadow-2);
+  border: 1px solid var(--alt-c-border);
+  box-shadow: var(--alt-shadow-3);
   min-width: 180px;
   transform-origin: top;
   animation: menuSlide var(--alt-transition-base);
+  z-index: var(--alt-z-dropdown);
   &:focus-visible {
     outline: 1px solid var(--alt-c-brand-2);
   }

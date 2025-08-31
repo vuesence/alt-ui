@@ -61,17 +61,17 @@ const tableColumns: TableColumnDefinition[] = [
     sortable: true,
   },
 ];
-const tableItems: TableRow[] = [
-  { id: "1", cells: { id: "1", name: "John Doe", email: "john@example.com" } },
-  {
-    id: "2",
-    cells: { id: "2", name: "Jane Smith", email: "jane@example.com" },
-  },
-  {
-    id: "3",
-    cells: { id: "3", name: "Bob Johnson", email: "bob@example.com" },
-  },
-];
+// const tableItems: TableRow[] = [
+//   { id: "1", cells: { id: "1", name: "John Doe", email: "john@example.com" } },
+//   {
+//     id: "2",
+//     cells: { id: "2", name: "Jane Smith", email: "jane@example.com" },
+//   },
+//   {
+//     id: "3",
+//     cells: { id: "3", name: "Bob Johnson", email: "bob@example.com" },
+//   },
+// ];
 
 // Segment group demo data
 const segmentValue = ref("1");
@@ -163,12 +163,12 @@ const menuItems = [
       </div>
     </section>
 
-    <section>
+    <!-- <section>
       <h2>Table</h2>
       <div class="component-group">
         <AltTable :columns="tableColumns" :data="tableItems" />
       </div>
-    </section>
+    </section> -->
 
     <section>
       <h2>Segment Group</h2>
