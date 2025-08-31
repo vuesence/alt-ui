@@ -69,16 +69,11 @@ const selectedLabel = computed(() => {
       {{ props.label }}
     </label>
 
-    <div
-      class="base-select__wrapper"
-      :class="{
-        'base-select__wrapper--active': selectedValue,
-      }"
-    >
+    <div class="base-select__wrapper">
       <select
         v-model="selectedValue"
         :disabled="props.disabled"
-        class="base-select__native alt-select__native"
+        class="base-select__native"
       >
         <option v-if="props.placeholder" value="" disabled hidden>
           {{ props.placeholder }}
@@ -88,7 +83,6 @@ const selectedLabel = computed(() => {
           :key="option.value"
           :value="option.value"
           :disabled="option.disabled"
-          class="option"
         >
           {{ option.label }}
         </option>
@@ -132,6 +126,34 @@ const selectedLabel = computed(() => {
   opacity: 0;
   cursor: pointer;
   z-index: 2;
+  
+  /* Hide default arrow in WebKit browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  /* Options styling for when dropdown is open */
+  option {
+    padding: 12px 16px;
+    font-size: 1rem;
+    background: var(--alt-c-surface-1);
+    color: var(--alt-c-text-1);
+    
+    &:hover {
+      background: var(--alt-c-surface-2);
+    }
+    
+    &:checked {
+      background: var(--alt-c-brand-1-100);
+      color: var(--alt-c-brand-1-700);
+      font-weight: var(--alt-font-weight-medium);
+    }
+    
+    &:disabled {
+      color: var(--alt-c-text-3);
+      opacity: 0.5;
+    }
+  }
 }
 
 .base-select__display {
@@ -143,9 +165,11 @@ const selectedLabel = computed(() => {
   border-radius: var(--alt-radius-base);
   background: var(--alt-c-surface-1);
   color: var(--alt-c-text-1);
+  font-size: var(--alt-font-size-2);
   transition:
     border-color var(--alt-transition-colors),
     box-shadow var(--alt-transition-colors);
+  pointer-events: none;
 }
 
 .base-select__display-text {
@@ -168,6 +192,10 @@ const selectedLabel = computed(() => {
   cursor: not-allowed;
 }
 
+.base-select--disabled .base-select__native {
+  cursor: not-allowed;
+}
+
 .base-select__native:focus + .base-select__display {
   border-color: var(--alt-c-brand-1-500);
   box-shadow: var(--alt-focus-ring);
@@ -177,8 +205,11 @@ const selectedLabel = computed(() => {
   border-color: var(--alt-c-brand-1-400);
 }
 
-.option {
-  color: var(--alt-c-text-1);
-  padding: var(--alt-space-3);
+/* Improved styling for options in different browsers */
+.base-select__native option {
+  padding: 12px 16px !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  min-height: 2.5rem !important;
 }
 </style>
