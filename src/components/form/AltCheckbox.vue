@@ -16,6 +16,10 @@ interface AltCheckboxProps {
    * Whether the checkbox is in indeterminate state
    */
   indeterminate?: boolean;
+  /**
+   * Label text for the checkbox
+   */
+  label?: string;
 }
 
 const props = withDefaults(defineProps<AltCheckboxProps>(), {
@@ -44,6 +48,10 @@ const checked = computed({
     :disabled="props.disabled"
     class="base-checkbox"
   >
+    <Checkbox.Label class="checkbox-label">
+      <span v-if="props.label">{{ props.label }}</span>
+      <slot />
+    </Checkbox.Label>
     <Checkbox.Control class="checkbox-control">
       <Checkbox.Indicator>
         <AltIcon name="check" size="18" class="checkbox-icon" />
@@ -52,9 +60,6 @@ const checked = computed({
         <AltIcon name="minus" size="18" class="checkbox-icon" />
       </Checkbox.Indicator>
     </Checkbox.Control>
-    <Checkbox.Label class="checkbox-label">
-      <slot />
-    </Checkbox.Label>
     <Checkbox.HiddenInput />
   </Checkbox.Root>
 </template>
@@ -112,10 +117,12 @@ const checked = computed({
   display: flex;
   align-items: center;
   gap: var(--alt-space-2);
+  cursor: pointer;
 }
 
 .base-checkbox[data-disabled] .checkbox-label {
   color: var(--alt-c-text-3);
+  cursor: not-allowed;
 }
 
 /* Focus styles */
@@ -125,7 +132,11 @@ const checked = computed({
 }
 
 /* Hover styles */
-.checkbox-control[data-hover]:not([data-disabled]) {
+/* .checkbox-control[data-hover]:not([data-disabled]) {
   border-color: var(--alt-c-brand-1-400);
-}
+} */
+
+/* .checkbox-label[data-hover]:not([data-disabled]) {
+  color: var(--alt-c-brand-1-500);
+} */
 </style>

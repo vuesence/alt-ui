@@ -133,13 +133,14 @@ const menuItems = [
     <section>
       <h2>Checkbox</h2>
       <div class="component-group">
-        <AltCheckbox v-model="checkboxValue" label="Basic checkbox" />
+        <AltCheckbox v-model="checkboxValue">Basic checkbox</AltCheckbox>
         <AltCheckbox
           v-model="indeterminateCheckbox"
-          label="Indeterminate checkbox"
           :indeterminate="true"
-        />
-        <AltCheckbox label="Disabled checkbox" disabled />
+        >
+          Indeterminate checkbox
+        </AltCheckbox>
+        <AltCheckbox disabled>Disabled checkbox</AltCheckbox>
       </div>
     </section>
 
