@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { Select, createListCollection } from "@ark-ui/vue/select";
 
 export interface SelectOption {
   value: string | number;
@@ -42,19 +43,40 @@ const emit = defineEmits<{
   (e: "change", value: string | number | undefined): void;
 }>();
 
-const selectedValue = computed({
-  get: () => props.modelValue,
-  set: (newValue: string | number | undefined) => {
-    emit("update:modelValue", newValue);
-    emit("change", newValue);
-  },
+// Create a map for fast value lookup
+const valueMap = computed(() => {
+  const map = new Map<string, string | number>();
+  props.options.forEach(option => {
+    map.set(option.value.toString(), option.value);
+  });
+  return map;
 });
 
-const selectedLabel = computed(() => {
-  const selectedItem = props.options.find(
-    (item) => item.value === props.modelValue,
-  );
-  return selectedItem ? selectedItem.label : props.placeholder;
+// Convert options to ark-ui collection format
+const collection = computed(() =>
+  createListCollection({
+    items: props.options.map(option => ({
+      ...option,
+      value: option.value.toString(), // ark-ui expects string values
+    })),
+  })
+);
+
+// Convert modelValue to ark-ui format (array of strings)
+const internalValue = computed({
+  get: () => props.modelValue !== undefined ? [props.modelValue.toString()] : [],
+  set: (newValue: string[]) => {
+    const value = newValue.length > 0 ? newValue[0] : undefined;
+    if (value !== undefined) {
+      // Use map for O(1) lookup instead of O(n) find
+      const finalValue = valueMap.value.get(value) ?? value;
+      emit("update:modelValue", finalValue);
+      emit("change", finalValue);
+    } else {
+      emit("update:modelValue", undefined);
+      emit("change", undefined);
+    }
+  },
 });
 </script>
 
@@ -65,30 +87,45 @@ const selectedLabel = computed(() => {
       'alt-select--disabled': props.disabled,
     }"
   >
-    <label v-if="props.label" class="alt-select__label">
-      {{ props.label }}
-    </label>
-
-    <select
-      v-model="selectedValue"
+    <Select.Root
+      :collection="collection"
+      v-model="internalValue"
       :disabled="props.disabled"
+      :close-on-select="true"
     >
-      <selectedcontent>
-        {{ selectedLabel }}
-      </selectedcontent>
+      <Select.Label v-if="props.label" class="alt-select__label">
+        {{ props.label }}
+      </Select.Label>
 
-      <option v-if="props.placeholder" value="" disabled hidden>
-        {{ props.placeholder }}
-      </option>
-      <option
-        v-for="option in props.options"
-        :key="option.value"
-        :value="option.value"
-        :disabled="option.disabled"
-      >
-        {{ option.label }}
-      </option>
-    </select>
+      <Select.Control>
+        <Select.Trigger class="alt-select__trigger">
+          <Select.ValueText :placeholder="props.placeholder" />
+          <Select.Indicator class="alt-select__indicator">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </Select.Indicator>
+        </Select.Trigger>
+      </Select.Control>
+
+      <Select.Positioner>
+        <Select.Content class="alt-select__content">
+          <Select.ItemGroup>
+            <Select.Item
+              v-for="item in collection.items"
+              :key="item.value"
+              :item="item"
+              :disabled="item.disabled"
+              class="alt-select__item"
+            >
+              <Select.ItemText>{{ item.label }}</Select.ItemText>
+            </Select.Item>
+          </Select.ItemGroup>
+        </Select.Content>
+      </Select.Positioner>
+
+      <Select.HiddenSelect />
+    </Select.Root>
   </div>
 </template>
 
@@ -99,17 +136,16 @@ const selectedLabel = computed(() => {
   flex-direction: column;
   gap: var(--alt-space-2);
 
-  label {
+  .alt-select__label {
     color: var(--alt-c-text-2);
     font-size: var(--alt-font-size-1);
-    margin-bottom: var(--alt-space-2);
   }
 
-  select {
+  .alt-select__trigger {
     width: 100%;
-    appearance: base-select;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: var(--alt-space-3);
     border: 1px solid var(--alt-c-border);
     border-radius: var(--alt-radius-base);
@@ -117,11 +153,11 @@ const selectedLabel = computed(() => {
     color: var(--alt-c-text-1);
     font-size: var(--alt-font-size-2);
     cursor: pointer;
-    transition: var(--alt-transition-colors);
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 
     &:hover:not(:disabled) {
       border-color: var(--alt-c-brand-1-400);
-      background: var(--alt-c-surface-2);
+      background: var(--alt-c-surface-3);
     }
 
     &:focus-visible {
@@ -131,85 +167,66 @@ const selectedLabel = computed(() => {
     }
   }
 
-  selectedcontent {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
+  .alt-select__indicator {
+    color: var(--alt-c-text-3);
+    transition: transform var(--alt-transition-fast);
+    display: flex;
+    align-items: center;
 
-/* Picker (dropdown) styling */
-select::picker(select) {
-  border: none;
-  border-radius: 0.25rem;
-  background: #ffffff;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  margin-top: 2px;
-}
-
-/* Options styling */
-select option {
-  padding: 0.75rem 1rem;
-  font-size: 1.125rem;
-  background: #ffffff;
-  color: #475569;
-  cursor: pointer;
-  transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
-
-  &:hover {
-    background: #f8fafc;
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
   }
 
-  &:checked {
-    font-weight: bold;
-    /* background: #dbeafe; */
-    /* color: #1d4ed8; */
+  .alt-select__content {
+    border: 1px solid var(--alt-c-border);
+    border-radius: var(--alt-radius-base);
+    background: var(--alt-c-surface-1);
+    box-shadow: var(--alt-shadow-2);
+    margin-top: var(--alt-space-1);
   }
 
-  &:disabled {
-    color: #94a3b8;
-    cursor: not-allowed;
+  .alt-select__item {
+    display: flex;
+    align-items: center;
+    padding: var(--alt-space-3) var(--alt-space-4);
+    font-size: var(--alt-font-size-2);
+    color: var(--alt-c-text-1);
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+
+    &:hover,
+    &[data-highlighted] {
+      background: var(--alt-c-surface-3);
+    }
+
+    &:focus-visible {
+      background: var(--alt-c-surface-3);
+    }
+
+    &[data-disabled] {
+      color: var(--alt-c-text-3);
+      cursor: not-allowed;
+
+      &:hover,
+      &[data-highlighted] {
+        background: transparent;
+      }
+    }
+
+    &[data-selected] {
+      font-weight: var(--alt-font-weight-medium);
+    }
   }
-}
-
-/* Picker icon styling */
-select::picker-icon {
-  color: #94a3b8;
-  margin-left: auto;
-  transition: transform 250ms;
-}
-
-/* Rotate icon when select is open */
-select:open::picker-icon {
-  transform: rotate(180deg);
 }
 
 /* Disabled state */
 .alt-select--disabled {
-  select {
+  .alt-select__trigger {
     background: var(--alt-c-surface-2);
     color: var(--alt-c-text-3);
     cursor: not-allowed;
-  }
-}
-
-/* Animation for picker */
-select::picker(select) {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 250ms, transform 250ms;
-}
-
-select::picker(select):popover-open {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@starting-style {
-  select::picker(select):popover-open {
-    opacity: 0;
-    transform: translateY(-10px);
   }
 }
 </style>
