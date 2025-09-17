@@ -108,7 +108,7 @@ const internalValue = computed({
         </Select.Trigger>
       </Select.Control>
 
-      <Select.Positioner>
+      <Select.Positioner class="alt-select__positioner">
         <Select.Content class="alt-select__content">
           <Select.ItemGroup>
             <Select.Item
@@ -165,6 +165,10 @@ const internalValue = computed({
       box-shadow: var(--alt-focus-ring);
       background: var(--alt-c-surface-1);
     }
+  }
+
+  .alt-select__positioner {
+    z-index: var(--alt-z-dropdown) !important;
   }
 
   .alt-select__indicator {
