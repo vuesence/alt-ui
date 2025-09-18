@@ -166,6 +166,10 @@ function click(event: MouseEvent) {
     font-size: var(--alt-font-size-0);
     padding: var(--alt-space-2) var(--alt-space-4);
   }
+  &.x-small {
+    font-size: var(--alt-font-size-00);
+    padding: var(--alt-space-1) var(--alt-space-2);
+  }
 
   &.large {
     font-size: var(--alt-font-size-2);
