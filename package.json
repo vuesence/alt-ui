@@ -71,8 +71,5 @@
     "design-system"
   ],
   "author": "Ruslan Makarov",
-  "license": "MIT",
-  "dependencies": {
-    "ark-ui": "^0.0.4"
-  }
+  "license": "MIT"
 }
