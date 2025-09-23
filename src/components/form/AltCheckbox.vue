@@ -48,10 +48,6 @@ const checked = computed({
     :disabled="props.disabled"
     class="base-checkbox"
   >
-    <Checkbox.Label class="checkbox-label">
-      <span v-if="props.label">{{ props.label }}</span>
-      <slot />
-    </Checkbox.Label>
     <Checkbox.Control class="checkbox-control">
       <Checkbox.Indicator>
         <AltIcon name="check" size="18" class="checkbox-icon" />
@@ -60,6 +56,10 @@ const checked = computed({
         <AltIcon name="minus" size="18" class="checkbox-icon" />
       </Checkbox.Indicator>
     </Checkbox.Control>
+    <Checkbox.Label class="checkbox-label">
+      <span v-if="props.label">{{ props.label }}</span>
+      <slot />
+    </Checkbox.Label>
     <Checkbox.HiddenInput />
   </Checkbox.Root>
 </template>
