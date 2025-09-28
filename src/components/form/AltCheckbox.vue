@@ -50,10 +50,10 @@ const checked = computed({
   >
     <Checkbox.Control class="checkbox-control">
       <Checkbox.Indicator>
-        <AltIcon name="check" size="18" class="checkbox-icon" />
+        <AltIcon name="check" size="16" class="checkbox-icon" />
       </Checkbox.Indicator>
       <Checkbox.Indicator indeterminate>
-        <AltIcon name="minus" size="18" class="checkbox-icon" />
+        <AltIcon name="minus" size="16" class="checkbox-icon" />
       </Checkbox.Indicator>
     </Checkbox.Control>
     <Checkbox.Label class="checkbox-label">
