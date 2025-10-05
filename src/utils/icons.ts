@@ -37,7 +37,9 @@ function loadIcons() {
 }
 
 function getSvgIcon(name: string): string | undefined {
-  return svgResources.get(name);
+  // Remove category prefix (e.g., "status/alert-octagon" -> "alert-octagon")
+  const iconName = name.includes("/") ? name.split("/")[1] : name;
+  return svgResources.get(iconName);
 }
 
 function getImageUrl(name: string): string | undefined {

@@ -40,7 +40,11 @@ const isOpen = defineModel<boolean>('modelValue');
 
 <template>
   <div class="collapsable-box">
-    <div @click="isOpen = !isOpen" class="summary-container" :class="{ 'is-open': isOpen }">
+    <div
+      @click="isOpen = !isOpen"
+      class="summary-container"
+      :class="{ 'is-open': isOpen }"
+    >
       <slot name="title">
         <div class="summary">
           <div class="summary-icon"></div>
@@ -75,6 +79,9 @@ const isOpen = defineModel<boolean>('modelValue');
       }
     }
   }
+  /* strong:has(+ br) {
+    margin-bottom: 10px;
+  } */
 }
 </style>
 
@@ -93,7 +100,7 @@ const isOpen = defineModel<boolean>('modelValue');
   outline: 0;
   transition: color 200ms ease;
   margin-bottom: 0.5rem;
-  
+
   &:hover {
     color: var(--alt-c-text-1);
   }
@@ -107,7 +114,7 @@ const isOpen = defineModel<boolean>('modelValue');
   position: relative;
   width: 0.875rem;
   height: 0.875rem;
-  
+
   &::before {
     content: "";
     position: absolute;
@@ -121,7 +128,7 @@ const isOpen = defineModel<boolean>('modelValue');
     transform: translateY(-50%) rotate(-45deg);
     transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
   }
-  
+
   &.is-open &::before {
     transform: translateY(-50%) rotate(45deg);
   }
@@ -132,7 +139,7 @@ const isOpen = defineModel<boolean>('modelValue');
   grid-template-rows: 0fr;
   transition: grid-template-rows 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
   overflow: hidden;
-  
+
   &.is-open {
     grid-template-rows: 1fr;
     margin-bottom: 1rem;
