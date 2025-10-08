@@ -137,6 +137,9 @@ function click(event: MouseEvent) {
       background-color: var(--alt-c-brand-1-600);
       border-color: var(--alt-c-brand-1-600);
     }
+    .base-icon {
+      color: var(--alt-c-white) !important;
+    }
   }
 
   &.secondary {
