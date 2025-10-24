@@ -117,6 +117,6 @@ const svgFillStyle = computed(() => {
 
 .base-icon--svg {
   flex-shrink: 0;
-  fill: currentColor;
+  /* fill: currentColor; */
 }
 </style>
