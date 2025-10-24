@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { getImageUrl, getSvgIcon } from "../../utils/icons";
+import { getImageUrl } from "../../utils/icons";
 import { isNumeric } from "../../utils/string-helpers";
 
 // Define a more strict type for icon types
@@ -15,6 +15,7 @@ interface AltIconProps {
   height?: string | number;
   fill?: string;
   type?: IconType;
+  spritePath?: string;
 }
 
 const props = withDefaults(defineProps<AltIconProps>(), {
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<AltIconProps>(), {
   width: 24,
   height: "auto",
   type: "svg",
+  spritePath: "/assets/images/icons-sprite.svg",
 });
 
 // Compute dimensions with more explicit size handling
@@ -56,8 +58,11 @@ const iconColor = computed(() => {
   return props.color !== "default" ? props.color : "var(--alt-c-brand-1)";
 });
 
-// Determine if icon is an SVG
-const isSvgIcon = computed(() => getSvgIcon(props.name));
+
+// Get icon name for sprite
+const iconName = computed(() => {
+  return props.name.includes("/") ? props.name.split("/")[1] : props.name;
+});
 
 // Compute fill style dynamically
 const svgFillStyle = computed(() => {
@@ -68,8 +73,8 @@ const svgFillStyle = computed(() => {
 </script>
 
 <template>
-  <div
-    v-if="isSvgIcon"
+  <svg
+    v-if="props.type === 'svg'"
     class="base-icon base-icon--svg"
     :data-name="props.name"
     :style="{
@@ -78,8 +83,9 @@ const svgFillStyle = computed(() => {
       color: iconColor,
       ...svgFillStyle,
     }"
-    v-html="getSvgIcon(props.name)"
-  />
+  >
+    <use :href="`${spritePath}#icon-${iconName}`" />
+  </svg>
   <img
     v-else
     class="base-icon base-icon--image"
@@ -111,10 +117,6 @@ const svgFillStyle = computed(() => {
 
 .base-icon--svg {
   flex-shrink: 0;
-}
-
-.base-icon--svg:deep(svg) {
-  width: 100%;
-  height: 100%;
+  fill: currentColor;
 }
 </style>

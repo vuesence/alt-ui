@@ -34,7 +34,10 @@ export { default as AltPromptDialog } from "./components/dialogs/AltPromptDialog
 // Onboarding Components
 export { default as OnboardingTooltip } from "./components/Onboarding/OnboardingTooltip.vue";
 export { useOnboarding } from "./components/Onboarding/useOnboarding";
-export type { OnboardingTooltipConfig, TooltipPlacement } from "./components/Onboarding/useOnboarding";
+export type {
+  OnboardingTooltipConfig,
+  TooltipPlacement,
+} from "./components/Onboarding/useOnboarding";
 
 // Tour Components
 export { default as TourComponent } from "./components/Tour/TourComponent.vue";
@@ -42,7 +45,11 @@ export { default as TourStepContent } from "./components/Tour/TourStepContent.vu
 export { useTourManager } from "./components/Tour/useTourManager";
 export { useTourKeyboardEvents } from "./components/Tour/useTourKeyboardEvents";
 export { Tour } from "./components/Tour/Tour";
-export type { TourData, TourStepData, TourStepAction } from "./components/Tour/types";
+export type {
+  TourData,
+  TourStepData,
+  TourStepAction,
+} from "./components/Tour/types";
 
 // Theme Components
 export { ThemeProvider, themeProvider } from "./components/ThemeProvider";
@@ -55,5 +62,8 @@ export { toast, toaster } from "./utils/toaster";
 
 // Types - export from table
 export * from "./types/table";
-export type { ThemeName, ThemeProviderOptions } from "./components/ThemeProvider";
+export type {
+  ThemeName,
+  ThemeProviderOptions,
+} from "./components/ThemeProvider";
 export type { ThemeToggleOptions } from "./components/ThemeToggle";

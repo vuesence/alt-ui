@@ -33,17 +33,10 @@ function onCellInput(
 
   // Prevent recursive updates
   if (isUpdating.get(target)) {
-    console.log("Skipping recursive update");
     return;
   }
 
   const newValue = target.textContent ?? "";
-
-  // console.log("Input event:", {
-  //   oldValue: row[header.key],
-  //   newValue,
-  //   cursorPosition: window.getSelection()?.focusOffset,
-  // });
 
   // Mark as updating
   isUpdating.set(target, true);
@@ -69,7 +62,6 @@ function initCell(
     const currentValue = (row[header.key] as string) ?? "";
     if (el.textContent !== currentValue) {
       el.textContent = currentValue;
-      console.log("Cell initialized with value:", currentValue);
     }
   }
 }
