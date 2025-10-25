@@ -13,6 +13,7 @@ import { useTourKeyboardEvents } from "./useTourKeyboardEvents";
 import { useTourManager } from "./useTourManager";
 import type { TourData } from "./types";
 import type { Router } from "vue-router";
+import { AltButton } from "../base";
 
 /**
  * Props for TourComponent
@@ -29,6 +30,7 @@ interface TourProps {
     next?: string;
     prev?: string;
     close?: string;
+    endTour?: string;
   };
   /** Router instance */
   router?: Router;
@@ -206,6 +208,13 @@ useTourKeyboardEvents({
 
 <template>
   <div v-if="isTooltipVisible" class="tour-component">
+    <!-- End Tour button in top right corner -->
+    <div class="tour-end-button">
+      <AltButton class="small secondary" @click="handleDismiss">
+        {{ texts?.endTour || 'End Tour' }}
+      </AltButton>
+    </div>
+
     <HoverCard.Root
       :open="isTooltipVisible"
       :positioning="tooltipPositioning"
@@ -263,6 +272,15 @@ useTourKeyboardEvents({
   pointer-events: none;
 }
 
+.tour-end-button {
+  position: fixed;
+  top: var(--alt-space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: calc(var(--alt-z-tooltip) + 2);
+  pointer-events: auto;
+}
+
 .tour-trigger {
   pointer-events: auto;
   position: fixed;
@@ -310,4 +328,4 @@ useTourKeyboardEvents({
     opacity: 1;
   }
 }
-</style> 
+</style>

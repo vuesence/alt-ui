@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 // import { router } from "@/app/router";
 // import type { ButtonProps } from "../types/components";
 import AltSpinner from "./AltSpinner.vue";
+import AltIcon from "./AltIcon.vue";
 
 const router = useRouter();
 
@@ -23,7 +24,26 @@ const props = defineProps({
     type: String as () => "button" | "submit" | "reset",
     default: "button",
   },
+  icon: {
+    type: String,
+    default: "",
+  },
+  label: {
+    type: String,
+    default: "",
+  },
+  hideText: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+// Computed icon size based on button size class
+// const iconSize = computed(() => {
+//   // Get the class from the button element to determine size
+//   // Since we can't access classes directly, we'll use CSS custom properties
+//   return "1em"; // This will match the font size automatically
+// });
 
 const emit = defineEmits(["click"]);
 
@@ -33,7 +53,7 @@ function click(event: MouseEvent) {
   if (props.type === "submit") {
     return;
   }
-  
+
   if (props.to) {
     const to = typeof props.to === "object" ? props.to : { name: props.to };
     router.push(to);
@@ -44,8 +64,15 @@ function click(event: MouseEvent) {
 </script>
 
 <template>
-  <button :type="type" class="base-button alt-button" :disabled="disabled" @click="click">
-    <slot />
+  <button
+    :type="type"
+    class="base-button alt-button"
+    :disabled="disabled"
+    @click="click"
+  >
+    <AltIcon v-if="icon" :name="icon" size="2em" class="button-icon" />
+    <span v-if="label && !hideText" class="button-text">{{ label }}</span>
+    <slot v-else />
     <AltSpinner v-if="loading" class="spinner" />
   </button>
 </template>
@@ -77,9 +104,24 @@ function click(event: MouseEvent) {
     border-color var(--alt-transition-colors),
     box-shadow var(--alt-transition-colors);
 
+  .button-text {
+    margin-top: 2px;
+    margin-left: var(--alt-space-2);
+  }
+
+  .button-icon {
+    opacity: 0.7;
+    flex-shrink: 0;
+    transition: opacity var(--alt-transition-colors);
+  }
+
+
   &:hover:not(:disabled) {
     background-color: var(--alt-c-surface-2);
     border-color: var(--alt-c-brand-1-400);
+    .button-icon {
+      opacity: 1;
+    }
   }
 
   &:focus-visible {
@@ -94,6 +136,9 @@ function click(event: MouseEvent) {
     &:hover:not(:disabled) {
       background-color: var(--alt-c-brand-1-600);
       border-color: var(--alt-c-brand-1-600);
+    }
+    .base-icon {
+      color: var(--alt-c-white) !important;
     }
   }
 
@@ -123,6 +168,14 @@ function click(event: MouseEvent) {
   &.small {
     font-size: var(--alt-font-size-0);
     padding: var(--alt-space-2) var(--alt-space-4);
+    .button-icon {
+      max-height: 16px;
+      max-width: 16px;
+    }
+  }
+  &.x-small {
+    font-size: var(--alt-font-size-00);
+    padding: var(--alt-space-1) var(--alt-space-2);
   }
 
   &.large {
@@ -138,6 +191,7 @@ function click(event: MouseEvent) {
     opacity: 0.6;
     cursor: not-allowed;
   }
+
 }
 
 .spinner {

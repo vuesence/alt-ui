@@ -1,25 +1,32 @@
-.md, 
+.md,
 .content--markdown {
   /* Headings */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: var(--alt-font-weight-bold);
     line-height: var(--alt-line-height-0);
     color: var(--alt-c-text-2);
   }
 
-  h1 { font-size: var(--alt-font-size-6); }
-  h2 { 
+  h1 {
+    font-size: var(--alt-font-size-6);
+  }
+  h2 {
     font-size: var(--alt-font-size-5);
     margin-top: var(--alt-space-4);
     margin-bottom: var(--alt-space-6);
   }
-  h3 { 
+  h3 {
     font-size: var(--alt-font-size-4);
     margin-top: var(--alt-space-4);
     margin-bottom: var(--alt-space-4);
   }
 
-  h4 { 
+  h4 {
     font-size: var(--alt-font-size-3);
     margin-top: var(--alt-space-4);
     margin-bottom: var(--alt-space-3);
@@ -31,13 +38,18 @@
   }
 
   /* Lists */
-  ul, ol {
+  ul,
+  ol {
     padding-left: var(--alt-space-5);
     margin: var(--alt-space-4) 0;
   }
 
-  ul { list-style-type: disc; }
-  ol { list-style-type: decimal; }
+  ul {
+    list-style-type: disc;
+  }
+  ol {
+    list-style-type: decimal;
+  }
 
   li {
     margin-bottom: var(--alt-space-2);
@@ -47,7 +59,7 @@
   a {
     color: var(--alt-c-brand-1);
     text-decoration: underline;
-    
+
     &:hover {
       color: var(--alt-c-brand-2);
     }
@@ -71,8 +83,9 @@
     width: 100%;
     border-collapse: collapse;
     margin: var(--alt-space-6) 0;
-    
-    th, td {
+
+    th,
+    td {
       padding: var(--alt-space-3);
       border: 1px solid var(--alt-c-border);
       text-align: left;
@@ -90,7 +103,7 @@
 
   /* Modern Details Animation with CSS Grid */
   details {
-    margin: var(--alt-space-2) 0;    
+    margin: var(--alt-space-2) 0;
     &[open] .ds {
       /* color: var(--alt-c-text-1); */
       color: var(--alt-c-brand-1-600);
@@ -99,15 +112,14 @@
       margin-top: var(--alt-space-4);
     }
   }
-  
-  details .ds { 
+
+  details .ds {
     font-size: var(--alt-font-size-3);
     color: var(--alt-c-brand-1-900);
     margin-top: var(--alt-space-1);
-    margin-bottom: var(--alt-space-1);      
-    
+    margin-bottom: var(--alt-space-1);
   }
-  
+
   details summary:hover {
     color: var(--alt-c-brand-1-300);
   }
@@ -145,7 +157,9 @@
   details > div {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.3s ease-out, opacity 0.3s ease;
+    transition:
+      grid-template-rows 0.3s ease-out,
+      opacity 0.3s ease;
     overflow: hidden;
     opacity: 0;
     padding-left: var(--alt-space-4);

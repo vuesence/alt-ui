@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { TableColumnDefinition, TableEmits, TableRowData } from "@/types/table";
+import type { TableColumnDefinition, TableEmits, TableRowData } from "../../types/table";
 
 const props = withDefaults(
   defineProps<{

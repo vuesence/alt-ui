@@ -1,20 +1,41 @@
 <script setup lang="ts">
+/**
+ * AltIcon - Universal icon component
+ *
+ * Supports two modes:
+ * - sprite: References icons from SVG sprite file (production)
+ * - bundle: Uses bundled SVG content (development)
+ *
+ * Also supports image icons (PNG, JPG, WebP)
+ *
+ * @example
+ * <AltIcon name="settings" :size="24" />
+ * <AltIcon name="user" color="#ff0000" />
+ * <AltIcon name="logo" type="image" />
+ */
 import { computed } from "vue";
-import { getImageUrl, getSvgIcon } from "../../utils/icons";
+import { getIconMode, getImageUrl, getSpritePath, getSvgIcon } from "../../utils/icons";
 import { isNumeric } from "../../utils/string-helpers";
 
-// Define a more strict type for icon types
 type IconType = "svg" | "image";
 
-// Define props with more explicit typing
 interface AltIconProps {
+  /** Icon name (e.g., "settings", "interface/settings") */
   name: string;
+  /** Icon size (applies to both width and height) */
   size?: string | number;
+  /** Icon color (CSS color value or "default") */
   color?: string;
+  /** Custom width (overridden by size) */
   width?: string | number;
+  /** Custom height (overridden by size) */
   height?: string | number;
+  /** SVG fill color */
   fill?: string;
+  /** Icon type: "svg" or "image" */
   type?: IconType;
+  /** Override sprite path (sprite mode only) */
+  spritePath?: string;
 }
 
 const props = withDefaults(defineProps<AltIconProps>(), {
@@ -24,22 +45,19 @@ const props = withDefaults(defineProps<AltIconProps>(), {
   width: 24,
   height: "auto",
   type: "svg",
+  spritePath: "",
 });
 
-// Compute dimensions with more explicit size handling
+// Compute width with size priority
 const computedWidth = computed(() => {
-  // If size is provided, use it as the primary dimension
   if (props.size) {
-    // Check if size is numeric (including numeric strings)
     return isNumeric(props.size) ? `${Number(props.size)}px` : props.size;
   }
-
-  // Same for width
   return isNumeric(props.width) ? `${Number(props.width)}px` : props.width;
 });
 
+// Compute height with size priority
 const computedHeight = computed(() => {
-  // If size is provided, use it as the primary dimension
   if (props.size) {
     return isNumeric(props.size) ? `${Number(props.size)}px` : props.size;
   }
@@ -51,25 +69,43 @@ const computedHeight = computed(() => {
   return isNumeric(props.height) ? `${Number(props.height)}px` : props.height;
 });
 
-// More robust color computation
+// Resolve icon color
 const iconColor = computed(() => {
   return props.color !== "default" ? props.color : "var(--alt-c-brand-1)";
 });
 
-// Determine if icon is an SVG
-const isSvgIcon = computed(() => getSvgIcon(props.name));
+// Extract icon name from path (e.g., "interface/settings" -> "settings")
+const iconName = computed(() => {
+  return props.name.includes("/") ? props.name.split("/")[1] : props.name;
+});
 
-// Compute fill style dynamically
+// Compute SVG fill style
 const svgFillStyle = computed(() => {
   return props.fill && props.fill !== "currentColor"
     ? { fill: props.fill }
     : {};
 });
+
+// Get effective sprite path (prop or global config)
+const effectiveSpritePath = computed(() => {
+  return props.spritePath || getSpritePath();
+});
+
+// Get current icon mode from global config
+const iconMode = computed(() => getIconMode());
+
+// Get bundled SVG content (bundle mode only)
+const bundledSvgContent = computed(() => {
+  if (iconMode.value === "bundle" && props.type === "svg") {
+    return getSvgIcon(props.name);
+  }
+  return undefined;
+});
 </script>
 
 <template>
-  <div
-    v-if="isSvgIcon"
+  <svg
+    v-if="props.type === 'svg' && iconMode === 'sprite'"
     class="base-icon base-icon--svg"
     :data-name="props.name"
     :style="{
@@ -78,10 +114,11 @@ const svgFillStyle = computed(() => {
       color: iconColor,
       ...svgFillStyle,
     }"
-    v-html="getSvgIcon(props.name)"
-  />
+  >
+    <use :href="`${effectiveSpritePath}#icon-${iconName}`" />
+  </svg>
   <img
-    v-else
+    v-else-if="props.type === 'image'"
     class="base-icon base-icon--image"
     :src="getImageUrl(props.name)"
     :alt="props.name"
@@ -111,10 +148,6 @@ const svgFillStyle = computed(() => {
 
 .base-icon--svg {
   flex-shrink: 0;
-}
-
-.base-icon--svg:deep(svg) {
-  width: 100%;
-  height: 100%;
+  /* fill: currentColor; */
 }
 </style>

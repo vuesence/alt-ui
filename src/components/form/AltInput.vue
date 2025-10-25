@@ -59,6 +59,7 @@ const modelValue = defineModel<string | number | boolean>();
 <style scoped>
 .input-wrapper {
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
   gap: var(--alt-space-1);
   width: 100%;

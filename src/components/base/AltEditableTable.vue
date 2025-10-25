@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { AltButton, AltIcon } from "../";
 import type { TableHeader, TableRow } from "../../types/table";
-import type { PropType } from "vue";
+import type { PropType, ComponentPublicInstance } from "vue";
+import { nextTick } from "vue";
 
 const modelValue = defineModel<TableRow[] | undefined>();
 
@@ -20,6 +21,8 @@ const props = defineProps({
   },
 });
 
+const isUpdating = new WeakMap<HTMLElement, boolean>();
+
 function onCellInput(
   event: Event,
   row: TableRow,
@@ -27,11 +30,39 @@ function onCellInput(
   rowIndex: number,
 ) {
   const target = event.target as HTMLElement;
-  const newValue = target.textContent?.trim() ?? "";
 
+  // Prevent recursive updates
+  if (isUpdating.get(target)) {
+    return;
+  }
+
+  const newValue = target.textContent ?? "";
+
+  // Mark as updating
+  isUpdating.set(target, true);
+
+  // Update data
   row[header.key] = newValue;
   if (modelValue.value) {
-    modelValue.value[rowIndex] = row;
+    modelValue.value[rowIndex] = { ...row };
+  }
+
+  // Clear updating flag
+  nextTick(() => {
+    isUpdating.delete(target);
+  });
+}
+
+function initCell(
+  el: Element | ComponentPublicInstance | null,
+  row: TableRow,
+  header: TableHeader,
+) {
+  if (el instanceof HTMLElement) {
+    const currentValue = (row[header.key] as string) ?? "";
+    if (el.textContent !== currentValue) {
+      el.textContent = currentValue;
+    }
   }
 }
 
@@ -101,12 +132,14 @@ function deleteRow(index: number) {
           >
             <div
               v-if="editable && header.editable"
+              :ref="(el) => initCell(el, row, header)"
               contenteditable
               class="editable-cell"
               @input="(e) => onCellInput(e, row, header, rowIndex)"
               @paste="onCellPaste"
-              v-text="row[header.key]"
-            />
+            >
+              <!-- Content set via ref callback -->
+            </div>
             <template v-else>
               {{ row[header.key] }}
             </template>
