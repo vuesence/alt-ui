@@ -1,107 +1,320 @@
-# Иконки
+# Система иконок
 
-Наша система иконок предоставляет гибкий и производительный способ управления и использования иконок по всему приложению.
+Alt-UI включает гибкую систему иконок с поддержкой двух режимов загрузки.
 
-## Типы иконок
+## Обзор
 
-### SVG-иконки
-- Хранятся в `src/assets/images/icons/`
-- Динамически загружаются с помощью `import.meta.glob` от Vite
-- Отображаются встроенно для лучшей производительности и контроля стиля
+Система иконок поддерживает:
 
-### Изображенческие иконки
-- Хранятся в `src/assets/images/`
-- Поддерживают форматы PNG и другие форматы изображений
-- Динамически загружаются и кэшируются
+- **Sprite режим** - иконки из SVG спрайта (рекомендуется для продакшена)
+- **Bundle режим** - иконки в JavaScript бандле (удобно для разработки)
+- SVG и растровые изображения (PNG, JPG, WebP)
+- Динамическое изменение размера и цвета
+- TypeScript типизация
+
+## Быстрый старт
+
+### 1. Инициализация
+
+```typescript
+import { initIconSystem } from "alt-ui";
+
+// Sprite режим (рекомендуется)
+initIconSystem({
+  mode: "sprite",
+  spritePath: "/assets/images/icons-sprite.svg"
+});
+
+// Bundle режим (альтернатива)
+initIconSystem({
+  mode: "bundle"
+});
+```
+
+### 2. Использование компонента
+
+```vue
+<template>
+  <AltIcon name="settings" :size="24" />
+  <AltIcon name="user" color="#ff0000" />
+  <AltIcon name="logo" type="image" />
+</template>
+
+<script setup>
+import { AltIcon } from "alt-ui";
+</script>
+```
+
+## Режимы работы
+
+### Sprite режим
+
+**Рекомендуется для продакшена**
+
+Преимущества:
+
+- ✅ Меньший размер бандла
+- ✅ Лучшее кеширование
+- ✅ Одиночный HTTP запрос для всех иконок
+
+Недостатки:
+
+- ⚠️ Требует генерации спрайта
+- ⚠️ Нужна пересборка при изменении иконок
+
+```typescript
+initIconSystem({
+  mode: "sprite",
+  spritePath: "/assets/images/icons-sprite.svg"
+});
+```
+
+### Bundle режим
+
+**Удобен для разработки**
+
+Преимущества:
+
+- ✅ Не требует генерации спрайта
+- ✅ Hot reload работает сразу
+- ✅ Автоматическая загрузка
+
+Недостатки:
+
+- ❌ Больший размер бандла
+- ❌ Все иконки в JavaScript
+
+```typescript
+initIconSystem({
+  mode: "bundle"
+});
+```
+
+## Генерация спрайта
+
+### Использование генератора
+
+```javascript
+import { generateIconsSprite } from "alt-ui/scripts/generate-icons-sprite.js";
+
+generateIconsSprite({
+  iconsDirectory: "./src/assets/icons",
+  outputPath: "./public/icons-sprite.svg",
+  iconPrefix: "icon",
+  verbose: true
+});
+```
+
+### В package.json
+
+```json
+{
+  "scripts": {
+    "generate-icons-sprite": "node scripts/generate-icons-sprite.js"
+  }
+}
+```
 
 ## Компонент AltIcon
 
-Универсальный компонент для отображения иконок с несколькими параметрами конфигурации:
+### Props
 
-### Свойства
-
-| Свойство | Тип                | По умолчанию | Описание                           |
-|----------|---------------------|---------|---------------------------------------|
-| `name`   | `string`           | `""`    | Имя иконки (имя файла без расширения) |
-| `size`   | `string` или `number`| `24`    | Размер иконки в пикселях или CSS-единицах      |
-| `color`  | `string`           | `"default"` | Цвет иконки (использует цвет бренда, если "default") |
-| `width`  | `string` или `number`| `24`    | Специфическое переопределение ширины               |
-| `height` | `string` или `number`| `"auto"`| Специфическое переопределение высоты              |
-| `fill`   | `string`           | -       | Цвет заливки SVG                        |
-| `type`   | `"svg"` или `"image"`| `"svg"` | Тип иконки                             |
+| Prop         | Тип                | По умолчанию | Описание                       |
+| ------------ | ------------------ | ------------ | ------------------------------ |
+| `name`       | `string`           | -            | Имя иконки (обязательно)       |
+| `size`       | `string \| number` | `24`         | Размер иконки                  |
+| `color`      | `string`           | `"default"`  | Цвет иконки                    |
+| `width`      | `string \| number` | `24`         | Ширина (переопределяется size) |
+| `height`     | `string \| number` | `"auto"`     | Высота (переопределяется size) |
+| `fill`       | `string`           | -            | SVG fill цвет                  |
+| `type`       | `"svg" \| "image"` | `"svg"`      | Тип иконки                     |
+| `spritePath` | `string`           | -            | Переопределить путь к спрайту  |
 
 ### Примеры использования
 
-#### Базовая SVG-иконка
+#### Базовая иконка
+
 ```vue
-<AltIcon name="database" />
+<AltIcon name="settings" />
 ```
 
-#### Настроенная иконка
+#### С размером
+
 ```vue
-<AltIcon 
-  name="database" 
-  size="32" 
-  color="var(--alt-c-brand-2)" 
-  fill="none" 
-/>
+<AltIcon name="settings" :size="32" />
+<AltIcon name="settings" width="40" height="40" />
 ```
 
-#### Изображенческая иконка
+#### С цветом
+
 ```vue
-<AltIcon 
-  name="logo" 
-  type="image" 
-  width="100" 
-/>
+<AltIcon name="settings" color="#3b82f6" />
+<AltIcon name="settings" color="var(--alt-c-brand-1)" />
 ```
 
-## Механизм загрузки иконок
+#### Растровое изображение
 
-### Динамический импорт
-- Использует `import.meta.glob` от Vite
-- Жадно загружает все SVG и PNG иконки
-- Кэширует иконки в картах `svgResources` и `imageResources`
+```vue
+<AltIcon name="avatar" type="image" />
+```
 
-### Оптимизация производительности
-- Встраиваемое отображение SVG
-- Без дополнительных HTTP-запросов
-- Легковесное управление иконками
+#### В кнопке
 
-## Стилизация иконок
+```vue
+<AltButton>
+  <AltIcon name="save" :size="20" />
+  Сохранить
+</AltButton>
+```
 
-### CSS-переходы
-- Плавные переходы цвета и непрозрачности
-- Эффект наведения с 0.8 непрозрачностью
+## API
 
-### Гибкие размеры
-- Поддерживает размеры в пикселях и CSS-единицах
-- Сохраняет соотношение сторон
-- Унаследует цвет от родителя
+### initIconSystem(config)
+
+Инициализирует систему иконок.
+
+```typescript
+interface IconSystemConfig {
+  mode: "sprite" | "bundle";
+  spritePath?: string;
+  svgIconsGlob?: string;  // deprecated
+  imageGlobs?: string[];  // deprecated
+}
+```
+
+### getIconMode()
+
+Возвращает текущий режим иконок.
+
+```typescript
+const mode = getIconMode(); // "sprite" | "bundle"
+```
+
+### getSpritePath()
+
+Возвращает путь к спрайту.
+
+```typescript
+const path = getSpritePath(); // "/assets/images/icons-sprite.svg"
+```
+
+### generateIconsSprite(config)
+
+Генерирует SVG спрайт из директории с иконками.
+
+```typescript
+interface SpriteConfig {
+  iconsDirectory: string;
+  outputPath: string;
+  iconPrefix?: string;
+  verbose?: boolean;
+}
+```
+
+## Организация иконок
+
+### Структура директорий
+
+```
+src/assets/icons/
+├── interface/
+│   ├── settings.svg
+│   ├── user.svg
+│   └── menu.svg
+├── medical/
+│   ├── heart.svg
+│   └── pill.svg
+└── common/
+    ├── check.svg
+    └── close.svg
+```
+
+### Именование
+
+- Используйте семантические имена: `settings`, `user`, `heart`
+- Избегайте префиксов: `icon-`, `svg-`
+- Используйте kebab-case: `user-profile`, `heart-rate`
+- Группируйте по категориям в поддиректориях
+
+## Оптимизация
+
+### SVG файлы
+
+1. Удалите ненужные атрибуты
+2. Оптимизируйте пути
+3. Используйте `currentColor` для цвета
+4. Установите правильный viewBox
+
+### Производительность
+
+**Sprite режим:**
+
+- Генерируйте спрайт на этапе сборки
+- Кешируйте спрайт на CDN
+- Используйте HTTP/2 для параллельной загрузки
+
+**Bundle режим:**
+
+- Используйте только для разработки
+- Переключайтесь на sprite для продакшена
+- Минимизируйте количество иконок
+
+## Troubleshooting
+
+### Иконки не отображаются (Sprite)
+
+```bash
+# Сгенерируйте спрайт
+pnpm generate-icons-sprite
+
+# Проверьте наличие файла
+ls public/assets/images/icons-sprite.svg
+
+# Проверьте путь в конфигурации
+```
+
+### Иконки не отображаются (Bundle)
+
+```typescript
+// Проверьте режим
+console.log(getIconMode()); // должно быть "bundle"
+
+// Проверьте, что иконки в правильной директории
+// @/assets/icons/**/*.svg
+```
+
+### Неправильный размер
+
+```vue
+<!-- Используйте size для единого размера -->
+<AltIcon name="settings" :size="24" />
+
+<!-- Или width/height для разных размеров -->
+<AltIcon name="logo" width="120" height="40" />
+```
+
+### Цвет не меняется
+
+```vue
+<!-- Убедитесь, что SVG использует currentColor -->
+<AltIcon name="settings" color="#ff0000" />
+
+<!-- Или используйте fill -->
+<AltIcon name="settings" fill="#ff0000" />
+```
 
 ## Лучшие практики
 
-1. **Конвенция именования**
-   - Используйте описательные, строчные имена файлов
-   - Размещайте иконки в соответствующих каталогах
+1. **Используйте sprite режим в продакшене**
+2. **Генерируйте спрайт в CI/CD**
+3. **Оптимизируйте SVG перед добавлением**
+4. **Используйте семантические имена**
+5. **Группируйте иконки по категориям**
+6. **Документируйте кастомные иконки**
+7. **Используйте size prop для единообразия**
 
-2. **Производительность**
-   - Предпочитайте SVG-иконки
-   - Оптимизируйте SVG-файлы
-   - Используйте простые, чистые дизайны иконок
+## Дополнительно
 
-3. **Доступность**
-   - Обеспечьте значимый текст `alt` для изображенческих иконок
-   - Убедитесь, что иконки имеют достаточный контраст
-
-## Устранение неполадок
-
-- Проверьте, что имя файла иконки соответствует имени импорта
-- Проверьте местоположение файла иконки
-- Убедитесь, что конфигурация Vite поддерживает импорт иконок
-
-## Будущие улучшения
-
-- Генерация спрайтов иконок
-- Ленивое загрузка для больших наборов иконок
-- Расширенная настройка иконок 
+- [Полная документация](https://github.com/your-repo/alt-ui/docs/icons-system.md)
+- [Примеры использования](https://github.com/your-repo/alt-ui/examples/icons)
+- [API Reference](https://github.com/your-repo/alt-ui/api/icons)

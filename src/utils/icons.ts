@@ -1,54 +1,182 @@
 /// <reference types="vite/client" />
 
+/**
+ * Icon System for alt-ui
+ *
+ * Supports two modes:
+ * - sprite: Icons loaded from SVG sprite file (recommended for production)
+ * - bundle: Icons bundled into JavaScript (good for development)
+ *
+ * @example
+ * // Sprite mode
+ * initIconSystem({
+ *   mode: "sprite",
+ *   spritePath: "/assets/images/icons-sprite.svg"
+ * });
+ *
+ * @example
+ * // Bundle mode
+ * initIconSystem({
+ *   mode: "bundle"
+ * });
+ */
+
+import type { IconMode, IconSystemConfig } from "../types/icons";
+
+// Storage for loaded icons and images
 const svgResources = new Map<string, string>();
 const imageResources = new Map<string, string>();
-let customGetSvgIcon: ((name: string) => string | undefined) | null = null;
 
-function loadIcons(customSvgIconGetter?: (name: string) => string | undefined) {
-  if (customSvgIconGetter) {
-    customGetSvgIcon = customSvgIconGetter;
-  } else {
-    let modules = import.meta.glob("@/assets/icons/**/*.svg", {
-      query: "?raw",
-      import: "default",
-      eager: true,
-    });
-    for (const [fileName, module] of Object.entries(modules)) {
-      const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
-      svgResources.set(name, module as string);
-    }
+// Current icon system configuration
+let iconMode: IconMode = "sprite";
+let spritePath = "/assets/images/icons-sprite.svg";
+
+/**
+ * @deprecated Use IconSystemConfig instead
+ */
+interface LoadIconsConfig {
+  mode?: IconMode;
+  svgIconsGlob?: string;
+  imageGlobs?: string[];
+  spritePath?: string;
+}
+
+/**
+ * Initialize the icon system with specified configuration
+ *
+ * @param config - Icon system configuration
+ *
+ * @example
+ * initIconSystem({
+ *   mode: "sprite",
+ *   spritePath: "/assets/images/icons-sprite.svg"
+ * });
+ */
+function initIconSystem(config: IconSystemConfig): void {
+  iconMode = config.mode;
+
+  if (config.spritePath) {
+    spritePath = config.spritePath;
   }
 
-  let modules = import.meta.glob("@/assets/images/**/*.png", {
-    query: "?url",
-    import: "default",
-    eager: true,
-  });
-  for (const [fileName, module] of Object.entries(modules)) {
-    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
-    imageResources.set(name, module as string);
-  }
-
-  modules = import.meta.glob("@/assets/images/**/*.webp", {
-    query: "?url",
-    import: "default",
-    eager: true,
-  });
-  for (const [fileName, module] of Object.entries(modules)) {
-    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -5);
-    imageResources.set(name, module as string);
+  if (config.mode === "bundle") {
+    loadIconsBundle();
   }
 }
 
+/**
+ * Load icons in bundle mode
+ * Note: import.meta.glob requires static literals, cannot use dynamic patterns
+ * Icons are loaded from predefined paths: @/assets/icons/ and @/assets/images/
+ */
+function loadIconsBundle(): void {
+  // Load SVG icons
+  const svgModules = import.meta.glob("@/assets/icons/**/*.svg", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  });
+
+  for (const [fileName, module] of Object.entries(svgModules)) {
+    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
+    svgResources.set(name, module as string);
+  }
+
+  // Load PNG images
+  const pngModules = import.meta.glob("@/assets/images/**/*.png", {
+    query: "?url",
+    import: "default",
+    eager: true,
+  });
+
+  for (const [fileName, module] of Object.entries(pngModules)) {
+    const extension = fileName.slice(fileName.lastIndexOf("."));
+    const name = fileName.slice(
+      fileName.lastIndexOf("/") + 1,
+      -extension.length
+    );
+    imageResources.set(name, module as string);
+  }
+
+  // Load JPG images
+  const jpgModules = import.meta.glob("@/assets/images/**/*.jpg", {
+    query: "?url",
+    import: "default",
+    eager: true,
+  });
+
+  for (const [fileName, module] of Object.entries(jpgModules)) {
+    const extension = fileName.slice(fileName.lastIndexOf("."));
+    const name = fileName.slice(
+      fileName.lastIndexOf("/") + 1,
+      -extension.length
+    );
+    imageResources.set(name, module as string);
+  }
+
+  // Load JPEG images
+  const jpegModules = import.meta.glob("@/assets/images/**/*.jpeg", {
+    query: "?url",
+    import: "default",
+    eager: true,
+  });
+
+  for (const [fileName, module] of Object.entries(jpegModules)) {
+    const extension = fileName.slice(fileName.lastIndexOf("."));
+    const name = fileName.slice(
+      fileName.lastIndexOf("/") + 1,
+      -extension.length
+    );
+    imageResources.set(name, module as string);
+  }
+
+  // Load WebP images
+  const webpModules = import.meta.glob("@/assets/images/**/*.webp", {
+    query: "?url",
+    import: "default",
+    eager: true,
+  });
+
+  for (const [fileName, module] of Object.entries(webpModules)) {
+    const extension = fileName.slice(fileName.lastIndexOf("."));
+    const name = fileName.slice(
+      fileName.lastIndexOf("/") + 1,
+      -extension.length
+    );
+    imageResources.set(name, module as string);
+  }
+
+  console.log(`✓ Loaded ${svgResources.size} SVG icons in bundle mode`);
+  console.log(`✓ Loaded ${imageResources.size} images`);
+}
+
+/**
+ * Get SVG icon content by name (bundle mode only)
+ *
+ * @param name - Icon name (with or without directory prefix)
+ * @returns SVG content string or undefined
+ *
+ * @example
+ * const iconContent = getSvgIcon("settings");
+ */
 function getSvgIcon(name: string): string | undefined {
-  if (customGetSvgIcon) {
-    return customGetSvgIcon(name);
+  if (iconMode === "sprite") {
+    return undefined;
   }
 
   const iconName = name.includes("/") ? name.split("/")[1] : name;
   return svgResources.get(iconName);
 }
 
+/**
+ * Get image URL by name
+ *
+ * @param name - Image name or full URL
+ * @returns Image URL
+ *
+ * @example
+ * const imageUrl = getImageUrl("logo");
+ */
 function getImageUrl(name: string): string | undefined {
   if (name.startsWith("http")) {
     return name;
@@ -56,4 +184,48 @@ function getImageUrl(name: string): string | undefined {
   return imageResources.get(name);
 }
 
-export { getImageUrl, getSvgIcon, loadIcons, svgResources };
+/**
+ * Get current icon mode
+ *
+ * @returns Current icon mode ("sprite" or "bundle")
+ */
+function getIconMode(): IconMode {
+  return iconMode;
+}
+
+/**
+ * Get configured sprite path
+ *
+ * @returns Sprite file path
+ */
+function getSpritePath(): string {
+  return spritePath;
+}
+
+/**
+ * @deprecated Use initIconSystem instead
+ *
+ * Legacy function for backward compatibility
+ */
+function loadIcons(config?: LoadIconsConfig): void {
+  console.warn("loadIcons is deprecated. Use initIconSystem instead.");
+  if (config) {
+    initIconSystem({
+      mode: config.mode || "sprite",
+      svgIconsGlob: config.svgIconsGlob,
+      imageGlobs: config.imageGlobs,
+      spritePath: config.spritePath,
+    });
+  }
+}
+
+export {
+  getIconMode,
+  getImageUrl,
+  getSpritePath,
+  getSvgIcon,
+  initIconSystem,
+  loadIcons,
+  svgResources,
+};
+export type { IconSystemConfig, LoadIconsConfig };

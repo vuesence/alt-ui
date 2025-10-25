@@ -56,7 +56,13 @@ export { ThemeProvider, themeProvider } from "./components/ThemeProvider";
 export { ThemeToggle, ThemeToggleVue } from "./components/ThemeToggle";
 
 // Utils
-export { loadIcons } from "./utils/icons";
+export {
+  initIconSystem,
+  loadIcons,
+  getIconMode,
+  getSpritePath,
+} from "./utils/icons";
+export type { IconSystemConfig } from "./utils/icons";
 export { getCssVar, setCssVar, toNumber } from "./utils/css";
 export { toast, toaster } from "./utils/toaster";
 

@@ -43,9 +43,7 @@ export default defineConfig({
       { text: "Техническая документация", link: "/technical/overview" },
       {
         text: "Ресурсы",
-        items: [
-          { text: "GitHub", link: "https://github.com/vuesence/alt-ui" },
-        ],
+        items: [{ text: "GitHub", link: "https://github.com/vuesence/alt-ui" }],
       },
     ],
 
@@ -64,15 +62,18 @@ export default defineConfig({
           { text: "Обзор компонентов", link: "/components/overview" },
           { text: "Базовые компоненты", link: "/components/base-components" },
           { text: "Компоненты форм", link: "/components/form-components" },
-          { text: "Компоненты диалогов", link: "/components/dialog-components" },
+          {
+            text: "Компоненты диалогов",
+            link: "/components/dialog-components",
+          },
           { text: "Компоненты тем", link: "/components/theme-components" },
-          { 
-            text: "Интерактивные компоненты", 
+          {
+            text: "Интерактивные компоненты",
             collapsed: false,
             items: [
               { text: "Туры", link: "/components/tour" },
               { text: "Онбординг", link: "/components/onboarding" },
-            ]
+            ],
           },
           { text: "Утилиты", link: "/components/utilities" },
         ],
@@ -82,23 +83,23 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: "Обзор", link: "/foundation/overview" },
-          { 
-            text: "Основы", 
+          {
+            text: "Основы",
             collapsed: false,
             items: [
               { text: "Цвета", link: "/foundation/colors" },
               { text: "Типографика", link: "/foundation/typography" },
               { text: "Отступы и макет", link: "/foundation/spacing-layout" },
-              { text: "Иконки", link: "/foundation/icons" },
-            ]
+              { text: "Система иконок", link: "/foundation/icons" },
+            ],
           },
-          { 
-            text: "Токены", 
+          {
+            text: "Токены",
             collapsed: false,
             items: [
               { text: "Дизайн-токены", link: "/tokens/design-tokens" },
               { text: "Токены компонентов", link: "/tokens/component-tokens" },
-            ]
+            ],
           },
         ],
       },
@@ -111,7 +112,7 @@ export default defineConfig({
           { text: "Темы", link: "/technical/themes" },
           { text: "API", link: "/technical/api" },
         ],
-      }
+      },
     ],
 
     socialLinks: [
@@ -123,4 +124,4 @@ export default defineConfig({
       copyright: "© 2024 Startup Tools",
     },
   },
-}); 
+});
