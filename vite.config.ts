@@ -22,15 +22,17 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "mjs" : "js"}`,
     },
     rollupOptions: {
-      external: ["vue", "vue-router"],
+      external: ["vue", "vue-router", "@ark-ui/vue"],
       output: {
         globals: {
           vue: "Vue",
           "vue-router": "VueRouter",
         },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'styles.css';
-          return assetInfo.name;
+          if (assetInfo.name && assetInfo.name.endsWith(".css")) {
+            return "styles.css";
+          }
+          return assetInfo.name || "asset";
         },
       },
     },
