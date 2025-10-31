@@ -9,12 +9,17 @@
  * Also supports image icons (PNG, JPG, WebP)
  *
  * @example
+ * // SVG icons (square)
  * <AltIcon name="settings" :size="24" />
  * <AltIcon name="user" color="#ff0000" />
- * <AltIcon name="logo" type="image" />
+ *
+ * @example
+ * // Image icons (preserves aspect ratio)
+ * <AltIcon name="logo" type="image" :size="200" />
+ * <AltIcon name="banner" type="image" :size="400" />
  */
 import { computed } from "vue";
-import { getIconMode, getImageUrl, getSpritePath, getSvgIcon } from "../../utils/icons";
+import { getIconMode, getImageUrl, getSpritePath } from "../../utils/icons";
 import { isNumeric } from "../../utils/string-helpers";
 
 type IconType = "svg" | "image";
@@ -22,7 +27,11 @@ type IconType = "svg" | "image";
 interface AltIconProps {
   /** Icon name (e.g., "settings", "interface/settings") */
   name: string;
-  /** Icon size (applies to both width and height) */
+  /**
+   * Icon size:
+   * - For SVG: applies to both width and height (square)
+   * - For images: applies to width only, height is auto (preserves aspect ratio)
+   */
   size?: string | number;
   /** Icon color (CSS color value or "default") */
   color?: string;
@@ -57,7 +66,15 @@ const computedWidth = computed(() => {
 });
 
 // Compute height with size priority
+// For images: if size is set, height is auto to preserve aspect ratio
+// For SVG: height equals width for square icons
 const computedHeight = computed(() => {
+  // For images: preserve aspect ratio when size is set
+  if (props.type === "image" && props.size) {
+    return "auto";
+  }
+
+  // For SVG: use size for both dimensions (square)
   if (props.size) {
     return isNumeric(props.size) ? `${Number(props.size)}px` : props.size;
   }
@@ -93,14 +110,6 @@ const effectiveSpritePath = computed(() => {
 
 // Get current icon mode from global config
 const iconMode = computed(() => getIconMode());
-
-// Get bundled SVG content (bundle mode only)
-const bundledSvgContent = computed(() => {
-  if (iconMode.value === "bundle" && props.type === "svg") {
-    return getSvgIcon(props.name);
-  }
-  return undefined;
-});
 </script>
 
 <template>
@@ -149,5 +158,12 @@ const bundledSvgContent = computed(() => {
 .base-icon--svg {
   flex-shrink: 0;
   /* fill: currentColor; */
+}
+
+.base-icon--image {
+  flex-shrink: 0;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>

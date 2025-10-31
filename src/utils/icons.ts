@@ -4,11 +4,16 @@
  * Icon System for alt-ui
  *
  * Supports two modes:
- * - sprite: Icons loaded from SVG sprite file (recommended for production)
- * - bundle: Icons bundled into JavaScript (good for development)
+ * - sprite: SVG icons loaded from sprite file, images loaded via Vite (recommended)
+ * - bundle: Both SVG icons and images bundled into JavaScript (dev mode)
+ *
+ * In sprite mode:
+ * - SVG icons use sprite file for optimal performance
+ * - Images (PNG, JPG, JPEG, WebP) are loaded directly with Vite's import.meta.glob
+ * - Images get hash in URL for cache busting
  *
  * @example
- * // Sprite mode
+ * // Sprite mode (recommended)
  * initIconSystem({
  *   mode: "sprite",
  *   spritePath: "/assets/images/icons-sprite.svg"
@@ -61,27 +66,17 @@ function initIconSystem(config: IconSystemConfig): void {
 
   if (config.mode === "bundle") {
     loadIconsBundle();
+  } else if (config.mode === "sprite") {
+    // Load images even in sprite mode (SVG icons use sprite, images use direct URLs)
+    loadImagesBundle();
   }
 }
 
 /**
- * Load icons in bundle mode
- * Note: import.meta.glob requires static literals, cannot use dynamic patterns
- * Icons are loaded from predefined paths: @/assets/icons/ and @/assets/images/
+ * Load images (PNG, JPG, JPEG, WebP) from @/assets/images/
+ * Used in both sprite and bundle modes
  */
-function loadIconsBundle(): void {
-  // Load SVG icons
-  const svgModules = import.meta.glob("@/assets/icons/**/*.svg", {
-    query: "?raw",
-    import: "default",
-    eager: true,
-  });
-
-  for (const [fileName, module] of Object.entries(svgModules)) {
-    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
-    svgResources.set(name, module as string);
-  }
-
+function loadImagesBundle(): void {
   // Load PNG images
   const pngModules = import.meta.glob("@/assets/images/**/*.png", {
     query: "?url",
@@ -146,8 +141,31 @@ function loadIconsBundle(): void {
     imageResources.set(name, module as string);
   }
 
-  console.log(`✓ Loaded ${svgResources.size} SVG icons in bundle mode`);
   console.log(`✓ Loaded ${imageResources.size} images`);
+}
+
+/**
+ * Load icons in bundle mode
+ * Note: import.meta.glob requires static literals, cannot use dynamic patterns
+ * Icons are loaded from predefined paths: @/assets/icons/ and @/assets/images/
+ */
+function loadIconsBundle(): void {
+  // Load SVG icons
+  const svgModules = import.meta.glob("@/assets/icons/**/*.svg", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  });
+
+  for (const [fileName, module] of Object.entries(svgModules)) {
+    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
+    svgResources.set(name, module as string);
+  }
+
+  console.log(`✓ Loaded ${svgResources.size} SVG icons in bundle mode`);
+
+  // Load images as well
+  loadImagesBundle();
 }
 
 /**
