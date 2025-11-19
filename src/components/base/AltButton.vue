@@ -84,6 +84,7 @@ function click(event: MouseEvent) {
   color: var(--alt-c-text-3);
   position: relative;
   display: inline-flex;
+  gap: 7px;
   align-items: center;
   justify-content: center;
   padding: var(--alt-space-3) var(--alt-space-6);

@@ -1,6 +1,6 @@
 import { createToaster } from "@ark-ui/vue/toast";
 
-type ToastType = 'info' | 'success' | 'error' | 'warning' | 'loading';
+type ToastType = "info" | "success" | "error" | "warning" | "loading";
 
 interface ToastOptions {
   title: string;
@@ -11,7 +11,7 @@ interface ToastOptions {
 }
 
 // Дефолтные заголовки для типов уведомлений
-const defaultTitles: Record<ToastType, string> = {
+let defaultTitles: Record<ToastType, string> = {
   info: "Information",
   success: "Success",
   error: "Error",
@@ -31,6 +31,13 @@ const createToast = (type: ToastType, title: string, description: string) => {
     description,
     type,
   });
+};
+
+// Функция для установки кастомных дефолтных заголовков
+export const setDefaultTitles = (
+  titles: Partial<Record<ToastType, string>>
+) => {
+  defaultTitles = { ...defaultTitles, ...titles };
 };
 
 export const toast = {

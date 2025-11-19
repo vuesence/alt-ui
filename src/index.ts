@@ -64,7 +64,7 @@ export {
 } from "./utils/icons";
 export type { IconSystemConfig } from "./utils/icons";
 export { getCssVar, setCssVar, toNumber } from "./utils/css";
-export { toast, toaster } from "./utils/toaster";
+export { toast, toaster, setDefaultTitles } from "./utils/toaster";
 
 // Types - export from table
 export * from "./types/table";
