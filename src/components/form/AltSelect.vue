@@ -101,8 +101,20 @@ const internalValue = computed({
         <Select.Trigger class="alt-select__trigger">
           <Select.ValueText :placeholder="props.placeholder" />
           <Select.Indicator class="alt-select__indicator">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9l6 6 6-6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </Select.Indicator>
         </Select.Trigger>
@@ -154,6 +166,11 @@ const internalValue = computed({
     font-size: var(--alt-font-size-2);
     cursor: pointer;
     transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+
+    .small & {
+      padding: var(--alt-space-2) var(--alt-space-3);
+      font-size: var(--alt-font-size-1);
+    }
 
     &:hover:not(:disabled) {
       border-color: var(--alt-c-brand-1-400);
