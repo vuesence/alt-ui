@@ -79,7 +79,7 @@ export class Tour {
 
     // Execute before action if present
     if (step.beforeAction) {
-      this.executeAction(step.beforeAction);
+      this.executeAction(step.beforeAction as any);
     }
 
     // Adjust timing for route changes
@@ -113,7 +113,7 @@ export class Tour {
 
     // Execute after action if present
     if (this.currentStep.value.afterAction) {
-      this.executeAction(this.currentStep.value.afterAction);
+      this.executeAction(this.currentStep.value.afterAction as any);
     }
 
     // Handle dynamic next step
@@ -126,7 +126,7 @@ export class Tour {
     if (typeof nextStep === "string") {
       // Simple next step by ID
       const nextIndex = this.activeTour.value.steps.findIndex(
-        (step: any) => step.id === nextStep,
+        (step: any) => step.id === nextStep
       );
       if (nextIndex !== -1) {
         this.goToStep(nextIndex);
@@ -142,7 +142,7 @@ export class Tour {
       const targetId = result ? nextStep.id : "default"; // Fallback to default
 
       const nextIndex = this.activeTour.value.steps.findIndex(
-        (step: any) => step.id === targetId,
+        (step: any) => step.id === targetId
       );
       if (nextIndex !== -1) {
         this.goToStep(nextIndex);
@@ -170,7 +170,7 @@ export class Tour {
     }
 
     const prevIndex = this.activeTour.value.steps.findIndex(
-      (step: any) => step.id === prevStepId,
+      (step: any) => step.id === prevStepId
     );
     if (prevIndex !== -1) {
       this.goToStep(prevIndex);
@@ -198,7 +198,7 @@ export class Tour {
           window.dispatchEvent(event);
         }
         break;
-        
+
       case "scroll":
         if (this.currentStep.value) {
           scrollToElement(this.currentStep.value.targetSelector);
@@ -251,4 +251,4 @@ export class Tour {
     const step = this.activeTour.value.steps.find((s: any) => s.id === stepId);
     return step ? new TourStep(step, this.translate) : null;
   }
-} 
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Checkbox, type CheckboxCheckedState } from "@ark-ui/vue/checkbox";
 import { computed } from "vue";
-import { AltIcon } from "../base";
+import AltIcon from "../base/AltIcon.vue";
 
 interface AltCheckboxProps {
   /**

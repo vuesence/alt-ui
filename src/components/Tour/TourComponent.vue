@@ -13,7 +13,7 @@ import { useTourKeyboardEvents } from "./useTourKeyboardEvents";
 import { useTourManager } from "./useTourManager";
 import type { TourData } from "./types";
 import type { Router } from "vue-router";
-import { AltButton } from "../base";
+import AltButton from "../base/AltButton.vue";
 
 /**
  * Props for TourComponent

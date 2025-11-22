@@ -39,19 +39,27 @@ export class TourStep {
     if (step.beforeAction) {
       this.beforeAction = {
         type: step.beforeAction.type,
-        route: step.beforeAction.route as RouteLocationRaw,
-        sidebar: step.beforeAction.sidebar,
-        customAction: step.beforeAction.customAction,
-      };
+        ...(step.beforeAction.route && {
+          route: step.beforeAction.route as any,
+        }),
+        ...(step.beforeAction.sidebar && {
+          sidebar: step.beforeAction.sidebar,
+        }),
+        ...(step.beforeAction.customAction && {
+          customAction: step.beforeAction.customAction,
+        }),
+      } as TourStepAction;
     }
 
     if (step.afterAction) {
       this.afterAction = {
         type: step.afterAction.type,
-        route: step.afterAction.route as RouteLocationRaw,
-        sidebar: step.afterAction.sidebar,
-        customAction: step.afterAction.customAction,
-      };
+        ...(step.afterAction.route && { route: step.afterAction.route as any }),
+        ...(step.afterAction.sidebar && { sidebar: step.afterAction.sidebar }),
+        ...(step.afterAction.customAction && {
+          customAction: step.afterAction.customAction,
+        }),
+      } as TourStepAction;
     }
 
     this.nextStep = step.nextStep;

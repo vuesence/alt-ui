@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AltButton } from "../../components/base";
+import AltButton from "../base/AltButton.vue";
 
 /**
  * Props for TourStepContent component
@@ -55,7 +55,9 @@ const emit = defineEmits<{
     </h3>
 
     <!-- Content text -->
-    <p v-for="(item, index) in content" :key="index" class="description">{{ item }}</p>
+    <p v-for="(item, index) in content" :key="index" class="description">
+      {{ item }}
+    </p>
 
     <!-- Navigation buttons -->
     <div class="actions">
@@ -71,11 +73,7 @@ const emit = defineEmits<{
         {{ closeText }}
       </AltButton>
 
-      <AltButton
-        v-if="hasNextStep"
-        class="small primary"
-        @click="emit('next')"
-      >
+      <AltButton v-if="hasNextStep" class="small primary" @click="emit('next')">
         {{ nextText }}
       </AltButton>
     </div>
@@ -149,4 +147,4 @@ h3 {
   margin-top: var(--alt-space-2);
   gap: var(--alt-space-2);
 }
-</style> 
+</style>

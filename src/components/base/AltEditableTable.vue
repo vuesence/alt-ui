@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { AltButton, AltIcon } from "../";
+import AltButton from "./AltButton.vue";
+import AltIcon from "./AltIcon.vue";
 import type { TableHeader, TableRow } from "../../types/table";
 import type { PropType, ComponentPublicInstance } from "vue";
 import { nextTick } from "vue";

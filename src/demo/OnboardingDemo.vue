@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { OnboardingTooltip, useOnboarding, AltButton } from '../components';
+import OnboardingTooltip from '../components/Onboarding/OnboardingTooltip.vue';
+import { useOnboarding } from '../components/Onboarding/useOnboarding';
+import AltButton from '../components/base/AltButton.vue';
 
 const tooltipRef = ref();
 const demoComplete = ref(false);
@@ -28,10 +30,10 @@ const startDemo = () => {
 <template>
   <div class="onboarding-demo">
     <h2>Onboarding Demo</h2>
-    
+
     <div class="demo-container">
-      <AltButton 
-        v-if="!isOnboardingEnabled && !demoComplete" 
+      <AltButton
+        v-if="!isOnboardingEnabled && !demoComplete"
         class="primary target-element"
         @click="startDemo"
       >
@@ -83,4 +85,4 @@ h2 {
   align-items: center;
   gap: var(--alt-space-3);
 }
-</style> 
+</style>

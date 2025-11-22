@@ -2,7 +2,7 @@
 import { HoverCard } from "@ark-ui/vue/hover-card";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useOnboarding } from '../Onboarding/useOnboarding';
-import { AltButton } from "../../components/base";
+import AltButton from "../base/AltButton.vue";
 
 const emit = defineEmits<{
   (e: "dismissed"): void;
@@ -210,4 +210,4 @@ onUnmounted(() => {
     transform: translateY(0.5rem);
   }
 }
-</style> 
+</style>

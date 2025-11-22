@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Toast, Toaster } from "@ark-ui/vue/toast";
-import { AltIcon } from "..";
+import AltIcon from "./AltIcon.vue";
 import { toaster } from "../../utils/toaster";
 </script>
 

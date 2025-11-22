@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Carousel } from "@ark-ui/vue/carousel";
 import { ref } from "vue";
-import { AltIcon } from "..";
+import AltIcon from "./AltIcon.vue";
 
 const props = defineProps({
   slideCount: {
