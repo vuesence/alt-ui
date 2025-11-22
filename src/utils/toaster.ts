@@ -8,6 +8,10 @@ interface ToastOptions {
   type: ToastType;
   id?: string;
   duration?: number;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
 // Дефолтные заголовки для типов уведомлений

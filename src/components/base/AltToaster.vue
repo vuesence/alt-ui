@@ -13,7 +13,7 @@ import { toaster } from "../../utils/toaster";
       :data-testid="`${toast.type}-toast`"
     >
       <div class="content-wrapper">
-        <AltIcon :name="toast.type" class="icon" size="20" />
+        <AltIcon :name="toast.type || 'info'" class="icon" size="20" />
         <div class="content">
           <Toast.Title v-if="toast.title" class="title">
             {{ toast.title }}

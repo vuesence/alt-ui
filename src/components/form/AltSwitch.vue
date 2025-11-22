@@ -13,10 +13,22 @@ const props = withDefaults(defineProps<AltSwitchProps>(), {
 });
 
 const checked = defineModel<boolean>();
+
+const emit = defineEmits<{
+  change: [value: boolean];
+}>();
+
+function handleCheckedChange(details: { checked: boolean }) {
+  emit("change", details.checked);
+}
 </script>
 
 <template>
-  <Switch.Root v-model:checked="checked" class="switch-root">
+  <Switch.Root
+    v-model:checked="checked"
+    class="switch-root"
+    @checked-change="handleCheckedChange"
+  >
     <Switch.Control class="control">
       <Switch.Thumb class="thumb" />
     </Switch.Control>
@@ -90,5 +102,31 @@ const checked = defineModel<boolean>();
     [data-state="checked"]
   ) {
   transform: translateX(1.25rem);
+}
+
+.switch-root.small {
+  .control {
+    width: 1.925rem;
+    height: 1.05rem;
+    padding: 0.0875rem;
+  }
+
+  .thumb {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .thumb:is(
+      :checked,
+      [data-checked],
+      [aria-checked="true"],
+      [data-state="checked"]
+    ) {
+    transform: translateX(0.875rem);
+  }
+
+  .label {
+    font-size: var(--alt-font-size-1);
+  }
 }
 </style>
