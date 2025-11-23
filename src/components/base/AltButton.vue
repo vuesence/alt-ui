@@ -175,8 +175,12 @@ function click(event: MouseEvent) {
     }
   }
   &.x-small {
-    font-size: var(--alt-font-size-00);
-    padding: var(--alt-space-1) var(--alt-space-2);
+    font-size: var(--alt-font-size-0);
+    padding: var(--alt-space-1) var(--alt-space-3);
+    .button-icon {
+      max-height: 12px;
+      max-width: 12px;
+    }
   }
 
   &.large {

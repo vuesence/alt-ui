@@ -203,6 +203,12 @@ function handleCellPaste(event: ClipboardEvent) {
 .base-table tr.warning {
   background-color: var(--alt-c-brand-3-50);
   [data-theme="dark"] & {
+    background-color: var(--alt-c-brand-3-900);
+  }
+}
+.base-table tr.danger {
+  background-color: var(--alt-c-brand-3-200);
+  [data-theme="dark"] & {
     background-color: var(--alt-c-brand-3-800);
   }
 }
