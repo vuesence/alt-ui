@@ -170,8 +170,8 @@ function click(event: MouseEvent) {
     font-size: var(--alt-font-size-0);
     padding: var(--alt-space-2) var(--alt-space-4);
     .button-icon {
-      max-height: 16px;
-      max-width: 16px;
+      max-height: 20px;
+      max-width: 20px;
     }
   }
   &.x-small {
