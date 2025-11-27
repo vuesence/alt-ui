@@ -248,6 +248,7 @@ const internalValue = computed({
     background: var(--alt-c-surface-2);
     color: var(--alt-c-text-3);
     cursor: not-allowed;
+    white-space: nowrap;
   }
 }
 </style>
