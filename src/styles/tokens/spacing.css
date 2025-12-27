@@ -1,17 +1,18 @@
 :root {
   /* Spacing Scale */
-  --alt-space-1: 0.25rem;  /* 4px */
-  --alt-space-2: 0.5rem;   /* 8px */
-  --alt-space-3: 0.75rem;  /* 12px */
-  --alt-space-4: 1rem;     /* 16px */
-  --alt-space-5: 1.5rem;   /* 24px */
-  --alt-space-6: 2rem;     /* 32px */
-  --alt-space-7: 2.5rem;   /* 40px */
-  --alt-space-8: 3rem;     /* 48px */
-  --alt-space-9: 3.5rem;   /* 56px */
-  --alt-space-10: 4rem;    /* 64px */
-  --alt-space-11: 4.5rem;  /* 72px */
-  --alt-space-12: 5rem;    /* 80px */
+  --alt-space-0: 0.1rem; /* 2px */
+  --alt-space-1: 0.25rem; /* 4px */
+  --alt-space-2: 0.5rem; /* 8px */
+  --alt-space-3: 0.75rem; /* 12px */
+  --alt-space-4: 1rem; /* 16px */
+  --alt-space-5: 1.5rem; /* 24px */
+  --alt-space-6: 2rem; /* 32px */
+  --alt-space-7: 2.5rem; /* 40px */
+  --alt-space-8: 3rem; /* 48px */
+  --alt-space-9: 3.5rem; /* 56px */
+  --alt-space-10: 4rem; /* 64px */
+  --alt-space-11: 4.5rem; /* 72px */
+  --alt-space-12: 5rem; /* 80px */
 
   /* Border Radius */
   --alt-radius-sm: 0.125rem;
@@ -28,4 +29,4 @@
   --alt-layout-sidebar-width: 272px;
   --alt-layout-header-height: 4rem;
   --alt-layout-footer-height: 3rem;
-} 
+}

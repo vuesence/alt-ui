@@ -45,6 +45,7 @@ import type { TableHeader, TableRow } from '../';
 ### Themes
 
 The library supports three themes:
+
 - Light theme (default)
 - Dark theme
 - System theme (follows system preferences)
@@ -67,6 +68,7 @@ The library uses CSS variables for consistent styling:
   --alt-c-brand-1: #3b82f6;
 
   /* Spacing */
+  --alt-space-0: 0.1rem;
   --alt-space-1: 0.25rem;
   --alt-space-2: 0.5rem;
   --alt-space-3: 1rem;
@@ -107,6 +109,7 @@ Check out the demo component at `src/ui/demo/UiDemo.vue` to see all components i
 ### Utilities
 
 The library includes utility functions for:
+
 - CSS class management
 - CSS variable handling
 - Unit conversion
@@ -120,4 +123,4 @@ The library includes utility functions for:
 3. Write descriptive prop and event names
 4. Include JSDoc comments for documentation
 5. Test components for accessibility
-6. Maintain consistent styling with CSS variables 
+6. Maintain consistent styling with CSS variables

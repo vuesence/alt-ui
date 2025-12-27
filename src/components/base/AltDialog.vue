@@ -62,6 +62,7 @@ dialog {
   max-height: 90%;
   width: fit-content;
   height: fit-content;
+  overflow: hidden; /* Prevent dialog from scrolling - content should handle its own scroll */
 
   /*   Open state of the dialog  */
   &[open] {

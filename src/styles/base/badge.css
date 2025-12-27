@@ -1,0 +1,250 @@
+/**
+ * Alt-UI Badge Utility Classes
+ * 
+ * CSS-only badge/tag components for status indicators.
+ * 
+ * Usage:
+ *   <span class="alt-badge success">Active</span>
+ *   <span class="alt-badge attention sm">Warning</span>
+ *   <div class="alt-badge info lg">Info</div>
+ * 
+ * Sizes: xs, sm, (default), lg
+ * Variants: success, warning, attention, danger, info, neutral, brand
+ * Modifiers: outline, soft
+ */
+
+.alt-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--alt-space-1);
+  padding: var(--alt-space-1) var(--alt-space-3);
+  font-size: var(--alt-font-size-0);
+  font-weight: var(--alt-font-weight-medium);
+  line-height: 1.3;
+  white-space: nowrap;
+  border-radius: var(--alt-radius-sm);
+  transition:
+    background-color var(--alt-transition-fast),
+    color var(--alt-transition-fast);
+
+  /* Default: neutral gray */
+  background: var(--alt-c-gray-200);
+  color: var(--alt-c-gray-700);
+
+  /* Dark theme */
+  :root.dark & {
+    background: var(--alt-c-gray-700);
+    color: var(--alt-c-gray-200);
+  }
+}
+
+/* ============================================
+   Size variants
+   ============================================ */
+
+.alt-badge.xs {
+  padding: 2px var(--alt-space-1);
+  font-size: 10px;
+}
+
+.alt-badge.sm {
+  padding: var(--alt-space-0) var(--alt-space-2);
+  font-size: var(--alt-font-size-0);
+}
+
+.alt-badge.lg {
+  padding: var(--alt-space-2) var(--alt-space-4);
+  font-size: var(--alt-font-size-1);
+}
+
+/* ============================================
+   Status variants - filled (default)
+   ============================================ */
+
+.alt-badge.success {
+  background: var(--alt-c-success);
+  color: white;
+}
+
+.alt-badge.warning {
+  background: var(--alt-c-warning);
+  color: white;
+}
+
+.alt-badge.attention {
+  background: #f97316;
+  color: white;
+}
+
+.alt-badge.danger,
+.alt-badge.critical {
+  background: var(--alt-c-danger);
+  color: white;
+}
+
+.alt-badge.info {
+  background: var(--alt-c-info);
+  color: white;
+}
+
+.alt-badge.brand {
+  background: var(--alt-c-brand-1-500);
+  color: white;
+}
+
+.alt-badge.neutral {
+  background: var(--alt-c-gray-400);
+  color: white;
+}
+
+/* ============================================
+   Soft variants (subtle background)
+   ============================================ */
+
+.alt-badge.soft {
+  background: var(--alt-c-gray-100);
+  color: var(--alt-c-gray-600);
+
+  :root.dark & {
+    background: var(--alt-c-gray-800);
+    color: var(--alt-c-gray-300);
+  }
+}
+
+.alt-badge.soft.success {
+  background: color-mix(in srgb, var(--alt-c-success) 15%, transparent);
+  color: var(--alt-c-success);
+
+  :root.dark & {
+    background: color-mix(in srgb, var(--alt-c-success) 25%, transparent);
+    color: color-mix(in srgb, var(--alt-c-success) 90%, white);
+  }
+}
+
+.alt-badge.soft.warning {
+  background: color-mix(in srgb, var(--alt-c-warning) 15%, transparent);
+  color: var(--alt-c-warning);
+
+  :root.dark & {
+    background: color-mix(in srgb, var(--alt-c-warning) 25%, transparent);
+    color: color-mix(in srgb, var(--alt-c-warning) 90%, white);
+  }
+}
+
+.alt-badge.soft.attention {
+  background: color-mix(in srgb, #f97316 15%, transparent);
+  color: #f97316;
+
+  :root.dark & {
+    background: color-mix(in srgb, #f97316 25%, transparent);
+    color: #fb923c;
+  }
+}
+
+.alt-badge.soft.danger,
+.alt-badge.soft.critical {
+  background: color-mix(in srgb, var(--alt-c-danger) 15%, transparent);
+  color: var(--alt-c-danger);
+
+  :root.dark & {
+    background: color-mix(in srgb, var(--alt-c-danger) 25%, transparent);
+    color: color-mix(in srgb, var(--alt-c-danger) 90%, white);
+  }
+}
+
+.alt-badge.soft.info {
+  background: color-mix(in srgb, var(--alt-c-info) 15%, transparent);
+  color: var(--alt-c-info);
+
+  :root.dark & {
+    background: color-mix(in srgb, var(--alt-c-info) 25%, transparent);
+    color: color-mix(in srgb, var(--alt-c-info) 90%, white);
+  }
+}
+
+.alt-badge.soft.brand {
+  background: var(--alt-c-brand-1-100);
+  color: var(--alt-c-brand-1-600);
+
+  :root.dark & {
+    background: var(--alt-c-brand-1-800);
+    color: var(--alt-c-brand-1-300);
+  }
+}
+
+/* ============================================
+   Outline variants
+   ============================================ */
+
+.alt-badge.outline {
+  background: transparent;
+  border: 1px solid currentColor;
+  color: var(--alt-c-gray-500);
+}
+
+.alt-badge.outline.success {
+  color: var(--alt-c-success);
+  border-color: var(--alt-c-success);
+}
+
+.alt-badge.outline.warning {
+  color: var(--alt-c-warning);
+  border-color: var(--alt-c-warning);
+}
+
+.alt-badge.outline.attention {
+  color: #f97316;
+  border-color: #f97316;
+}
+
+.alt-badge.outline.danger,
+.alt-badge.outline.critical {
+  color: var(--alt-c-danger);
+  border-color: var(--alt-c-danger);
+}
+
+.alt-badge.outline.info {
+  color: var(--alt-c-info);
+  border-color: var(--alt-c-info);
+}
+
+.alt-badge.outline.brand {
+  color: var(--alt-c-brand-1-500);
+  border-color: var(--alt-c-brand-1-500);
+}
+
+/* ============================================
+   Pill shape (fully rounded)
+   ============================================ */
+
+.alt-badge.pill {
+  border-radius: var(--alt-radius-full);
+}
+
+/* ============================================
+   With dot indicator
+   ============================================ */
+
+.alt-badge.with-dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.alt-badge.success.with-dot::before,
+.alt-badge.warning.with-dot::before,
+.alt-badge.attention.with-dot::before,
+.alt-badge.danger.with-dot::before,
+.alt-badge.critical.with-dot::before,
+.alt-badge.info.with-dot::before,
+.alt-badge.brand.with-dot::before {
+  background: white;
+}
+
+.alt-badge.soft.with-dot::before,
+.alt-badge.outline.with-dot::before {
+  background: currentColor;
+}

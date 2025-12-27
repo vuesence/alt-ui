@@ -17,6 +17,7 @@ import "./theme/custom-theme-example.css";
 import "./base/fonts.css";
 import "./base/animations.css";
 import "./base/reset.css";
+import "./base/badge.css";
 
 // Import utilities and general styles
 import "./markdown.css";
