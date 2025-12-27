@@ -1,4 +1,5 @@
-import { dialogsState, FormField } from "./dialogState";
+import type { Component } from "vue";
+import { dialogsState, type FormField, type SidePanelOptions } from "./dialogState";
 
 /**
  * Показывает диалог с сообщением и кнопкой "OK"
@@ -57,6 +58,46 @@ function form(title: string, fields: FormField[]): Promise<Record<string, string
 }
 
 /**
+ * Показывает боковую панель с контентом
+ * @param title Заголовок панели
+ * @param content Vue компонент для отображения в панели
+ * @param contentProps Пропсы для компонента контента
+ * @param options Опции панели (ширина, позиция и т.д.)
+ * @returns Promise, который резолвится после закрытия панели
+ */
+function sidePanel(
+  title: string,
+  content: Component | null = null,
+  contentProps: Record<string, unknown> = {},
+  options: SidePanelOptions = {},
+): Promise<void> {
+  return new Promise<void>((resolve) => {
+    dialogsState.sidePanel.title = title;
+    dialogsState.sidePanel.content = content;
+    dialogsState.sidePanel.contentProps = contentProps;
+    dialogsState.sidePanel.options = {
+      width: options.width || "560px",
+      position: options.position || "right",
+      closeOnOverlay: options.closeOnOverlay !== false,
+    };
+    dialogsState.sidePanel.resolve = resolve;
+    dialogsState.sidePanel.isOpen = true;
+  });
+}
+
+/**
+ * Закрывает боковую панель
+ */
+function closeSidePanel(): void {
+  if (dialogsState.sidePanel.resolve) {
+    dialogsState.sidePanel.resolve();
+    dialogsState.sidePanel.resolve = null;
+  }
+  dialogsState.sidePanel.isOpen = false;
+  dialogsState.sidePanel.content = null;
+}
+
+/**
  * Хук для работы с диалогами
  * Возвращает методы для показа различных типов диалогов
  */
@@ -66,6 +107,8 @@ export function useDialogs() {
     confirm,
     prompt,
     form,
+    sidePanel,
+    closeSidePanel,
   };
 }
 

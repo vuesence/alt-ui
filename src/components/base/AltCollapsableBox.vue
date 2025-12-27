@@ -45,11 +45,9 @@ const isOpen = defineModel<boolean>('modelValue');
       class="summary-container"
       :class="{ 'is-open': isOpen }"
     >
+      <div class="summary-icon" :class="{ 'is-open': isOpen }"></div>
       <slot name="title">
-        <div class="summary">
-          <div class="summary-icon"></div>
-          <div class="summary-title">{{ title }}</div>
-        </div>
+        <div class="summary-title">{{ title }}</div>
       </slot>
     </div>
     <div class="content-container" :class="{ 'is-open': isOpen }">
@@ -90,12 +88,11 @@ const isOpen = defineModel<boolean>('modelValue');
   max-width: 40rem;
 }
 
-.summary {
+.summary-container {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: var(--alt-c-text-3);
-  position: relative;
   cursor: pointer;
   outline: 0;
   transition: color 200ms ease;
@@ -114,6 +111,7 @@ const isOpen = defineModel<boolean>('modelValue');
   position: relative;
   width: 0.875rem;
   height: 0.875rem;
+  flex-shrink: 0;
 
   &::before {
     content: "";
@@ -129,7 +127,7 @@ const isOpen = defineModel<boolean>('modelValue');
     transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
   }
 
-  &.is-open &::before {
+  &.is-open::before {
     transform: translateY(-50%) rotate(45deg);
   }
 }

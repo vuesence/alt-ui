@@ -4,6 +4,7 @@ import AltAlertDialog from "./AltAlertDialog.vue";
 import AltConfirmDialog from "./AltConfirmDialog.vue";
 import AltPromptDialog from "./AltPromptDialog.vue";
 import AltFormDialog from "./AltFormDialog.vue";
+import AltSidePanel from "./AltSidePanel.vue";
 import { dialogsState } from "./dialogState";
 
 // Пропсы для текстов кнопок
@@ -21,6 +22,14 @@ defineProps({
     type: String,
     default: "Confirm",
   },
+  backText: {
+    type: String,
+    default: "Back",
+  },
+  closeText: {
+    type: String,
+    default: "Close",
+  },
 });
 
 // Ссылки на компоненты диалогов
@@ -28,6 +37,7 @@ const alertDialog = ref<InstanceType<typeof AltAlertDialog> | null>(null);
 const confirmDialog = ref<InstanceType<typeof AltConfirmDialog> | null>(null);
 const promptDialog = ref<InstanceType<typeof AltPromptDialog> | null>(null);
 const formDialog = ref<InstanceType<typeof AltFormDialog> | null>(null);
+const sidePanel = ref<InstanceType<typeof AltSidePanel> | null>(null);
 
 // Отслеживаем изменения состояния для alert диалога
 watch(
@@ -112,6 +122,32 @@ watch(
     }
   },
 );
+
+// Отслеживаем изменения состояния для side panel
+watch(
+  () => dialogsState.sidePanel.isOpen,
+  async (isOpen) => {
+    if (isOpen && sidePanel.value) {
+      try {
+        await sidePanel.value.show(
+          dialogsState.sidePanel.title,
+          dialogsState.sidePanel.content,
+          dialogsState.sidePanel.contentProps,
+          dialogsState.sidePanel.options,
+        );
+        // Вызываем резолв промиса после закрытия панели
+        if (dialogsState.sidePanel.resolve) {
+          dialogsState.sidePanel.resolve();
+          dialogsState.sidePanel.resolve = null;
+        }
+      } finally {
+        dialogsState.sidePanel.isOpen = false;
+        dialogsState.sidePanel.content = null;
+        dialogsState.sidePanel.contentProps = {};
+      }
+    }
+  },
+);
 </script>
 
 <template>
@@ -130,6 +166,11 @@ watch(
     ref="formDialog"
     :ok-text="okText"
     :cancel-text="cancelText"
+  />
+  <AltSidePanel
+    ref="sidePanel"
+    :back-text="backText"
+    :close-text="closeText"
   />
 </template>
 

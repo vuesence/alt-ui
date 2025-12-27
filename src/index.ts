@@ -30,6 +30,8 @@ export { useDialogs, dialogsService } from "./components/dialogs/useDialogs";
 export { default as DialogsManager } from "./components/dialogs/DialogsManager.vue";
 export { default as AltFormDialog } from "./components/dialogs/AltFormDialog.vue";
 export { default as AltPromptDialog } from "./components/dialogs/AltPromptDialog.vue";
+export { default as AltSidePanel } from "./components/dialogs/AltSidePanel.vue";
+export type { SidePanelOptions } from "./components/dialogs/dialogState";
 
 // Onboarding Components
 export { default as OnboardingTooltip } from "./components/Onboarding/OnboardingTooltip.vue";

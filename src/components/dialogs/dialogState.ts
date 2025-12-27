@@ -22,7 +22,7 @@ export interface PromptDialogState {
 export interface FormField {
   id: string;
   label: string;
-  type: 'text' | 'textarea';
+  type: "text" | "textarea";
   value: string;
   placeholder?: string;
 }
@@ -34,11 +34,27 @@ export interface FormDialogState {
   resolve: ((value: Record<string, string> | null) => void) | null;
 }
 
+export interface SidePanelOptions {
+  width?: string;
+  position?: "left" | "right";
+  closeOnOverlay?: boolean;
+}
+
+export interface SidePanelDialogState {
+  title: string;
+  content: any;
+  contentProps: Record<string, unknown>;
+  options: SidePanelOptions;
+  isOpen: boolean;
+  resolve: ((value: void) => void) | null;
+}
+
 export interface DialogsState {
   alert: AlertDialogState;
   confirm: ConfirmDialogState;
   prompt: PromptDialogState;
   form: FormDialogState;
+  sidePanel: SidePanelDialogState;
 }
 
 // Создаем единое реактивное состояние для всех диалогов
@@ -62,6 +78,18 @@ export const dialogsState = reactive<DialogsState>({
   form: {
     title: "",
     fields: [],
+    isOpen: false,
+    resolve: null,
+  },
+  sidePanel: {
+    title: "",
+    content: null,
+    contentProps: {},
+    options: {
+      width: "560px",
+      position: "right",
+      closeOnOverlay: true,
+    },
     isOpen: false,
     resolve: null,
   },
