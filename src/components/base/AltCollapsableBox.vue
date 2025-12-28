@@ -52,7 +52,7 @@ const isOpen = defineModel<boolean>('modelValue');
     </div>
     <div class="content-container" :class="{ 'is-open': isOpen }">
       <div class="content-inner">
-        <slot name="content">
+        <slot>
           <div class="content" v-html="content" />
         </slot>
       </div>
@@ -124,10 +124,12 @@ const isOpen = defineModel<boolean>('modelValue');
     border-width: 0 0.16rem 0.16rem 0;
     border-color: var(--alt-c-text-3);
     transform: translateY(-50%) rotate(-45deg);
-    transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
   }
 
   &.is-open::before {
+    top: 30%;
+    left: 10%;
     transform: translateY(-50%) rotate(45deg);
   }
 }
@@ -137,6 +139,7 @@ const isOpen = defineModel<boolean>('modelValue');
   grid-template-rows: 0fr;
   transition: grid-template-rows 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
   overflow: hidden;
+  margin-top: 1rem;
 
   &.is-open {
     grid-template-rows: 1fr;
