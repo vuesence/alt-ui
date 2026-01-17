@@ -2,6 +2,7 @@ import { reactive } from "vue";
 
 export interface AlertDialogState {
   message: string;
+  isHtml: boolean;
   isOpen: boolean;
   resolve: ((value: void) => void) | null;
 }
@@ -61,6 +62,7 @@ export interface DialogsState {
 export const dialogsState = reactive<DialogsState>({
   alert: {
     message: "",
+    isHtml: false,
     isOpen: false,
     resolve: null,
   },

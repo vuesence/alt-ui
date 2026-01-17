@@ -151,7 +151,7 @@ watch(
 </script>
 
 <template>
-  <AltAlertDialog ref="alertDialog" :ok-text="okText" />
+  <AltAlertDialog ref="alertDialog" :ok-text="okText" :is-html="dialogsState.alert.isHtml" />
   <AltConfirmDialog
     ref="confirmDialog"
     :cancel-text="cancelText"

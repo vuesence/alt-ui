@@ -1,14 +1,20 @@
 import type { Component } from "vue";
-import { dialogsState, type FormField, type SidePanelOptions } from "./dialogState";
+import {
+  dialogsState,
+  type FormField,
+  type SidePanelOptions,
+} from "./dialogState";
 
 /**
  * Показывает диалог с сообщением и кнопкой "OK"
  * @param message Текст сообщения
+ * @param isHtml Является ли сообщение HTML (по умолчанию false)
  * @returns Promise, который резолвится после закрытия диалога
  */
-function alert(message: string): Promise<void> {
+function alert(message: string, isHtml: boolean = false): Promise<void> {
   return new Promise<void>((resolve) => {
     dialogsState.alert.message = message;
+    dialogsState.alert.isHtml = isHtml;
     dialogsState.alert.resolve = resolve;
     dialogsState.alert.isOpen = true;
   });
@@ -48,7 +54,10 @@ function prompt(message: string, defaultValue = ""): Promise<string | null> {
  * @param fields Поля формы
  * @returns Promise, который резолвится с объектом данных формы или null (если нажата "Отмена")
  */
-function form(title: string, fields: FormField[]): Promise<Record<string, string> | null> {
+function form(
+  title: string,
+  fields: FormField[]
+): Promise<Record<string, string> | null> {
   return new Promise<Record<string, string> | null>((resolve) => {
     dialogsState.form.title = title;
     dialogsState.form.fields = fields;
@@ -69,7 +78,7 @@ function sidePanel(
   title: string,
   content: Component | null = null,
   contentProps: Record<string, unknown> = {},
-  options: SidePanelOptions = {},
+  options: SidePanelOptions = {}
 ): Promise<void> {
   return new Promise<void>((resolve) => {
     dialogsState.sidePanel.title = title;

@@ -57,7 +57,7 @@ interface LoadIconsConfig {
  *   spritePath: "/assets/images/icons-sprite.svg"
  * });
  */
-function initIconSystem(config: IconSystemConfig): void {
+async function initIconSystem(config: IconSystemConfig): Promise<void> {
   iconMode = config.mode;
 
   if (config.spritePath) {
@@ -65,7 +65,7 @@ function initIconSystem(config: IconSystemConfig): void {
   }
 
   if (config.mode === "bundle") {
-    loadIconsBundle();
+    await loadIconsBundle();
   } else if (config.mode === "sprite") {
     // Load images even in sprite mode (SVG icons use sprite, images use direct URLs)
     loadImagesBundle();
@@ -148,18 +148,26 @@ function loadImagesBundle(): void {
  * Load icons in bundle mode
  * Note: import.meta.glob requires static literals, cannot use dynamic patterns
  * Icons are loaded from predefined paths: @/assets/icons/ and @/assets/images/
+ * Using eager: false to prevent including all SVGs in main bundle when not used
  */
-function loadIconsBundle(): void {
-  // Load SVG icons
+async function loadIconsBundle(): Promise<void> {
+  // Load SVG icons lazily to avoid bundling when not used
   const svgModules = import.meta.glob("@/assets/icons/**/*.svg", {
     query: "?raw",
     import: "default",
-    eager: true,
   });
 
-  for (const [fileName, module] of Object.entries(svgModules)) {
-    const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
-    svgResources.set(name, module as string);
+  // Load all modules
+  const entries = await Promise.all(
+    Object.entries(svgModules).map(async ([fileName, loader]) => {
+      const module = await loader();
+      const name = fileName.slice(fileName.lastIndexOf("/") + 1, -4);
+      return [name, module as string] as const;
+    })
+  );
+
+  for (const [name, content] of entries) {
+    svgResources.set(name, content);
   }
 
   console.log(`✓ Loaded ${svgResources.size} SVG icons in bundle mode`);

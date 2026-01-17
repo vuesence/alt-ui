@@ -7,6 +7,10 @@ defineProps({
     type: String,
     default: "OK",
   },
+  isHtml: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const dialog = ref<InstanceType<typeof AltDialog> | null>(null);
@@ -34,7 +38,8 @@ defineExpose({ show });
   <AltDialog ref="dialog">
     <div class="alert-dialog" data-testid="alert-dialog">
       <div class="alert-content">
-        <p>{{ message }}</p>
+        <p v-if="!isHtml">{{ message }}</p>
+        <p v-else v-html="message"></p>
         <div class="alert-actions">
           <button
             class="btn btn-primary"
