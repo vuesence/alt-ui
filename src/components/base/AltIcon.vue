@@ -119,6 +119,7 @@ const iconMode = computed(() => getIconMode());
     :data-name="props.name"
     :style="{
       width: computedWidth,
+      minWidth: computedWidth,
       height: computedHeight,
       color: iconColor,
       ...svgFillStyle,
@@ -134,6 +135,7 @@ const iconMode = computed(() => getIconMode());
     :data-name="props.name"
     :style="{
       width: computedWidth,
+      minWidth: computedWidth,
       height: computedHeight,
       color: iconColor,
     }"

@@ -72,10 +72,7 @@ const props = defineProps({
     <summary class="content-summary">
       {{ props.collapsedText }}
     </summary>
-    <div
-      class="content content--markdown"
-      v-html="props.renderedHtml"
-    />
+    <div class="content content--markdown" v-html="props.renderedHtml" />
   </details>
   <div
     v-else-if="!props.isEditable && props.renderMarkdown"
@@ -131,7 +128,7 @@ const props = defineProps({
 }
 
 .input-field--text {
-  min-height: var(--alt-space-6);
+  min-height: var(--alt-space-7);
 }
 
 .input-field--textarea {
@@ -160,7 +157,7 @@ const props = defineProps({
   padding: var(--alt-space-1) 0;
   border-radius: var(--alt-radius-base);
   margin-bottom: var(--alt-space-4);
-  
+
   &:hover {
     color: var(--alt-c-brand-1-500);
   }

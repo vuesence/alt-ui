@@ -88,6 +88,10 @@ const isOpen = defineModel<boolean>('modelValue');
   max-width: 40rem;
 }
 
+.wide.collapsable-box {
+  max-width: unset;
+}
+
 .summary-container {
   display: flex;
   align-items: center;
