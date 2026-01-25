@@ -88,6 +88,7 @@ function sidePanel(
       width: options.width || "560px",
       position: options.position || "right",
       closeOnOverlay: options.closeOnOverlay !== false,
+      hideFooter: options.hideFooter === true,
     };
     dialogsState.sidePanel.resolve = resolve;
     dialogsState.sidePanel.isOpen = true;

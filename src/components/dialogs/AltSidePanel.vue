@@ -21,6 +21,7 @@ const panelOptions = ref<SidePanelOptions>({
   width: "560px",
   position: "right",
   closeOnOverlay: true,
+  hideFooter: false,
 });
 const resolvePromise = ref<((value: void) => void) | null>(null);
 
@@ -41,6 +42,7 @@ function show(
     width: options.width || "560px",
     position: options.position || "right",
     closeOnOverlay: options.closeOnOverlay !== false,
+    hideFooter: options.hideFooter === true,
   };
   isVisible.value = true;
 
@@ -107,7 +109,7 @@ defineExpose({ show, close });
               <slot v-else />
             </div>
 
-            <footer class="panel-footer">
+            <footer v-if="!panelOptions.hideFooter" class="panel-footer">
               <button class="close-btn" @click="close">
                 {{ closeText }}
               </button>

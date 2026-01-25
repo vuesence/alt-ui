@@ -39,6 +39,7 @@ export interface SidePanelOptions {
   width?: string;
   position?: "left" | "right";
   closeOnOverlay?: boolean;
+  hideFooter?: boolean;
 }
 
 export interface SidePanelDialogState {
