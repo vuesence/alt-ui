@@ -70,7 +70,7 @@ function click(event: MouseEvent) {
     :disabled="disabled"
     @click="click"
   >
-    <AltIcon v-if="icon" :name="icon" size="2em" class="button-icon" />
+    <AltIcon v-if="icon" :name="icon" size="auto" class="button-icon" />
     <span v-if="label && !hideText" class="button-text">{{ label }}</span>
     <slot v-else />
     <AltSpinner v-if="loading" class="spinner" />
@@ -79,6 +79,8 @@ function click(event: MouseEvent) {
 
 <style scoped>
 .base-button {
+  --icon-size: 1.25em;
+
   font-size: var(--alt-font-size-1);
   font-variant-numeric: tabular-nums;
   color: var(--alt-c-text-3);
@@ -167,23 +169,23 @@ function click(event: MouseEvent) {
   }
 
   &.small {
+    --icon-size: 16px;
+
     font-size: var(--alt-font-size-0);
-    padding: var(--alt-space-2) var(--alt-space-4);
-    .button-icon {
-      max-height: 20px;
-      max-width: 20px;
-    }
+    padding: var(--alt-space-2) var(--alt-space-3);
   }
+
   &.x-small {
+    --icon-size: 12px;
+
     font-size: var(--alt-font-size-0);
-    padding: var(--alt-space-1) var(--alt-space-3);
-    .button-icon {
-      max-height: 12px;
-      max-width: 12px;
-    }
+    padding: var(--alt-space-1) var(--alt-space-2);
+    gap: 4px;
   }
 
   &.large {
+    --icon-size: 1.5em;
+
     font-size: var(--alt-font-size-2);
     padding: var(--alt-space-4) var(--alt-space-8);
   }

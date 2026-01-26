@@ -57,8 +57,17 @@ const props = withDefaults(defineProps<AltIconProps>(), {
   spritePath: "",
 });
 
+// Check if size should be inherited from CSS (auto/inherit = no inline styles)
+const isInheritedSize = computed(() => {
+  return props.size === "auto" || props.size === "inherit";
+});
+
 // Compute width with size priority
 const computedWidth = computed(() => {
+  // When inherited, don't set inline width - let CSS handle it
+  if (isInheritedSize.value) {
+    return undefined;
+  }
   if (props.size) {
     return isNumeric(props.size) ? `${Number(props.size)}px` : props.size;
   }
@@ -69,6 +78,11 @@ const computedWidth = computed(() => {
 // For images: if size is set, height is auto to preserve aspect ratio
 // For SVG: height equals width for square icons
 const computedHeight = computed(() => {
+  // When inherited, don't set inline height - let CSS handle it
+  if (isInheritedSize.value) {
+    return undefined;
+  }
+
   // For images: preserve aspect ratio when size is set
   if (props.type === "image" && props.size) {
     return "auto";
@@ -151,6 +165,10 @@ const iconMode = computed(() => getIconMode());
   transition:
     color var(--alt-transition-colors),
     opacity var(--alt-transition-colors);
+
+  /* Default size when no inline styles (size="auto" or "inherit") */
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
 }
 
 .base-icon:hover {
