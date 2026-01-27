@@ -1,34 +1,23 @@
+/**
+ * Dark Theme
+ * 
+ * Only semantic tokens are defined here.
+ * Primitive colors (brand, gray scale) are in colors.css.
+ */
 :root[data-theme="dark"] {
-  /* Base Colors */
-  --alt-c-white: #ffffff;
-  --alt-c-black: #000000;
-
-  /* Text Colors */
+  /* Text Colors - inverted for dark theme */
   --alt-c-text-1: var(--alt-c-gray-50);
   --alt-c-text-2: var(--alt-c-gray-400);
   --alt-c-text-3: var(--alt-c-gray-500);
 
-  /* Surface Colors */
+  /* Surface Colors - inverted layered backgrounds */
   --alt-c-surface-1: var(--alt-c-gray-900);
   --alt-c-surface-2: var(--alt-c-gray-800);
   --alt-c-surface-3: var(--alt-c-gray-700);
   --alt-c-surface-4: var(--alt-c-gray-600);
   --alt-c-surface-5: var(--alt-c-gray-500);
 
-  /* Brand Colors */
-  --alt-c-brand-1: #3b82f6;
-  --alt-c-brand-1-50: #1e3a8a;
-  --alt-c-brand-1-100: #1e40af;
-  --alt-c-brand-1-200: #1d4ed8;
-  --alt-c-brand-1-300: #2563eb;
-  --alt-c-brand-1-400: #3b82f6;
-  --alt-c-brand-1-500: #60a5fa;
-  --alt-c-brand-1-600: #93c5fd;
-  --alt-c-brand-1-700: #bfdbfe;
-  --alt-c-brand-1-800: #dbeafe;
-  --alt-c-brand-1-900: #eff6ff;
-
-  /* Background Colors */
+  /* Background Aliases */
   --alt-c-bg: var(--alt-c-surface-1);
   --alt-c-bg-alt: var(--alt-c-surface-2);
   --alt-c-bg-soft: var(--alt-c-surface-3);
@@ -39,4 +28,15 @@
 
   /* Overlay */
   --alt-c-overlay: rgba(0, 0, 0, 0.7);
+
+  /* Focus Ring - lighter for dark background */
+  --alt-focus-ring: 0 0 0 3px var(--alt-c-brand-1-700);
+
+  /* Soft variants - stronger opacity for dark theme */
+  --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 25%, transparent);
+  --alt-c-warning-soft: color-mix(in srgb, var(--alt-c-warning) 25%, transparent);
+  --alt-c-danger-soft: color-mix(in srgb, var(--alt-c-danger) 25%, transparent);
+  --alt-c-info-soft: color-mix(in srgb, var(--alt-c-info) 25%, transparent);
+  --alt-c-attention-soft: color-mix(in srgb, var(--alt-c-attention) 25%, transparent);
+  --alt-c-brand-soft: color-mix(in srgb, var(--alt-c-brand) 25%, transparent);
 } 

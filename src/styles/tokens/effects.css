@@ -1,29 +1,63 @@
 :root {
-  /* Shadows */
+  /* ============================================
+   * SHADOWS
+   * Elevation levels for depth perception
+   * ============================================ */
   --alt-shadow-1: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --alt-shadow-2: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --alt-shadow-3: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --alt-shadow-4: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --alt-shadow-5: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  /* Focus Ring */
+  /* ============================================
+   * FOCUS RING
+   * Accessibility focus indicators
+   * ============================================ */
   --alt-focus-ring: 0 0 0 3px var(--alt-c-brand-1-200);
   --alt-focus-ring-offset: 2px;
 
-  /* Transitions */
-  --alt-transition-fast: 150ms;
-  --alt-transition-base: 250ms;
-  --alt-transition-slow: 350ms;
+  /* ============================================
+   * DURATION
+   * Animation/transition timing values
+   * ============================================ */
+  --alt-duration-instant: 0ms;
+  --alt-duration-fast: 150ms;
+  --alt-duration-base: 250ms;
+  --alt-duration-slow: 350ms;
+  --alt-duration-slower: 500ms;
+
+  /* Legacy aliases (for backward compatibility) */
+  --alt-transition-fast: var(--alt-duration-fast);
+  --alt-transition-base: var(--alt-duration-base);
+  --alt-transition-slow: var(--alt-duration-slow);
+
+  /* ============================================
+   * EASING
+   * Animation curves
+   * ============================================ */
+  --alt-ease-linear: linear;
   --alt-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --alt-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --alt-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --alt-transition-colors: var(--alt-transition-base) ease-in-out;
-  --alt-transition-transform: var(--alt-transition-base) var(--alt-ease-in-out);
-  --alt-transition-opacity: var(--alt-transition-base) var(--alt-ease-in-out);
-  --alt-transition-all: all 0.3s ease-in-out;
+  --alt-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Z-Index */
+  /* ============================================
+   * TRANSITION PRESETS
+   * Common transition combinations
+   * ============================================ */
+  --alt-transition-colors: color var(--alt-duration-base) var(--alt-ease-in-out),
+                           background-color var(--alt-duration-base) var(--alt-ease-in-out),
+                           border-color var(--alt-duration-base) var(--alt-ease-in-out);
+  --alt-transition-transform: transform var(--alt-duration-base) var(--alt-ease-in-out);
+  --alt-transition-opacity: opacity var(--alt-duration-base) var(--alt-ease-in-out);
+  --alt-transition-all: all var(--alt-duration-base) var(--alt-ease-in-out);
+
+  /* ============================================
+   * Z-INDEX
+   * Stacking context layers
+   * ============================================ */
   --alt-z-negative: -1;
+  --alt-z-base: 0;
   --alt-z-elevate: 1;
   --alt-z-sticky: 100;
   --alt-z-header: 200;
@@ -31,4 +65,5 @@
   --alt-z-modal: 400;
   --alt-z-toast: 500;
   --alt-z-tooltip: 600;
+  --alt-z-max: 9999;
 } 

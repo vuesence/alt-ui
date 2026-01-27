@@ -102,7 +102,7 @@ const computedHeight = computed(() => {
 
 // Resolve icon color
 const iconColor = computed(() => {
-  return props.color !== "default" ? props.color : "var(--alt-c-brand-1)";
+  return props.color !== "default" ? props.color : "var(--alt-c-icon-brand)";
 });
 
 // Extract icon name from path (e.g., "interface/settings" -> "settings")

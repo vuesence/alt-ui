@@ -1,52 +1,91 @@
 :root {
-  /* Primitive colors */
+  /* ============================================
+   * PRIMITIVE COLORS
+   * Base colors that don't change between themes
+   * ============================================ */
   --alt-c-white: #ffffff;
   --alt-c-black: #000000;
 
-  /* Brand Colors */
-  --alt-c-brand-1: #428AC8;
-  --alt-c-brand-1-50: #EBF3FA;
-  --alt-c-brand-1-100: #D7E7F5;
-  --alt-c-brand-1-200: #B0CFEB;
-  --alt-c-brand-1-300: #88B7E1;
-  --alt-c-brand-1-400: #619FD7;
-  --alt-c-brand-1-500: #428AC8;
-  --alt-c-brand-1-600: #346EA0;
-  --alt-c-brand-1-700: #275278;
-  --alt-c-brand-1-800: #1A3750;
-  --alt-c-brand-1-900: #0D1B28;
-
-  --alt-c-brand-2: #7CC7B9;
-  --alt-c-brand-2-50: #F2F9F8;
-  --alt-c-brand-2-100: #E5F3F1;
-  --alt-c-brand-2-200: #CBE7E3;
-  --alt-c-brand-2-300: #B1DBD5;
-  --alt-c-brand-2-400: #97CFC7;
-  --alt-c-brand-2-500: #7CC7B9;
-  --alt-c-brand-2-600: #639F94;
-  --alt-c-brand-2-700: #4A776F;
-  --alt-c-brand-2-800: #31504A;
-  --alt-c-brand-2-900: #182825;
-
-  --alt-c-brand-3: #FF6B6B;
-  --alt-c-brand-3-50: #FFF0F0;
-  --alt-c-brand-3-100: #FFE1E1;
-  --alt-c-brand-3-200: #FFC3C3;
-  --alt-c-brand-3-300: #FFA5A5;
-  --alt-c-brand-3-400: #FF8787;
-  --alt-c-brand-3-500: #FF6B6B;
-  --alt-c-brand-3-600: #CC5656;
-  --alt-c-brand-3-700: #994040;
-  --alt-c-brand-3-800: #662B2B;
-  --alt-c-brand-3-900: #331515;
+  /* ============================================
+   * BRAND COLORS
+   * Primary palette with full shade scale (50-900)
+   * ============================================ */
   
-  /* Functional Colors */
-  --alt-c-success: #18794e;
+  /* Brand 1: Primary Blue - Main brand color */
+  --alt-c-brand-1: #3b82f6;
+  --alt-c-brand-1-50: #eff6ff;
+  --alt-c-brand-1-100: #dbeafe;
+  --alt-c-brand-1-200: #bfdbfe;
+  --alt-c-brand-1-300: #93c5fd;
+  --alt-c-brand-1-400: #60a5fa;
+  --alt-c-brand-1-500: #3b82f6;
+  --alt-c-brand-1-600: #2563eb;
+  --alt-c-brand-1-700: #1d4ed8;
+  --alt-c-brand-1-800: #1e40af;
+  --alt-c-brand-1-900: #1e3a8a;
+
+  /* Brand 2: Teal - Secondary/wellness color */
+  --alt-c-brand-2: #14b8a6;
+  --alt-c-brand-2-50: #f0fdfa;
+  --alt-c-brand-2-100: #ccfbf1;
+  --alt-c-brand-2-200: #99f6e4;
+  --alt-c-brand-2-300: #5eead4;
+  --alt-c-brand-2-400: #2dd4bf;
+  --alt-c-brand-2-500: #14b8a6;
+  --alt-c-brand-2-600: #0d9488;
+  --alt-c-brand-2-700: #0f766e;
+  --alt-c-brand-2-800: #115e59;
+  --alt-c-brand-2-900: #134e4a;
+
+  /* Brand 3: Violet - Accent color (distinct from danger red) */
+  --alt-c-brand-3: #8b5cf6;
+  --alt-c-brand-3-50: #f5f3ff;
+  --alt-c-brand-3-100: #ede9fe;
+  --alt-c-brand-3-200: #ddd6fe;
+  --alt-c-brand-3-300: #c4b5fd;
+  --alt-c-brand-3-400: #a78bfa;
+  --alt-c-brand-3-500: #8b5cf6;
+  --alt-c-brand-3-600: #7c3aed;
+  --alt-c-brand-3-700: #6d28d9;
+  --alt-c-brand-3-800: #5b21b6;
+  --alt-c-brand-3-900: #4c1d95;
+  
+  /* ============================================
+   * FUNCTIONAL COLORS
+   * Semantic colors for status/feedback
+   * ============================================ */
+  --alt-c-success: #16a34a;
   --alt-c-warning: #d97706;
   --alt-c-danger: #dc2626;
   --alt-c-info: #0284c7;
+  --alt-c-attention: #f97316;
 
-  /* Gray Scale */
+  /* ============================================
+   * BRAND ALIASES
+   * Convenience shortcuts for common use cases
+   * ============================================ */
+  --alt-c-brand: var(--alt-c-brand-1-500);
+  --alt-c-brand-hover: var(--alt-c-brand-1-600);
+  --alt-c-brand-active: var(--alt-c-brand-1-700);
+  --alt-c-brand-disabled: var(--alt-c-brand-1-300);
+
+  /* ============================================
+   * SOFT VARIANTS
+   * Subtle backgrounds for badges, alerts, etc.
+   * ============================================ */
+  --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 15%, transparent);
+  --alt-c-warning-soft: color-mix(in srgb, var(--alt-c-warning) 15%, transparent);
+  --alt-c-danger-soft: color-mix(in srgb, var(--alt-c-danger) 15%, transparent);
+  --alt-c-info-soft: color-mix(in srgb, var(--alt-c-info) 15%, transparent);
+  --alt-c-attention-soft: color-mix(in srgb, var(--alt-c-attention) 15%, transparent);
+  --alt-c-brand-soft: color-mix(in srgb, var(--alt-c-brand) 15%, transparent);
+  --alt-c-brand-2-soft: color-mix(in srgb, var(--alt-c-brand-2) 15%, transparent);
+  --alt-c-brand-3-soft: color-mix(in srgb, var(--alt-c-brand-3) 15%, transparent);
+
+  /* ============================================
+   * GRAY SCALE (Slate)
+   * Neutral colors for text, borders, backgrounds
+   * ============================================ */
   --alt-c-gray-50: #f8fafc;
   --alt-c-gray-100: #f1f5f9;
   --alt-c-gray-200: #e2e8f0;
@@ -58,7 +97,85 @@
   --alt-c-gray-800: #1e293b;
   --alt-c-gray-900: #0f172a;
 
-  /* Alpha Colors */
+  /* ============================================
+   * ICON COLORS
+   * Dedicated tokens for iconography
+   * ============================================ */
+  --alt-c-icon-default: var(--alt-c-gray-600);
+  --alt-c-icon-muted: var(--alt-c-gray-400);
+  --alt-c-icon-brand: var(--alt-c-brand-1-500);
+  --alt-c-icon-success: var(--alt-c-success);
+  --alt-c-icon-warning: var(--alt-c-warning);
+  --alt-c-icon-danger: var(--alt-c-danger);
+  --alt-c-icon-info: var(--alt-c-info);
+
+  /* ============================================
+   * INTERACTIVE STATES
+   * Overlays and effects for hover/active/focus
+   * ============================================ */
+  --alt-c-hover-overlay: rgba(0, 0, 0, 0.04);
+  --alt-c-active-overlay: rgba(0, 0, 0, 0.08);
+  --alt-c-focus-ring-color: var(--alt-c-brand-1-500);
+  --alt-c-disabled-opacity: 0.5;
+
+  /* ============================================
+   * ALPHA COLORS
+   * Semi-transparent variants
+   * ============================================ */
   --alt-c-gray-alpha: rgba(142, 150, 170, 0.14);
-  --alt-c-brand-alpha: rgba(66, 138, 200, 0.14);
+  --alt-c-brand-alpha: rgba(59, 130, 246, 0.14);
+
+  /* ============================================
+   * OVERLAY COLORS
+   * Modal/dialog backdrops
+   * ============================================ */
+  --alt-c-overlay-light: rgba(255, 255, 255, 0.5);
+  --alt-c-overlay-dark: rgba(0, 0, 0, 0.5);
+  --alt-c-overlay-heavy: rgba(0, 0, 0, 0.85);
+
+  /* Five Elements (TCM) - domain-specific */
+  --alt-c-element-water: #0369a1;
+  --alt-c-element-water-soft: #e0f2fe;
+  --alt-c-element-fire: #dc2626;
+  --alt-c-element-fire-soft: #fee2e2;
+  --alt-c-element-earth: #d97706;
+  --alt-c-element-earth-soft: #fef3c7;
+  --alt-c-element-metal: #4b5563;
+  --alt-c-element-metal-soft: #f3f4f6;
+  --alt-c-element-wood: #16a34a;
+  --alt-c-element-wood-soft: #dcfce7;
+
+  /* Ayurveda Doshas - domain-specific */
+  --alt-c-dosha-vata-light: #e8f4f8;
+  --alt-c-dosha-vata-dark: #d0e8f0;
+  --alt-c-dosha-pitta-light: #fff3e0;
+  --alt-c-dosha-pitta-dark: #ffe0b2;
+  --alt-c-dosha-kapha-light: #e8f5e9;
+  --alt-c-dosha-kapha-dark: #c8e6c9;
+
+  /* Severity/Priority Levels */
+  --alt-c-severity-low: var(--alt-c-success);
+  --alt-c-severity-low-soft: var(--alt-c-success-soft);
+  --alt-c-severity-mild: var(--alt-c-warning);
+  --alt-c-severity-mild-soft: var(--alt-c-warning-soft);
+  --alt-c-severity-moderate: #ea580c;
+  --alt-c-severity-moderate-soft: #fed7aa;
+  --alt-c-severity-high: var(--alt-c-danger);
+  --alt-c-severity-high-soft: var(--alt-c-danger-soft);
+
+  /* Health Indicator Colors (charts/timeline) */
+  --alt-c-indicator-positive: #32cd32;
+  --alt-c-indicator-positive-active: #4df94d;
+  --alt-c-indicator-treatment: var(--alt-c-indicator-positive);
+  --alt-c-indicator-neutral: lightblue;
+
+  /* Social Media Brand Colors */
+  --alt-c-social-vk: #4c75a3;
+  --alt-c-social-ok: #ee8208;
+  --alt-c-social-telegram: #0088cc;
+
+  /* Dev/Debug Colors */
+  --alt-c-dev-vue: #42b883;
+  --alt-c-dev-dark: rgba(0, 0, 0, 0.85);
+  --alt-c-dev-panel: rgba(30, 30, 30, 0.9);
 } 
