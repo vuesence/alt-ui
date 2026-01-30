@@ -92,6 +92,12 @@ const isInheritedSize = computed(() => {
   return props.size === "auto" || props.size === "inherit";
 });
 
+// Check if color should be inherited (when used inside button or other container)
+// When size is inherited, color should also inherit from parent via currentColor
+const isInheritedColor = computed(() => {
+  return isInheritedSize.value && !props.color;
+});
+
 // Compute width with size priority
 const computedWidth = computed(() => {
   // When inherited, don't set inline width - let CSS handle it
@@ -130,8 +136,12 @@ const computedHeight = computed(() => {
   return isNumeric(props.height) ? `${Number(props.height)}px` : props.height;
 });
 
-// Resolve icon color: custom color > variant > default
+// Resolve icon color: inherited > custom color > variant > default
 const iconColor = computed(() => {
+  // When inherited, don't set color - let CSS handle it via currentColor
+  if (isInheritedColor.value) {
+    return undefined;
+  }
   // Custom color takes highest priority
   if (props.color) {
     return props.color;
@@ -166,13 +176,12 @@ const iconMode = computed(() => getIconMode());
     v-if="props.type === 'svg' && iconMode === 'sprite'"
     class="base-icon base-icon--svg"
     :data-name="props.name"
-    :style="{
-      width: computedWidth,
-      minWidth: computedWidth,
-      height: computedHeight,
-      color: iconColor,
-      ...svgFillStyle,
-    }"
+    :style="[
+      computedWidth !== undefined && { width: computedWidth, minWidth: computedWidth },
+      computedHeight !== undefined && { height: computedHeight },
+      iconColor !== undefined && { color: iconColor },
+      svgFillStyle,
+    ]"
   >
     <use :href="`${effectiveSpritePath}#icon-${iconName}`" />
   </svg>

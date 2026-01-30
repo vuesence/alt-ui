@@ -10,7 +10,7 @@ html {
   line-height: var(--alt-line-height-1);
   text-size-adjust: 100%;
   /* font-smoothing: antialiased; */
-  overflow-y: hidden;
+  overflow-x: clip;
   font-synthesis: style;
   text-rendering: optimizeLegibility;
   transition: font-size 0.2s ease-in-out;

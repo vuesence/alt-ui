@@ -159,9 +159,19 @@ function click(event: MouseEvent) {
     color var(--alt-duration-fast) var(--alt-ease-in-out);
 }
 
-/* Icon inherits button color - this makes icons white on dark buttons */
+/* Icon inherits button text color via currentColor (works because AltIcon with size="auto" doesn't set inline color) */
 .base-button .button-icon :deep(.base-icon) {
-  color: currentColor !important;
+  color: currentColor;
+}
+
+/* Force all icons inside dark-background buttons to use white color (including slot content) */
+.base-button.primary :deep(.base-icon),
+.base-button.secondary-brand :deep(.base-icon),
+.base-button.accent :deep(.base-icon),
+.base-button.success :deep(.base-icon),
+.base-button.warning :deep(.base-icon),
+.base-button.danger :deep(.base-icon) {
+  color: var(--alt-c-white) !important;
 }
 
 .base-button:hover:not(:disabled) {
@@ -287,7 +297,8 @@ function click(event: MouseEvent) {
 }
 
 .base-button.success:hover:not(:disabled) {
-  filter: brightness(1.1);
+  background-color: var(--alt-c-success-600, color-mix(in srgb, var(--alt-c-success) 85%, black));
+  border-color: var(--alt-c-success-600, color-mix(in srgb, var(--alt-c-success) 85%, black));
 }
 
 
@@ -301,7 +312,8 @@ function click(event: MouseEvent) {
 }
 
 .base-button.warning:hover:not(:disabled) {
-  filter: brightness(1.1);
+  background-color: var(--alt-c-warning-600, color-mix(in srgb, var(--alt-c-warning) 85%, black));
+  border-color: var(--alt-c-warning-600, color-mix(in srgb, var(--alt-c-warning) 85%, black));
 }
 
 
@@ -315,7 +327,8 @@ function click(event: MouseEvent) {
 }
 
 .base-button.danger:hover:not(:disabled) {
-  filter: brightness(1.1);
+  background-color: var(--alt-c-danger-600, color-mix(in srgb, var(--alt-c-danger) 85%, black));
+  border-color: var(--alt-c-danger-600, color-mix(in srgb, var(--alt-c-danger) 85%, black));
 }
 
 
