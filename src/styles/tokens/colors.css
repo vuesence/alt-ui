@@ -100,14 +100,19 @@
   /* ============================================
    * ICON COLORS
    * Dedicated tokens for iconography
+   * Default is brand-1 for consistency
    * ============================================ */
-  --alt-c-icon-default: var(--alt-c-gray-600);
+  --alt-c-icon-default: var(--alt-c-brand-1-500);
   --alt-c-icon-muted: var(--alt-c-gray-400);
   --alt-c-icon-brand: var(--alt-c-brand-1-500);
+  --alt-c-icon-secondary: var(--alt-c-brand-2-500);
+  --alt-c-icon-accent: var(--alt-c-brand-3-500);
   --alt-c-icon-success: var(--alt-c-success);
   --alt-c-icon-warning: var(--alt-c-warning);
   --alt-c-icon-danger: var(--alt-c-danger);
   --alt-c-icon-info: var(--alt-c-info);
+  --alt-c-icon-on-dark: var(--alt-c-white);
+  --alt-c-icon-neutral: var(--alt-c-gray-500);
 
   /* ============================================
    * INTERACTIVE STATES

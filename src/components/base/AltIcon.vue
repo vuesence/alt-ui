@@ -9,20 +9,31 @@
  * Also supports image icons (PNG, JPG, WebP)
  *
  * @example
- * // SVG icons (square)
+ * // Basic usage
  * <AltIcon name="settings" :size="24" />
+ *
+ * @example
+ * // Semantic color variants
+ * <AltIcon name="check" variant="success" />
+ * <AltIcon name="alert" variant="warning" />
+ * <AltIcon name="x" variant="danger" />
+ * <AltIcon name="info" variant="info" />
+ * <AltIcon name="star" variant="brand" />
+ *
+ * @example
+ * // Custom color
  * <AltIcon name="user" color="#ff0000" />
  *
  * @example
  * // Image icons (preserves aspect ratio)
  * <AltIcon name="logo" type="image" :size="200" />
- * <AltIcon name="banner" type="image" :size="400" />
  */
 import { computed } from "vue";
 import { getIconMode, getImageUrl, getSpritePath } from "../../utils/icons";
 import { isNumeric } from "../../utils/string-helpers";
 
 type IconType = "svg" | "image";
+type IconVariant = "default" | "muted" | "brand" | "success" | "warning" | "danger" | "info" | "secondary" | "accent";
 
 interface AltIconProps {
   /** Icon name (e.g., "settings", "interface/settings") */
@@ -33,7 +44,12 @@ interface AltIconProps {
    * - For images: applies to width only, height is auto (preserves aspect ratio)
    */
   size?: string | number;
-  /** Icon color (CSS color value or "default") */
+  /** 
+   * Semantic color variant (uses design tokens)
+   * Takes precedence over color prop
+   */
+  variant?: IconVariant;
+  /** Icon color (CSS color value or "default") - use variant for semantic colors */
   color?: string;
   /** Custom width (overridden by size) */
   width?: string | number;
@@ -50,12 +66,26 @@ interface AltIconProps {
 const props = withDefaults(defineProps<AltIconProps>(), {
   name: "",
   size: 24,
-  color: "default",
+  variant: "default",
+  color: "",
   width: 24,
   height: "auto",
   type: "svg",
   spritePath: "",
 });
+
+// Map variant to CSS custom property
+const variantColorMap: Record<IconVariant, string> = {
+  default: "var(--alt-c-icon-default)",
+  muted: "var(--alt-c-icon-muted)",
+  brand: "var(--alt-c-icon-brand)",
+  success: "var(--alt-c-icon-success)",
+  warning: "var(--alt-c-icon-warning)",
+  danger: "var(--alt-c-icon-danger)",
+  info: "var(--alt-c-icon-info)",
+  secondary: "var(--alt-c-icon-secondary)",
+  accent: "var(--alt-c-icon-accent)",
+};
 
 // Check if size should be inherited from CSS (auto/inherit = no inline styles)
 const isInheritedSize = computed(() => {
@@ -100,9 +130,14 @@ const computedHeight = computed(() => {
   return isNumeric(props.height) ? `${Number(props.height)}px` : props.height;
 });
 
-// Resolve icon color
+// Resolve icon color: custom color > variant > default
 const iconColor = computed(() => {
-  return props.color !== "default" ? props.color : "var(--alt-c-icon-brand)";
+  // Custom color takes highest priority
+  if (props.color) {
+    return props.color;
+  }
+  // Use variant color from token map
+  return variantColorMap[props.variant] || variantColorMap.default;
 });
 
 // Extract icon name from path (e.g., "interface/settings" -> "settings")
@@ -163,21 +198,22 @@ const iconMode = computed(() => getIconMode());
   justify-content: center;
   color: inherit;
   transition:
-    color var(--alt-transition-colors),
-    opacity var(--alt-transition-colors);
+    color var(--alt-duration-fast) var(--alt-ease-in-out),
+    opacity var(--alt-duration-fast) var(--alt-ease-in-out),
+    transform var(--alt-duration-fast) var(--alt-ease-in-out);
 
   /* Default size when no inline styles (size="auto" or "inherit") */
   width: var(--icon-size, 24px);
   height: var(--icon-size, 24px);
 }
 
-.base-icon:hover {
+/* Interactive state - only apply when icon is in interactive context */
+.base-icon.interactive:hover {
   opacity: 0.8;
 }
 
 .base-icon--svg {
   flex-shrink: 0;
-  /* fill: currentColor; */
 }
 
 .base-icon--image {
