@@ -106,8 +106,7 @@ function deleteRow(index: number) {
           <td v-if="editable" class="actions-column">
             <AltIcon
               name="delete"
-              size="18"
-              color="currentColor"
+              size="20"
               class="delete-icon"
               @click="deleteRow(rowIndex)"
             />
@@ -244,6 +243,7 @@ function deleteRow(index: number) {
   cursor: pointer;
   color: var(--alt-c-text-3);
   transition: var(--alt-transition-colors);
+  color: var(--alt-c-danger);
 
   &:hover {
     color: var(--alt-c-danger);
