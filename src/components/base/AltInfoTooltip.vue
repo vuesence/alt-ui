@@ -3,8 +3,8 @@
  * @fileoverview Компонент информационного тултипа с иконкой
  * @component AltInfoTooltip
  * @example
- * <AltInfoTooltip 
- *   text="Подсказка для пользователя" 
+ * <AltInfoTooltip
+ *   text="Подсказка для пользователя"
  *   :positioning="{ placement: 'top' }"
  * />
  */
@@ -22,7 +22,7 @@ export interface AltInfoTooltipProps {
    * @default undefined
    */
   text?: string;
-  
+
   /**
    * Настройки позиционирования тултипа
    * @default undefined
@@ -37,31 +37,31 @@ export interface AltInfoTooltipProps {
     /** Дополнительные отступы */
     offset?: { mainAxis?: number; crossAxis?: number };
   };
-  
+
   /**
    * Задержка перед показом тултипа (мс)
    * @default 100
    */
   openDelay?: number;
-  
+
   /**
    * Задержка перед скрытием тултипа (мс)
    * @default 300
    */
   closeDelay?: number;
-  
+
   /**
    * Показывать ли стрелку тултипа
    * @default false
    */
   showArrow?: boolean;
-  
+
   /**
    * Размер иконки в пикселях
    * @default 16
    */
   size?: number;
-  
+
   /**
    * Цвет иконки (CSS переменная или hex)
    * @default 'var(--alt-c-text-3)'
@@ -93,7 +93,7 @@ const handleClickOutside = (event: Event) => {
   if (isTooltipOpen.value && triggerRef.value) {
     const target = event.target as Node;
     const triggerElement = (triggerRef.value as any)?.$el || triggerRef.value;
-    
+
     if (triggerElement && typeof triggerElement.contains === 'function' && !triggerElement.contains(target)) {
       isTooltipOpen.value = false;
     }
@@ -126,7 +126,7 @@ onUnmounted(() => {
     :close-delay="closeDelay || 300"
     :open="isTouchDevice ? isTooltipOpen : undefined"
   >
-    <Tooltip.Trigger 
+    <Tooltip.Trigger
       ref="triggerRef"
       class="info-tooltip-trigger"
       @touchstart="handleTouchStart"
@@ -139,18 +139,18 @@ onUnmounted(() => {
         class="info-icon"
       />
     </Tooltip.Trigger>
-      <Tooltip.Positioner class="info-tooltip">
-        <Tooltip.Content class="content-wrapper">
-          <template v-if="showArrow">
-            <Tooltip.Arrow class="arrow">
-              <Tooltip.ArrowTip class="arrow-tip" />
-            </Tooltip.Arrow>
-          </template>
-          <div class="tooltip-content">
-            <slot>{{ text }}</slot>
-          </div>
-        </Tooltip.Content>
-      </Tooltip.Positioner>
+    <Tooltip.Positioner class="info-tooltip">
+      <Tooltip.Content class="content-wrapper">
+        <template v-if="showArrow">
+          <Tooltip.Arrow class="arrow">
+            <Tooltip.ArrowTip class="arrow-tip" />
+          </Tooltip.Arrow>
+        </template>
+        <div class="tooltip-content">
+          <slot>{{ text }}</slot>
+        </div>
+      </Tooltip.Content>
+    </Tooltip.Positioner>
   </Tooltip.Root>
 </template>
 
@@ -169,16 +169,16 @@ onUnmounted(() => {
   touch-action: manipulation;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  
+
   &:hover .info-icon {
     color: var(--alt-c-text-2);
   }
-  
+
   /* Поддержка тач-устройств */
   &:active .info-icon {
     color: var(--alt-c-text-2);
   }
-  
+
   &:focus-visible {
     outline: 2px solid var(--alt-c-border);
     outline-offset: 2px;
@@ -200,7 +200,7 @@ onUnmounted(() => {
   position: relative;
   z-index: var(--alt-z-dropdown);
   max-width: 300px;
-  
+
   &:is([open], [data-open], [data-state="open"]) {
     animation: fadeIn var(--alt-transition-base) ease-out;
   }
@@ -215,7 +215,6 @@ onUnmounted(() => {
   font-size: var(--alt-font-size-0);
   color: var(--alt-c-text-2);
   line-height: var(--alt-line-height-2);
-  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
@@ -251,4 +250,4 @@ onUnmounted(() => {
     transform: scale(0.95);
   }
 }
-</style> 
+</style>
