@@ -1,48 +1,110 @@
+/**
+ * High Contrast Theme
+ *
+ * Designed for maximum readability with strong borders,
+ * high-contrast text, and vivid functional colors.
+ * Based on WCAG AAA contrast requirements.
+ */
 :root[data-theme="contrast"] {
   /* Base Colors */
   --alt-c-white: #ffffff;
   --alt-c-black: #000000;
 
-  /* Text Colors */
-  --alt-c-text-1: var(--alt-c-white);
-  --alt-c-text-2: var(--alt-c-white);
-  --alt-c-text-3: var(--alt-c-white);
+  /* Text Colors - maximum contrast */
+  --alt-c-text-1: #ffffff;
+  --alt-c-text-2: #e0e0e0;
+  --alt-c-text-3: #b0b0b0;
 
-  /* Surface Colors */
-  --alt-c-surface-1: var(--alt-c-black);
-  --alt-c-surface-2: #121212;
-  --alt-c-surface-3: #1a1a1a;
-  --alt-c-surface-4: #242424;
-  --alt-c-surface-5: #2a2a2a;
+  /* Surface Colors - layered dark backgrounds */
+  --alt-c-surface-1: #000000;
+  --alt-c-surface-2: #1a1a1a;
+  --alt-c-surface-3: #2a2a2a;
+  --alt-c-surface-4: #333333;
+  --alt-c-surface-5: #3d3d3d;
 
-  /* Brand Colors */
-  --alt-c-brand-1: #ffffff;
-  --alt-c-brand-1-50: #1a1a1a;
-  --alt-c-brand-1-100: #242424;
-  --alt-c-brand-1-200: #2a2a2a;
-  --alt-c-brand-1-300: #333333;
-  --alt-c-brand-1-400: #3a3a3a;
-  --alt-c-brand-1-500: #404040;
-  --alt-c-brand-1-600: #4a4a4a;
-  --alt-c-brand-1-700: #505050;
-  --alt-c-brand-1-800: #5a5a5a;
-  --alt-c-brand-1-900: #606060;
+  /* Brand Colors - vivid for contrast on dark */
+  --alt-c-brand-1: #6cb4ff;
+  --alt-c-brand-1-50: #0d1b2a;
+  --alt-c-brand-1-100: #132d4a;
+  --alt-c-brand-1-200: #1a4070;
+  --alt-c-brand-1-300: #2563a8;
+  --alt-c-brand-1-400: #4a90e0;
+  --alt-c-brand-1-500: #6cb4ff;
+  --alt-c-brand-1-600: #8ac4ff;
+  --alt-c-brand-1-700: #a8d4ff;
+  --alt-c-brand-1-800: #c6e4ff;
+  --alt-c-brand-1-900: #e4f2ff;
 
-  /* Functional Colors */
-  --alt-c-success: #00ff00;
-  --alt-c-warning: #ffff00;
-  --alt-c-danger: #ff0000;
-  --alt-c-info: #00ffff;
+  /* Brand 2: Teal - vivid for contrast */
+  --alt-c-brand-2: #2dd4bf;
+  --alt-c-brand-2-500: #2dd4bf;
+  --alt-c-brand-2-600: #5eead4;
+
+  /* Brand 3: Violet - vivid for contrast */
+  --alt-c-brand-3: #a78bfa;
+  --alt-c-brand-3-500: #a78bfa;
+  --alt-c-brand-3-600: #c4b5fd;
+
+  /* Brand Aliases */
+  --alt-c-brand: var(--alt-c-brand-1-500);
+  --alt-c-brand-hover: var(--alt-c-brand-1-600);
+  --alt-c-brand-active: var(--alt-c-brand-1-700);
+  --alt-c-brand-disabled: var(--alt-c-brand-1-300);
+
+  /* Functional Colors - vivid and high-contrast */
+  --alt-c-success: #4ade80;
+  --alt-c-warning: #fbbf24;
+  --alt-c-danger: #f87171;
+  --alt-c-info: #38bdf8;
+  --alt-c-attention: #fb923c;
+
+  /* Soft variants */
+  --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 20%, transparent);
+  --alt-c-warning-soft: color-mix(in srgb, var(--alt-c-warning) 20%, transparent);
+  --alt-c-danger-soft: color-mix(in srgb, var(--alt-c-danger) 20%, transparent);
+  --alt-c-info-soft: color-mix(in srgb, var(--alt-c-info) 20%, transparent);
+  --alt-c-attention-soft: color-mix(in srgb, var(--alt-c-attention) 20%, transparent);
+  --alt-c-brand-soft: color-mix(in srgb, var(--alt-c-brand) 20%, transparent);
+  --alt-c-brand-2-soft: color-mix(in srgb, var(--alt-c-brand-2) 20%, transparent);
+  --alt-c-brand-3-soft: color-mix(in srgb, var(--alt-c-brand-3) 20%, transparent);
 
   /* Background Colors */
   --alt-c-bg: var(--alt-c-black);
-  --alt-c-bg-alt: #121212;
-  --alt-c-bg-soft: #1a1a1a;
+  --alt-c-bg-alt: #1a1a1a;
+  --alt-c-bg-soft: #2a2a2a;
 
-  /* Border Colors */
-  --alt-c-border: var(--alt-c-white);
-  --alt-c-divider: var(--alt-c-white);
+  /* Border Colors - visible but not too harsh */
+  --alt-c-border: #555555;
+  --alt-c-divider: #444444;
 
   /* Overlay */
-  --alt-c-overlay: rgba(255, 255, 255, 0.1);
+  --alt-c-overlay: rgba(0, 0, 0, 0.8);
+  --alt-c-overlay-light: rgba(255, 255, 255, 0.1);
+  --alt-c-overlay-dark: rgba(0, 0, 0, 0.7);
+  --alt-c-overlay-heavy: rgba(0, 0, 0, 0.9);
+
+  /* Interactive States */
+  --alt-c-hover-overlay: rgba(255, 255, 255, 0.08);
+  --alt-c-active-overlay: rgba(255, 255, 255, 0.12);
+
+  /* Focus Ring */
+  --alt-focus-ring: 0 0 0 3px var(--alt-c-brand-1-500);
+
+  /* Shadows - use light glow for contrast on dark */
+  --alt-shadow-1: 0 1px 3px rgba(255, 255, 255, 0.05);
+  --alt-shadow-2: 0 2px 6px rgba(255, 255, 255, 0.08);
+  --alt-shadow-sm: 0 1px 2px rgba(255, 255, 255, 0.04);
+
+  /* Icon Colors */
+  --alt-c-icon-default: var(--alt-c-brand-1-500);
+  --alt-c-icon-muted: #888888;
+  --alt-c-icon-brand: var(--alt-c-brand-1-500);
+  --alt-c-icon-secondary: var(--alt-c-brand-2-500);
+  --alt-c-icon-accent: var(--alt-c-brand-3-500);
+  --alt-c-icon-on-dark: var(--alt-c-white);
+  --alt-c-icon-neutral: #888888;
+
+  /* Alpha Colors */
+  --alt-c-gray-alpha: rgba(200, 200, 200, 0.14);
+  --alt-c-brand-alpha: rgba(108, 180, 255, 0.14);
 }

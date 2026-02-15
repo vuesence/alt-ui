@@ -5,6 +5,7 @@ import "./tokens/spacing.css";
 import "./tokens/effects.css";
 
 // Import themes (semantic tokens)
+import "./theme/contrast.css";
 import "./theme/dark.css";
 import "./theme/light.css";
 import "./theme/system.css";
