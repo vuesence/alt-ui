@@ -23,6 +23,7 @@
   --alt-c-brand-1-700: #1d4ed8;
   --alt-c-brand-1-800: #1e40af;
   --alt-c-brand-1-900: #1e3a8a;
+  --alt-c-brand-1-950: #0f1d4d;
 
   /* Brand 2: Teal - Secondary/wellness color */
   --alt-c-brand-2: #14b8a6;
@@ -36,6 +37,7 @@
   --alt-c-brand-2-700: #0f766e;
   --alt-c-brand-2-800: #115e59;
   --alt-c-brand-2-900: #134e4a;
+  --alt-c-brand-2-950: #0a2e2b;
 
   /* Brand 3: Violet - Accent color (distinct from danger red) */
   --alt-c-brand-3: #8b5cf6;
@@ -49,6 +51,7 @@
   --alt-c-brand-3-700: #6d28d9;
   --alt-c-brand-3-800: #5b21b6;
   --alt-c-brand-3-900: #4c1d95;
+  --alt-c-brand-3-950: #2a1065;
   
   /* ============================================
    * FUNCTIONAL COLORS

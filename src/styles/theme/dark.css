@@ -1,7 +1,7 @@
 /**
  * Dark Theme
  * 
- * Only semantic tokens are defined here.
+ * Semantic tokens + inverted brand shades for dark backgrounds.
  * Primitive colors (brand, gray scale) are in colors.css.
  */
 :root[data-theme="dark"] {
@@ -32,6 +32,23 @@
   /* Focus Ring - lighter for dark background */
   --alt-focus-ring: 0 0 0 3px var(--alt-c-brand-1-700);
 
+  /*
+   * Brand shade inversion for dark backgrounds.
+   * In light theme -50/-100 are light pastels; here we swap them
+   * to very dark tinted shades so widgets/cards stay dark.
+   */
+  --alt-c-brand-1-50: #0d1525;
+  --alt-c-brand-1-100: #111d38;
+  --alt-c-brand-1-200: #162a52;
+
+  --alt-c-brand-2-50: #0b1716;
+  --alt-c-brand-2-100: #0f2321;
+  --alt-c-brand-2-200: #143430;
+
+  --alt-c-brand-3-50: #110e20;
+  --alt-c-brand-3-100: #191330;
+  --alt-c-brand-3-200: #221a45;
+
   /* Soft variants - stronger opacity for dark theme */
   --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 25%, transparent);
   --alt-c-warning-soft: color-mix(in srgb, var(--alt-c-warning) 25%, transparent);
@@ -39,4 +56,4 @@
   --alt-c-info-soft: color-mix(in srgb, var(--alt-c-info) 25%, transparent);
   --alt-c-attention-soft: color-mix(in srgb, var(--alt-c-attention) 25%, transparent);
   --alt-c-brand-soft: color-mix(in srgb, var(--alt-c-brand) 25%, transparent);
-} 
+}

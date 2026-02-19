@@ -66,6 +66,7 @@
   animation: fadeOut var(--alt-transition-base) var(--alt-ease-in);
 }
 
-.animate-spin {
+.animate-spin,
+.alt-spin {
   animation: spin 1s linear infinite;
-} 
+}
