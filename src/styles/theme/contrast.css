@@ -22,7 +22,7 @@
   --alt-c-surface-4: #333333;
   --alt-c-surface-5: #3d3d3d;
 
-  /* Brand Colors - vivid for contrast on dark */
+  /* Brand 1: Blue - vivid for contrast on dark */
   --alt-c-brand-1: #6cb4ff;
   --alt-c-brand-1-50: #0d1b2a;
   --alt-c-brand-1-100: #132d4a;
@@ -34,16 +34,35 @@
   --alt-c-brand-1-700: #a8d4ff;
   --alt-c-brand-1-800: #c6e4ff;
   --alt-c-brand-1-900: #e4f2ff;
+  --alt-c-brand-1-950: #f2f9ff;
 
   /* Brand 2: Teal - vivid for contrast */
   --alt-c-brand-2: #2dd4bf;
+  --alt-c-brand-2-50: #081a17;
+  --alt-c-brand-2-100: #0f2e28;
+  --alt-c-brand-2-200: #16443c;
+  --alt-c-brand-2-300: #1f6258;
+  --alt-c-brand-2-400: #28887a;
   --alt-c-brand-2-500: #2dd4bf;
   --alt-c-brand-2-600: #5eead4;
+  --alt-c-brand-2-700: #86f0de;
+  --alt-c-brand-2-800: #aef6e8;
+  --alt-c-brand-2-900: #d6fbf2;
+  --alt-c-brand-2-950: #ebfdf9;
 
   /* Brand 3: Violet - vivid for contrast */
   --alt-c-brand-3: #a78bfa;
+  --alt-c-brand-3-50: #120e22;
+  --alt-c-brand-3-100: #1e1638;
+  --alt-c-brand-3-200: #2c2055;
+  --alt-c-brand-3-300: #3f2d7a;
+  --alt-c-brand-3-400: #6548c4;
   --alt-c-brand-3-500: #a78bfa;
   --alt-c-brand-3-600: #c4b5fd;
+  --alt-c-brand-3-700: #d4c8fe;
+  --alt-c-brand-3-800: #e4dcfe;
+  --alt-c-brand-3-900: #f0edff;
+  --alt-c-brand-3-950: #f8f6ff;
 
   /* Brand Aliases */
   --alt-c-brand: var(--alt-c-brand-1-500);

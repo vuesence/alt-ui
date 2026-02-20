@@ -37,17 +37,41 @@
    * In light theme -50/-100 are light pastels; here we swap them
    * to very dark tinted shades so widgets/cards stay dark.
    */
-  --alt-c-brand-1-50: #0d1525;
-  --alt-c-brand-1-100: #111d38;
-  --alt-c-brand-1-200: #162a52;
+  --alt-c-brand-1-50: #0a1120;
+  --alt-c-brand-1-100: #0e1a33;
+  --alt-c-brand-1-200: #13254d;
+  --alt-c-brand-1-300: #1a3568;
+  --alt-c-brand-1-400: #2a5090;
+  --alt-c-brand-1-500: #3b82f6;
+  --alt-c-brand-1-600: #5a9af8;
+  --alt-c-brand-1-700: #7ab2fa;
+  --alt-c-brand-1-800: #a0c9fc;
+  --alt-c-brand-1-900: #c8e0fd;
+  --alt-c-brand-1-950: #e4f0fe;
 
-  --alt-c-brand-2-50: #0b1716;
-  --alt-c-brand-2-100: #0f2321;
-  --alt-c-brand-2-200: #143430;
+  --alt-c-brand-2-50: #081412;
+  --alt-c-brand-2-100: #0c1f1c;
+  --alt-c-brand-2-200: #112e2a;
+  --alt-c-brand-2-300: #18423c;
+  --alt-c-brand-2-400: #1f5c54;
+  --alt-c-brand-2-500: #14b8a6;
+  --alt-c-brand-2-600: #2dd4bf;
+  --alt-c-brand-2-700: #5eead4;
+  --alt-c-brand-2-800: #99f6e4;
+  --alt-c-brand-2-900: #ccfbf1;
+  --alt-c-brand-2-950: #e6fdf8;
 
-  --alt-c-brand-3-50: #110e20;
-  --alt-c-brand-3-100: #191330;
-  --alt-c-brand-3-200: #221a45;
+  --alt-c-brand-3-50: #0e0b1a;
+  --alt-c-brand-3-100: #161028;
+  --alt-c-brand-3-200: #1f173d;
+  --alt-c-brand-3-300: #2d2058;
+  --alt-c-brand-3-400: #3f2d7a;
+  --alt-c-brand-3-500: #8b5cf6;
+  --alt-c-brand-3-600: #a78bfa;
+  --alt-c-brand-3-700: #c4b5fd;
+  --alt-c-brand-3-800: #ddd6fe;
+  --alt-c-brand-3-900: #ede9fe;
+  --alt-c-brand-3-950: #f5f3ff;
 
   /* Soft variants - stronger opacity for dark theme */
   --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 25%, transparent);
