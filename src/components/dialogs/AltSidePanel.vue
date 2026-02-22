@@ -70,7 +70,11 @@ defineExpose({ show, close });
 <template>
   <Teleport to="body">
     <Transition name="side-panel-overlay">
-      <div v-if="isVisible" class="side-panel-overlay" @click.self="onOverlayClick">
+      <div
+        v-if="isVisible"
+        class="side-panel-overlay"
+        @click.self="onOverlayClick"
+      >
         <Transition name="side-panel-slide">
           <aside
             v-if="isVisible"
@@ -122,6 +126,8 @@ defineExpose({ show, close });
 </template>
 
 <style scoped>
+@import "alt-ui/styles/tokens/scrollbar.css";
+
 .side-panel-overlay {
   position: fixed;
   inset: 0;
@@ -270,4 +276,3 @@ defineExpose({ show, close });
   }
 }
 </style>
-
