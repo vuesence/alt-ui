@@ -73,66 +73,21 @@ async function initIconSystem(config: IconSystemConfig): Promise<void> {
 }
 
 /**
- * Load images (PNG, JPG, JPEG, WebP) from @/assets/images/
+ * Load images (PNG, JPG, JPEG, WebP, Avif) from @/assets/images/
  * Used in both sprite and bundle modes
  */
 function loadImagesBundle(): void {
-  // Load PNG images
-  const pngModules = import.meta.glob("@/assets/images/**/*.png", {
-    query: "?url",
-    import: "default",
-    eager: true,
-  });
+  // Load all images
+  const imageModules = import.meta.glob(
+    "@/assets/images/**/*.{png,avif,webp,jpg,jpeg}",
+    {
+      query: "?url",
+      import: "default",
+      eager: true,
+    }
+  );
 
-  for (const [fileName, module] of Object.entries(pngModules)) {
-    const extension = fileName.slice(fileName.lastIndexOf("."));
-    const name = fileName.slice(
-      fileName.lastIndexOf("/") + 1,
-      -extension.length
-    );
-    imageResources.set(name, module as string);
-  }
-
-  // Load JPG images
-  const jpgModules = import.meta.glob("@/assets/images/**/*.jpg", {
-    query: "?url",
-    import: "default",
-    eager: true,
-  });
-
-  for (const [fileName, module] of Object.entries(jpgModules)) {
-    const extension = fileName.slice(fileName.lastIndexOf("."));
-    const name = fileName.slice(
-      fileName.lastIndexOf("/") + 1,
-      -extension.length
-    );
-    imageResources.set(name, module as string);
-  }
-
-  // Load JPEG images
-  const jpegModules = import.meta.glob("@/assets/images/**/*.jpeg", {
-    query: "?url",
-    import: "default",
-    eager: true,
-  });
-
-  for (const [fileName, module] of Object.entries(jpegModules)) {
-    const extension = fileName.slice(fileName.lastIndexOf("."));
-    const name = fileName.slice(
-      fileName.lastIndexOf("/") + 1,
-      -extension.length
-    );
-    imageResources.set(name, module as string);
-  }
-
-  // Load WebP images
-  const webpModules = import.meta.glob("@/assets/images/**/*.webp", {
-    query: "?url",
-    import: "default",
-    eager: true,
-  });
-
-  for (const [fileName, module] of Object.entries(webpModules)) {
+  for (const [fileName, module] of Object.entries(imageModules)) {
     const extension = fileName.slice(fileName.lastIndexOf("."));
     const name = fileName.slice(
       fileName.lastIndexOf("/") + 1,
