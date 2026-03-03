@@ -1,71 +1,48 @@
 <script setup lang="ts">
 /**
- * @fileoverview Компонент информационного тултипа с иконкой
  * @component AltInfoTooltip
+ * @description Info icon tooltip component. Displays a help icon that shows a tooltip on hover
+ * or tap (touch devices).
+ *
  * @example
  * <AltInfoTooltip
- *   text="Подсказка для пользователя"
+ *   text="User hint"
  *   :positioning="{ placement: 'top' }"
  * />
+ *
+ * @slot default - Tooltip content (falls back to `text` prop)
+ * @dependency @ark-ui/vue - Tooltip component
  */
 
 import { Tooltip } from "@ark-ui/vue/tooltip";
 import { ref, onMounted, onUnmounted } from "vue";
 import AltIcon from "./AltIcon.vue";
 
-/**
- * Props для компонента AltInfoTooltip
- */
 export interface AltInfoTooltipProps {
-  /**
-   * Текст тултипа для отображения
-   * @default undefined
-   */
+  /** Tooltip text */
   text?: string;
 
-  /**
-   * Настройки позиционирования тултипа
-   * @default undefined
-   */
+  /** Positioning options */
   positioning?: {
-    /** Позиция тултипа относительно триггера */
     placement?: "top" | "bottom" | "left" | "right";
-    /** Отступ от триггера в пикселях */
     gutter?: number;
-    /** Стратегия позиционирования */
     strategy?: "absolute" | "fixed";
-    /** Дополнительные отступы */
     offset?: { mainAxis?: number; crossAxis?: number };
   };
 
-  /**
-   * Задержка перед показом тултипа (мс)
-   * @default 100
-   */
+  /** Delay before showing tooltip (ms). Default: 100 */
   openDelay?: number;
 
-  /**
-   * Задержка перед скрытием тултипа (мс)
-   * @default 300
-   */
+  /** Delay before hiding tooltip (ms). Default: 300 */
   closeDelay?: number;
 
-  /**
-   * Показывать ли стрелку тултипа
-   * @default false
-   */
+  /** Show tooltip arrow. Default: false */
   showArrow?: boolean;
 
-  /**
-   * Размер иконки в пикселях
-   * @default 16
-   */
+  /** Icon size in pixels. Default: 16 */
   size?: number;
 
-  /**
-   * Цвет иконки (CSS переменная или hex)
-   * @default 'var(--alt-c-text-3)'
-   */
+  /** Icon color (CSS variable or hex). Default: var(--alt-c-text-3) */
   iconColor?: string;
 }
 
@@ -135,7 +112,7 @@ onUnmounted(() => {
       <AltIcon
         name="info"
         :size="size || 16"
-        :color1="iconColor || 'var(--alt-c-text-3)'"
+        :color="iconColor || 'var(--alt-c-text-3)'"
         class="info-icon"
       />
     </Tooltip.Trigger>

@@ -1,7 +1,18 @@
 <script setup lang="ts">
+/**
+ * @component AltTabsTrigger
+ * @description Individual tab trigger button. Use inside AltTabs' tabs slot.
+ *
+ * @example
+ * <AltTabsTrigger value="settings">Settings</AltTabsTrigger>
+ *
+ * @slot default - Tab label content
+ * @dependency @ark-ui/vue - Tabs component
+ */
 import { Tabs } from "@ark-ui/vue/tabs";
 
 defineProps<{
+  /** Tab value identifier */
   value: string;
 }>();
 </script>
@@ -15,15 +26,15 @@ defineProps<{
 <style scoped>
 .tab-trigger {
   position: relative;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: var(--alt-space-2) var(--alt-space-4);
+  border-radius: var(--alt-radius-md);
   border: none;
   background: transparent;
   color: var(--alt-c-text-2);
   font-family: var(--alt-font-family-base);
-  font-weight: 500;
+  font-weight: var(--alt-font-weight-medium);
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all var(--alt-duration-base) var(--alt-ease-in-out);
 }
 
 .tab-trigger:hover {
@@ -39,6 +50,6 @@ defineProps<{
 
 .tab-trigger:focus-visible {
   outline: none;
-  box-shadow: var(--alt-shadow-2);
+  box-shadow: var(--alt-focus-ring);
 }
 </style>

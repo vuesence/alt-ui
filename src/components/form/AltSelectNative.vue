@@ -1,4 +1,12 @@
 <script setup lang="ts">
+/**
+ * @component AltSelectNative
+ * @description Native HTML select with customized appearance using CSS `appearance: base-select`.
+ * Lighter alternative to AltSelect when Ark-UI features are not needed.
+ *
+ * @example
+ * <AltSelectNative v-model="country" label="Country" :options="countries" />
+ */
 import { computed } from "vue";
 
 export interface SelectOption {
@@ -73,10 +81,6 @@ const selectedLabel = computed(() => {
       v-model="selectedValue"
       :disabled="props.disabled"
     >
-      <selectedcontent>
-        {{ selectedLabel }}
-      </selectedcontent>
-
       <option v-if="props.placeholder" value="" disabled hidden>
         {{ props.placeholder }}
       </option>
@@ -131,11 +135,11 @@ const selectedLabel = computed(() => {
     }
   }
 
-  selectedcontent {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  /* Selected value display */
+  select {
+    &::after {
+      content: none;
+    }
   }
 }
 

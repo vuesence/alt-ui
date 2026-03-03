@@ -1,4 +1,18 @@
 <script setup lang="ts">
+/**
+ * @component AltEditableTable
+ * @description Editable data table with inline cell editing, row add/delete.
+ * Uses contenteditable for cell editing and v-model for row data.
+ *
+ * @example
+ * <AltEditableTable
+ *   v-model="rows"
+ *   :headers="[{ key: 'name', label: 'Name', editable: true }]"
+ *   editable
+ * />
+ *
+ * @dependency none
+ */
 import AltButton from "./AltButton.vue";
 import AltIcon from "./AltIcon.vue";
 import type { TableHeader, TableRow } from "../../types/table";
@@ -70,7 +84,13 @@ function initCell(
 function onCellPaste(event: ClipboardEvent) {
   event.preventDefault();
   const text = event.clipboardData?.getData("text/plain") ?? "";
-  document.execCommand("insertText", false, text);
+  const selection = window.getSelection();
+  if (selection && selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(document.createTextNode(text));
+    range.collapse(false);
+  }
 }
 
 function onHeaderClick(header: TableHeader) {

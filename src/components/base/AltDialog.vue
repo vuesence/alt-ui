@@ -1,4 +1,19 @@
 <script setup lang="ts">
+/**
+ * @component AltDialog
+ * @description Base modal dialog wrapper using native HTML <dialog> element.
+ * Provides show/close via template ref. Closes on backdrop click and Escape key.
+ *
+ * @example
+ * <AltDialog ref="dialogRef">
+ *   <div>Dialog content</div>
+ * </AltDialog>
+ *
+ * @slot default - Dialog content. Receives `close` function as slot prop.
+ * @expose show - Opens the dialog as a modal
+ * @expose close - Closes the dialog
+ * @dependency none
+ */
 import { ref } from "vue";
 
 const dialog = ref<HTMLDialogElement | null>(null);
@@ -27,18 +42,28 @@ function onMouseDown($event: MouseEvent) {
   }
 }
 
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === "Escape") {
+    close();
+  }
+}
+
+defineEmits<{
+  close: [];
+}>();
+
 defineExpose({ show, close });
 </script>
 
 <template>
   <dialog
     ref="dialog"
-    role="textbox"
     tabindex="0"
     @mousedown="onMouseDown"
-    @keydown1="() => {}"
+    @keydown="onKeydown"
+    @close="$emit('close')"
   >
-    <slot @close="close" />
+    <slot :close="close" />
   </dialog>
 </template>
 

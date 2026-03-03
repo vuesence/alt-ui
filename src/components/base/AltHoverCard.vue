@@ -1,4 +1,19 @@
 <script setup lang="ts">
+/**
+ * @component AltHoverCard
+ * @description Popover card that appears on hover. Wraps Ark-UI HoverCard.
+ *
+ * @slot trigger - Element that triggers the hover card on hover
+ * @slot content - Content displayed inside the hover card
+ *
+ * @example
+ * <AltHoverCard>
+ *   <template #trigger>Hover me</template>
+ *   <template #content>Card content here</template>
+ * </AltHoverCard>
+ *
+ * @dependency @ark-ui/vue - HoverCard component
+ */
 import { HoverCard } from "@ark-ui/vue/hover-card";
 
 defineProps<{

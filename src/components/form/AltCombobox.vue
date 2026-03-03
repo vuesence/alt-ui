@@ -1,4 +1,18 @@
 <script setup lang="ts">
+/**
+ * @component AltCombobox
+ * @description Searchable select (combobox) wrapping Ark-UI Combobox.
+ * Supports custom values and filterable dropdown options.
+ *
+ * @example
+ * <AltCombobox
+ *   v-model="selected"
+ *   title="Choose item"
+ *   :items="['Apple', 'Banana', 'Cherry']"
+ * />
+ *
+ * @dependency @ark-ui/vue - Combobox component
+ */
 // biome-ignore lint/style/useImportType: <explanation>
 import { Combobox, createListCollection } from '@ark-ui/vue/combobox'
 import { computed, ref, watch } from 'vue'
@@ -134,7 +148,7 @@ const handleBlur = () => {
 <style scoped>
 .empty-message {
   padding: 8px 12px;
-  color: #999;
+  color: var(--alt-c-text-3);
   text-align: center;
   font-style: italic;
 }
@@ -214,7 +228,7 @@ const handleBlur = () => {
   border: 1px solid var(--alt-c-border);
   border-radius: var(--alt-radius-base);
   background: var(--alt-c-surface-1);
-  box-shadow: var(--alt-shadow-md);
+  box-shadow: var(--alt-shadow-3);
   z-index: 1000;
 }
 

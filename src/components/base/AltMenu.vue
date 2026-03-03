@@ -1,4 +1,20 @@
 <script setup lang="ts">
+/**
+ * @component AltMenu
+ * @description Dropdown menu component wrapping Ark-UI Menu.
+ * Renders items from array or uses custom content slot.
+ *
+ * @slot trigger - Element that triggers the menu
+ * @slot content - Custom menu content (overrides default items rendering)
+ * @slot default - Custom item rendering (receives :item scoped prop)
+ *
+ * @example
+ * <AltMenu :items="[{ label: 'Edit' }, { label: 'Delete' }]">
+ *   <template #trigger><AltButton class="text" icon="more" /></template>
+ * </AltMenu>
+ *
+ * @dependency @ark-ui/vue - Menu component
+ */
 import { Menu } from "@ark-ui/vue/menu";
 import { type PropType } from "vue";
 

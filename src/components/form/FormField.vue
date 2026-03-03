@@ -1,4 +1,18 @@
 <script setup lang="ts">
+/**
+ * @component FormField
+ * @description Form field wrapper with validation display.
+ * Provides `touch` and `blur` callbacks to child via scoped slot for tracking interaction.
+ *
+ * @slot default - Form input content. Receives `touch()` and `blur()` functions as scoped slot props.
+ *
+ * @example
+ * <FormField :field="nameField" title="Name" validate>
+ *   <template #default="{ touch, blur }">
+ *     <AltInput v-model="name" @focus="touch" @blur="blur" />
+ *   </template>
+ * </FormField>
+ */
 import { ref } from "vue";
 
 interface FormFieldData {

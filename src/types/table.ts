@@ -6,6 +6,7 @@ export interface TableColumnDefinition {
   label: string;
   align?: "left" | "center" | "right";
   sortable?: boolean;
+  sortDirection?: "ascending" | "descending" | "none";
   editable?: boolean;
   type?: "text" | "custom";
   class?: string;

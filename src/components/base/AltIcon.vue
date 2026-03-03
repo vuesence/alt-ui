@@ -27,6 +27,8 @@
  * @example
  * // Image icons (preserves aspect ratio)
  * <AltIcon name="logo" type="image" :size="200" />
+ *
+ * @dependency none - Uses internal icon system (sprite or bundle mode)
  */
 import { computed } from "vue";
 import { getIconMode, getImageUrl, getSpritePath } from "../../utils/icons";

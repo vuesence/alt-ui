@@ -1,4 +1,18 @@
 <script setup lang="ts">
+/**
+ * @component AltRadioGroup
+ * @description Radio button group wrapping Ark-UI RadioGroup.
+ * Supports horizontal/vertical orientation and size variants.
+ *
+ * @example
+ * <AltRadioGroup
+ *   v-model="choice"
+ *   :items="[{ value: 'a', label: 'Option A' }, { value: 'b', label: 'Option B' }]"
+ *   orientation="horizontal"
+ * />
+ *
+ * @dependency @ark-ui/vue - RadioGroup component
+ */
 import { RadioGroup } from "@ark-ui/vue/radio-group";
 
 // Создаем свой интерфейс, вместо импорта

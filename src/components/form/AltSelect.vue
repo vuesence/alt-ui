@@ -1,4 +1,19 @@
 <script setup lang="ts">
+/**
+ * @component AltSelect
+ * @description Select dropdown wrapping Ark-UI Select.
+ * Supports single selection, disabled state, and label.
+ *
+ * CSS Classes:
+ * - `small` — compact trigger size
+ *
+ * @cssclass small - Compact trigger with smaller padding and font
+ *
+ * @example
+ * <AltSelect v-model="role" label="Role" :options="roleOptions" placeholder="Select role" />
+ *
+ * @dependency @ark-ui/vue - Select component
+ */
 import { computed } from "vue";
 import { Select, createListCollection } from "@ark-ui/vue/select";
 

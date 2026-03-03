@@ -33,7 +33,7 @@
   color: var(--alt-c-gray-700);
 
   /* Dark theme */
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-gray-700);
     color: var(--alt-c-gray-200);
   }
@@ -106,7 +106,7 @@
   background: var(--alt-c-gray-100);
   color: var(--alt-c-gray-600);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-gray-800);
     color: var(--alt-c-gray-300);
   }
@@ -116,7 +116,7 @@
   background: var(--alt-c-success-soft);
   color: var(--alt-c-success);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-success-soft);
     color: color-mix(in srgb, var(--alt-c-success) 90%, var(--alt-c-white));
   }
@@ -126,7 +126,7 @@
   background: var(--alt-c-warning-soft);
   color: var(--alt-c-warning);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-warning-soft);
     color: color-mix(in srgb, var(--alt-c-warning) 90%, var(--alt-c-white));
   }
@@ -136,7 +136,7 @@
   background: var(--alt-c-attention-soft);
   color: var(--alt-c-attention);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-attention-soft);
     color: color-mix(in srgb, var(--alt-c-attention) 80%, var(--alt-c-white));
   }
@@ -147,7 +147,7 @@
   background: var(--alt-c-danger-soft);
   color: var(--alt-c-danger);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-danger-soft);
     color: color-mix(in srgb, var(--alt-c-danger) 90%, var(--alt-c-white));
   }
@@ -157,7 +157,7 @@
   background: var(--alt-c-info-soft);
   color: var(--alt-c-info);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-info-soft);
     color: color-mix(in srgb, var(--alt-c-info) 90%, var(--alt-c-white));
   }
@@ -167,7 +167,7 @@
   background: var(--alt-c-brand-soft);
   color: var(--alt-c-brand-1-600);
 
-  :root.dark & {
+  [data-theme="dark"] & {
     background: var(--alt-c-brand-soft);
     color: var(--alt-c-brand-1-300);
   }

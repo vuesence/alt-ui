@@ -1,4 +1,16 @@
 <script setup lang="ts">
+/**
+ * @component AltSegmentGroup
+ * @description Segmented control / tab bar using Ark-UI SegmentGroup.
+ * Displays as horizontal tabs with animated indicator.
+ *
+ * @slot item - Custom item rendering (receives :item scoped prop)
+ *
+ * @example
+ * <AltSegmentGroup v-model="tab" :items="['Overview', 'Details', 'History']" />
+ *
+ * @dependency @ark-ui/vue - SegmentGroup component
+ */
 import { SegmentGroup } from "@ark-ui/vue/segment-group";
 import type { PropType } from "vue";
 

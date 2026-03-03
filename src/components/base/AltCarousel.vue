@@ -1,4 +1,24 @@
 <script setup lang="ts">
+/**
+ * @component AltCarousel
+ * @description Image/content carousel wrapping Ark-UI Carousel.
+ * Supports autoplay, looping, pagination indicators, and navigation controls.
+ *
+ * @slot items - Carousel slide items (use Carousel.Item from @ark-ui/vue)
+ * @slot prev-trigger - Custom previous button content
+ * @slot next-trigger - Custom next button content
+ *
+ * @example
+ * <AltCarousel :slide-count="3" autoplay loop>
+ *   <template #items>
+ *     <Carousel.Item v-for="i in 3" :key="i" :index="i - 1">
+ *       <img :src="`/slide-${i}.jpg`" />
+ *     </Carousel.Item>
+ *   </template>
+ * </AltCarousel>
+ *
+ * @dependency @ark-ui/vue - Carousel component
+ */
 import { Carousel } from "@ark-ui/vue/carousel";
 import { ref } from "vue";
 import AltIcon from "./AltIcon.vue";

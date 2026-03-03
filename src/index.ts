@@ -8,6 +8,7 @@ export { default as AltMenu } from "./components/base/AltMenu.vue";
 export { default as AltSpinner } from "./components/base/AltSpinner.vue";
 export { default as AltTable } from "./components/base/AltTable.vue";
 export { default as AltTabs } from "./components/base/AltTabs.vue";
+export { default as AltTabsTrigger } from "./components/base/AltTabsTrigger.vue";
 export { default as AltToggleGroup } from "./components/base/AltToggleGroup.vue";
 export { default as AltSegmentGroup } from "./components/base/AltSegmentGroup.vue";
 export { default as AltCollapsableBox } from "./components/base/AltCollapsableBox.vue";
@@ -15,6 +16,9 @@ export { default as AltCarousel } from "./components/base/AltCarousel.vue";
 export { default as AltEditableTable } from "./components/base/AltEditableTable.vue";
 export { default as AltEditableText } from "./components/base/AltEditableText.vue";
 export { default as AltToaster } from "./components/base/AltToaster.vue";
+export { default as AltChip } from "./components/base/AltChip.vue";
+export { default as AltJsonTreeView } from "./components/base/AltJsonTreeView.vue";
+export { default as AltProgress } from "./components/base/AltProgress.vue";
 
 // Form Components
 export { default as AltInput } from "./components/form/AltInput.vue";
@@ -22,6 +26,7 @@ export { default as AltCheckbox } from "./components/form/AltCheckbox.vue";
 export { default as AltCombobox } from "./components/form/AltCombobox.vue";
 export { default as AltRadioGroup } from "./components/form/AltRadioGroup.vue";
 export { default as AltSelect } from "./components/form/AltSelect.vue";
+export { default as AltSelectNative } from "./components/form/AltSelectNative.vue";
 export { default as AltSwitch } from "./components/form/AltSwitch.vue";
 export { default as FormField } from "./components/form/FormField.vue";
 
@@ -66,6 +71,15 @@ export {
 } from "./utils/icons";
 export type { IconSystemConfig } from "./utils/icons";
 export { getCssVar, setCssVar, toNumber } from "./utils/css";
+export { useUniqueId } from "./utils/useUniqueId";
+export {
+  onEnter,
+  onEscape,
+  onSpace,
+  onEnterOrSpace,
+  onDelete,
+  onArrowKeys,
+} from "./utils/useKeyboard";
 export { toast, toaster, setDefaultTitles } from "./utils/toaster";
 
 // Types - export from table

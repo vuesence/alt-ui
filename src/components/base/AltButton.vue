@@ -1,32 +1,43 @@
 <script setup lang="ts">
 /**
- * AltButton - Universal button component
+ * @component AltButton
+ * @description Universal button component with CSS class-based variant customization.
+ * Colored variants render as outline by default; add `solid` for filled background.
  *
- * Supports multiple variants via CSS classes:
- * - Variants: primary, secondary, text, outline, success, warning, danger, accent, secondary-brand
- * - Sizes: x-small, small, (default), large
- * - Width: wide (100%)
- * - Fill: solid (filled background) — without it, colored variants render as outline
+ * @cssclass primary - Primary brand color (blue)
+ * @cssclass secondary - Neutral secondary style
+ * @cssclass secondary-brand - Secondary brand color (teal)
+ * @cssclass accent - Accent color (violet) for AI features
+ * @cssclass outline - Outline style with brand border
+ * @cssclass text - Ghost/text button, no border or background
+ * @cssclass success - Green success variant
+ * @cssclass warning - Amber warning variant
+ * @cssclass danger - Red danger variant
+ * @cssclass solid - Filled background (combine with color variant)
+ * @cssclass x-small - Extra small size
+ * @cssclass small - Small size
+ * @cssclass large - Large size
+ * @cssclass wide - Full width (100%)
+ * @cssclass icon-only - Square icon-only button
  *
- * Colored variants (primary, danger, success, warning, accent, secondary-brand)
- * render as outline by default (colored border + text, transparent background).
- * Add the `solid` class for a fully filled background.
+ * @cssvar --btn-padding-y - Vertical padding
+ * @cssvar --btn-padding-x - Horizontal padding
+ * @cssvar --btn-gap - Gap between icon and label
+ * @cssvar --btn-font-size - Font size
+ * @cssvar --icon-size - Icon dimensions
+ *
+ * @slot default - Button content (used when label prop is not set)
  *
  * @example
- * // Primary outline (default)
- * <AltButton class="primary" label="Save" />
- *
- * @example
- * // Primary solid (filled)
  * <AltButton class="primary solid" label="Save" />
  *
  * @example
- * // Danger outline
  * <AltButton class="danger" icon="trash" label="Delete" />
  *
  * @example
- * // Danger solid (filled)
- * <AltButton class="danger solid" icon="trash" label="Delete" />
+ * <AltButton class="text small" icon="settings" />
+ *
+ * @dependency vue-router - For `to` prop navigation
  */
 import { useRouter } from "vue-router";
 import AltSpinner from "./AltSpinner.vue";

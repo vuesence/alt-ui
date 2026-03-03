@@ -1,4 +1,22 @@
 <script setup lang="ts">
+/**
+ * @component AltCollapsableBox
+ * @description Expandable/collapsible content section with animated open/close.
+ * Uses CSS grid transition for smooth height animation.
+ *
+ * CSS Classes:
+ * - `wide` — removes max-width constraint
+ *
+ * @cssclass wide - Full width (removes max-width: 40rem)
+ *
+ * @slot title - Custom title content
+ * @slot default - Collapsible body content
+ *
+ * @example
+ * <AltCollapsableBox v-model="isOpen" title="Section Title">
+ *   <p>Collapsible content here</p>
+ * </AltCollapsableBox>
+ */
 // import { ref, watch, onMounted } from 'vue';
 
 defineProps({

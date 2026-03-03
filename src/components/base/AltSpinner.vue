@@ -1,11 +1,35 @@
 <script setup lang="ts">
+/**
+ * @component AltSpinner
+ * @description Loading spinner with circular animation.
+ * Inherits color from parent via currentColor.
+ *
+ * CSS Classes:
+ * - `small` — smaller size (0.75em)
+ * - `large` — larger size (1.5em)
+ *
+ * @cssclass small - Smaller spinner (0.75em)
+ * @cssclass large - Larger spinner (1.5em)
+ *
+ * @example
+ * <AltSpinner />
+ *
+ * @example
+ * <AltSpinner class="large" />
+ */
 defineProps<{
+  /** Custom size (CSS value) */
   size?: string;
 }>();
 </script>
 
 <template>
-  <div class="spinner" :style="{ width: size, height: size }">
+  <div
+    class="alt-spinner"
+    role="status"
+    aria-label="Loading"
+    :style="size ? { width: size, height: size } : undefined"
+  >
     <svg viewBox="0 0 50 50">
       <circle
         class="path"
@@ -20,19 +44,29 @@ defineProps<{
 </template>
 
 <style scoped>
-.spinner {
+.alt-spinner {
   display: inline-block;
   width: 1em;
   height: 1em;
+
+  &.small {
+    width: 0.75em;
+    height: 0.75em;
+  }
+
+  &.large {
+    width: 1.5em;
+    height: 1.5em;
+  }
 }
 
-.spinner svg {
+.alt-spinner svg {
   animation: rotate 2s linear infinite;
   width: 100%;
   height: 100%;
 }
 
-.spinner .path {
+.alt-spinner .path {
   stroke: currentColor;
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;

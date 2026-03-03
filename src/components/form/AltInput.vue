@@ -1,4 +1,19 @@
 <script setup lang="ts">
+/**
+ * @component AltInput
+ * @description Text input with label, validation states, and v-model support.
+ *
+ * CSS Classes:
+ * - `compact` — reduced padding and font size
+ *
+ * @cssclass compact - Smaller input size
+ *
+ * @example
+ * <AltInput v-model="email" label="Email" type="email" required />
+ *
+ * @example
+ * <AltInput v-model="name" state="error" placeholder="Enter name" />
+ */
 interface AltInputProps {
   /**
    * The placeholder text for the input

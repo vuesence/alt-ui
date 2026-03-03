@@ -40,7 +40,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
-      "alt-ui/styles": resolve(__dirname, "src/styles"),
     },
   },
 });

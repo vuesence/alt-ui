@@ -1,4 +1,18 @@
 <script setup lang="ts">
+/**
+ * @component AltSwitch
+ * @description Toggle switch wrapping Ark-UI Switch.
+ *
+ * CSS Classes:
+ * - `small` — compact switch size
+ *
+ * @cssclass small - Smaller switch dimensions
+ *
+ * @example
+ * <AltSwitch v-model="enabled" label="Enable notifications" />
+ *
+ * @dependency @ark-ui/vue - Switch component
+ */
 import { Switch } from "@ark-ui/vue/switch";
 
 interface AltSwitchProps {

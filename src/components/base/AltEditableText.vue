@@ -1,4 +1,15 @@
 <script setup lang="ts">
+/**
+ * @component AltEditableText
+ * @description Inline editable text component. Supports text, textarea, markdown rendering,
+ * and collapsible content modes.
+ *
+ * @example
+ * <AltEditableText v-model="text" :is-editable="true" variant="textarea" />
+ *
+ * @example
+ * <AltEditableText v-model="content" :render-markdown="true" :rendered-html="html" />
+ */
 import type { PropType } from "vue";
 
 const modelValue = defineModel<string>();

@@ -1,4 +1,15 @@
 <script setup lang="ts">
+/**
+ * @component AltToggleGroup
+ * @description Toggle button group using Ark-UI ToggleGroup. Single-select by default.
+ *
+ * @slot item - Custom item rendering (receives :item scoped prop)
+ *
+ * @example
+ * <AltToggleGroup v-model="selected" :items="['Option A', 'Option B', 'Option C']" />
+ *
+ * @dependency @ark-ui/vue - ToggleGroup component
+ */
 import { ToggleGroup } from "@ark-ui/vue/toggle-group";
 import { nextTick, ref, type PropType } from "vue";
 

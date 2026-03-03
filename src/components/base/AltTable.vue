@@ -1,4 +1,27 @@
 <script setup lang="ts">
+/**
+ * @component AltTable
+ * @description Data table with sortable columns, editable cells, and custom slot rendering.
+ *
+ * CSS Classes:
+ * - `compact` — reduced padding
+ * - `striped` — alternating row colors (default behavior)
+ *
+ * @slot header-{key} - Custom header cell for column with matching key
+ * @slot cell-{key} - Custom cell rendering (receives :row and :column props)
+ * @slot empty - Custom empty state content
+ * @slot loading - Custom loading state content
+ *
+ * @cssvar --alt-font-size-scale - Font size multiplier (used in tooltip/hovercard contexts)
+ * @cssvar --alt-spacing-scale - Spacing multiplier
+ *
+ * @example
+ * <AltTable :columns="columns" :data="rows">
+ *   <template #cell-actions="{ row }">
+ *     <AltButton class="text x-small" icon="edit" @click="edit(row)" />
+ *   </template>
+ * </AltTable>
+ */
 import { computed } from "vue";
 import type { TableColumnDefinition, TableEmits, TableRowData } from "../../types/table";
 
@@ -48,7 +71,13 @@ function updateCellValue(
 function handleCellPaste(event: ClipboardEvent) {
   event.preventDefault();
   const plainText = event.clipboardData?.getData("text/plain") ?? "";
-  document.execCommand("insertText", false, plainText);
+  const selection = window.getSelection();
+  if (selection && selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(document.createTextNode(plainText));
+    range.collapse(false);
+  }
 }
 </script>
 
@@ -65,6 +94,7 @@ function handleCellPaste(event: ClipboardEvent) {
               `text-${column.align || 'left'}`,
               { 'is-sortable': column.sortable },
             ]"
+            :aria-sort="column.sortable ? (column.sortDirection || 'none') : undefined"
             @click="handleColumnSort(column)"
           >
             <slot

@@ -1,4 +1,19 @@
 <script setup lang="ts">
+/**
+ * @component AltCheckbox
+ * @description Checkbox component wrapping Ark-UI Checkbox.
+ * Supports checked, unchecked, and indeterminate states.
+ *
+ * @slot default - Additional label content after the label text
+ *
+ * @example
+ * <AltCheckbox v-model="agreed" label="I agree to terms" />
+ *
+ * @example
+ * <AltCheckbox v-model="selectAll" :indeterminate="isPartial" />
+ *
+ * @dependency @ark-ui/vue - Checkbox component
+ */
 import { Checkbox, type CheckboxCheckedState } from "@ark-ui/vue/checkbox";
 import { computed } from "vue";
 import AltIcon from "../base/AltIcon.vue";
