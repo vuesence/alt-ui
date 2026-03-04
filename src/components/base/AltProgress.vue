@@ -100,7 +100,7 @@ const percent = computed(() => {
   }
 
   .alt-progress__label {
-    font-size: var(--alt-font-size-minus-1);
+    font-size: var(--alt-font-size-000);
     font-weight: var(--alt-font-weight-semibold);
     color: var(--alt-c-text-2);
     min-width: 2.5em;

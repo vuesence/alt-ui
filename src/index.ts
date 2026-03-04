@@ -19,6 +19,7 @@ export { default as AltToaster } from "./components/base/AltToaster.vue";
 export { default as AltChip } from "./components/base/AltChip.vue";
 export { default as AltJsonTreeView } from "./components/base/AltJsonTreeView.vue";
 export { default as AltProgress } from "./components/base/AltProgress.vue";
+export { default as AltProgressRing } from "./components/base/AltProgressRing.vue";
 
 // Form Components
 export { default as AltInput } from "./components/form/AltInput.vue";

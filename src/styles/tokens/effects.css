@@ -9,6 +9,12 @@
   --alt-shadow-4: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --alt-shadow-5: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
+  /* Named aliases */
+  --alt-shadow-sm: var(--alt-shadow-1);
+  --alt-shadow-md: var(--alt-shadow-3);
+  --alt-shadow-lg: var(--alt-shadow-4);
+  --alt-shadow-xl: var(--alt-shadow-5);
+
   /* ============================================
    * FOCUS RING
    * Accessibility focus indicators
@@ -25,6 +31,9 @@
   --alt-duration-base: 250ms;
   --alt-duration-slow: 350ms;
   --alt-duration-slower: 500ms;
+
+  /* Named aliases */
+  --alt-duration-normal: var(--alt-duration-base);
 
   /* Legacy aliases (for backward compatibility) */
   --alt-transition-fast: var(--alt-duration-fast);

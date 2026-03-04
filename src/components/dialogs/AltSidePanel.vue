@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, type Component } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Component, watch } from "vue";
+import AltButton from "../base/AltButton.vue";
 import type { SidePanelOptions } from "./dialogState";
 
 const props = defineProps({
@@ -24,6 +25,7 @@ const panelOptions = ref<SidePanelOptions>({
   hideFooter: false,
 });
 const resolvePromise = ref<((value: void) => void) | null>(null);
+const overlayRef = ref<HTMLDivElement | null>(null);
 
 const panelStyle = computed(() => ({
   maxWidth: panelOptions.value.width || "560px",
@@ -64,6 +66,29 @@ function onOverlayClick() {
   }
 }
 
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === "Escape" && isVisible.value) {
+    e.stopPropagation();
+    close();
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", onKeydown, true);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("keydown", onKeydown, true);
+});
+
+watch(isVisible, (visible) => {
+  if (visible) {
+    nextTick(() => {
+      overlayRef.value?.focus();
+    });
+  }
+});
+
 defineExpose({ show, close });
 </script>
 
@@ -72,8 +97,11 @@ defineExpose({ show, close });
     <Transition name="side-panel-overlay">
       <div
         v-if="isVisible"
+        ref="overlayRef"
         class="side-panel-overlay"
+        tabindex="-1"
         @click.self="onOverlayClick"
+        @keydown.escape="close"
       >
         <Transition name="side-panel-slide">
           <aside
@@ -86,8 +114,8 @@ defineExpose({ show, close });
               <button class="back-btn" @click="close">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -95,7 +123,7 @@ defineExpose({ show, close });
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                  <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
                 {{ backText }}
               </button>
@@ -114,9 +142,11 @@ defineExpose({ show, close });
             </div>
 
             <footer v-if="!panelOptions.hideFooter" class="panel-footer">
-              <button class="close-btn" @click="close">
-                {{ closeText }}
-              </button>
+              <AltButton
+                class="secondary small"
+                :label="closeText"
+                @click="close"
+              />
             </footer>
           </aside>
         </Transition>
@@ -131,9 +161,10 @@ defineExpose({ show, close });
 .side-panel-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--alt-c-overlay);
   z-index: var(--alt-z-modal, 1000);
   display: flex;
+  outline: none;
 }
 
 .side-panel-overlay-enter-active,
@@ -153,7 +184,7 @@ defineExpose({ show, close });
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--alt-shadow-lg);
 
   &.position-right {
     margin-left: auto;
@@ -261,18 +292,4 @@ defineExpose({ show, close });
   }
 }
 
-.close-btn {
-  padding: var(--alt-space-2, 8px) var(--alt-space-4, 16px);
-  background: var(--alt-c-surface-2, #f0f0f0);
-  border: 1px solid var(--alt-c-border, #e0e0e0);
-  border-radius: var(--alt-radius-base, 6px);
-  color: var(--alt-c-text-1, #333);
-  font-size: var(--alt-font-size-1, 14px);
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: var(--alt-c-surface-3, #e5e5e5);
-  }
-}
 </style>
