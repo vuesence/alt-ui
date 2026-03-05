@@ -156,7 +156,7 @@ defineExpose({ show, close });
 </template>
 
 <style scoped>
-@import "alt-ui/styles/tokens/scrollbar.css";
+@import "../../styles/tokens/scrollbar.css";
 
 .side-panel-overlay {
   position: fixed;
