@@ -32,7 +32,7 @@
  * <AltButton class="primary solid" label="Save" />
  *
  * @example
- * <AltButton class="danger" icon="trash" label="Delete" />
+ * <AltButton class="danger" icon="delete" label="Delete" />
  *
  * @example
  * <AltButton class="text small" icon="settings" />
@@ -153,6 +153,7 @@ function click(event: MouseEvent) {
   box-shadow: var(--alt-shadow-1);
   border-radius: var(--alt-radius-md);
   outline: 0;
+  width: fit-content;
   transition:
     color var(--alt-duration-fast) var(--alt-ease-in-out),
     background-color var(--alt-duration-fast) var(--alt-ease-in-out),
@@ -171,19 +172,9 @@ function click(event: MouseEvent) {
     color var(--alt-duration-fast) var(--alt-ease-in-out);
 }
 
-/* Icon inherits button text color via currentColor (works because AltIcon with size="auto" doesn't set inline color) */
-.base-button .button-icon :deep(.base-icon) {
-  color: currentColor;
-}
-
-/* Force all icons inside solid dark-background buttons to use white color (including slot content) */
-.base-button.primary.solid :deep(.base-icon),
-.base-button.secondary-brand.solid :deep(.base-icon),
-.base-button.accent.solid :deep(.base-icon),
-.base-button.success.solid :deep(.base-icon),
-.base-button.warning.solid :deep(.base-icon),
-.base-button.danger.solid :deep(.base-icon) {
-  color: var(--alt-c-white) !important;
+/* Icon always inherits button text color via currentColor */
+.base-button :deep(.base-icon) {
+  color: currentColor !important;
 }
 
 .base-button:hover:not(:disabled) {
