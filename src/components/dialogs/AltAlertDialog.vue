@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import AltDialog from "../base/AltDialog.vue";
 
 defineProps({
@@ -16,10 +16,12 @@ defineProps({
 const dialog = ref<InstanceType<typeof AltDialog> | null>(null);
 const message = ref("");
 const resolvePromise = ref<(() => void) | null>(null);
+const okButtonRef = ref<HTMLButtonElement | null>(null);
 
 function show(text: string): Promise<void> {
   message.value = text;
   dialog.value?.show();
+  nextTick(() => okButtonRef.value?.focus());
 
   return new Promise((resolve) => {
     resolvePromise.value = resolve;
@@ -31,17 +33,25 @@ function onClose() {
   dialog.value?.close();
 }
 
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    onClose();
+  }
+}
+
 defineExpose({ show });
 </script>
 
 <template>
   <AltDialog ref="dialog">
-    <div class="alert-dialog" data-testid="alert-dialog">
+    <div class="alert-dialog" data-testid="alert-dialog" @keydown="onKeydown">
       <div class="alert-content">
         <p v-if="!isHtml">{{ message }}</p>
         <p v-else v-html="message"></p>
         <div class="alert-actions">
           <button
+            ref="okButtonRef"
             class="btn btn-primary"
             data-testid="alert-dialog-ok"
             @click="onClose"

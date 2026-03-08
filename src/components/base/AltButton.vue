@@ -455,8 +455,9 @@ function click(event: MouseEvent) {
 }
 
 .base-button.icon-only {
-    min-width: 6rem;
+  --icon-size: 20px;
   --btn-padding-x: var(--btn-padding-y);
+  aspect-ratio: 1;
 }
 
 .base-button:disabled {

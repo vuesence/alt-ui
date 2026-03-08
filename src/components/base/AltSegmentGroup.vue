@@ -129,6 +129,7 @@ onBeforeUnmount(() => {
 .segment-group-wrapper {
   position: relative;
   max-width: 100%;
+  overflow: hidden;
 
   &::before,
   &::after {
@@ -144,7 +145,7 @@ onBeforeUnmount(() => {
   }
 
   &::before {
-    left: 0;
+    left: -1px;
     background: linear-gradient(
       to right,
       var(--scroll-fade-bg, var(--alt-c-bg)) 0%,
@@ -153,7 +154,7 @@ onBeforeUnmount(() => {
   }
 
   &::after {
-    right: 0;
+    right: -1px;
     background: linear-gradient(
       to left,
       var(--scroll-fade-bg, var(--alt-c-bg)) 0%,
@@ -191,11 +192,12 @@ onBeforeUnmount(() => {
   }
 
   .indicator {
+    transform: translateY(1px);
     width: var(--width);
-    top: auto !important;
-    height: var(--alt-space-1) !important;
+    height: 0 !important;
     bottom: 0;
-    background: var(--alt-c-brand-1-500);
+    border-bottom: var(--alt-space-1) solid var(--alt-c-brand-1-500);
+    transition: var(--alt-transition-transform);
   }
 
   .item {

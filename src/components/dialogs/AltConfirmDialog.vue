@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import AltDialog from "../base/AltDialog.vue";
 
 defineProps({
@@ -17,9 +17,12 @@ const dialog = ref<InstanceType<typeof AltDialog> | null>(null);
 const message = ref("");
 const resolvePromise = ref<((result: boolean) => void) | null>(null);
 
+const confirmButtonRef = ref<HTMLButtonElement | null>(null);
+
 function show(text: string): Promise<boolean> {
   message.value = text;
   dialog.value?.show();
+  nextTick(() => confirmButtonRef.value?.focus());
 
   return new Promise((resolve) => {
     resolvePromise.value = resolve;
@@ -31,12 +34,19 @@ function onConfirm(result: boolean) {
   dialog.value?.close();
 }
 
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    onConfirm(true);
+  }
+}
+
 defineExpose({ show });
 </script>
 
 <template>
   <AltDialog ref="dialog">
-    <div class="confirm-dialog" data-testid="confirm-dialog">
+    <div class="confirm-dialog" data-testid="confirm-dialog" @keydown="onKeydown">
       <div class="confirm-content">
         <p>{{ message }}</p>
         <div class="confirm-actions">
@@ -48,6 +58,7 @@ defineExpose({ show });
             {{ cancelText }}
           </button>
           <button
+            ref="confirmButtonRef"
             class="btn btn-primary"
             data-testid="confirm-dialog-confirm"
             @click="onConfirm(true)"

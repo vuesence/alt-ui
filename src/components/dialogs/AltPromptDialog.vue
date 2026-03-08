@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import AltDialog from "../base/AltDialog.vue";
 
 defineProps({
@@ -18,12 +18,14 @@ const message = ref("");
 const inputValue = ref("");
 const defaultVal = ref("");
 const resolvePromise = ref<((result: string | null) => void) | null>(null);
+const inputRef = ref<HTMLInputElement | null>(null);
 
 function show(text: string, defaultValue = ""): Promise<string | null> {
   message.value = text;
   defaultVal.value = defaultValue;
   inputValue.value = defaultValue;
   dialog.value?.show();
+  nextTick(() => inputRef.value?.focus());
 
   return new Promise((resolve) => {
     resolvePromise.value = resolve;
@@ -49,6 +51,7 @@ defineExpose({ show });
       <div class="prompt-content">
         <p>{{ message }}</p>
         <input
+          ref="inputRef"
           v-model="inputValue"
           type="text"
           class="prompt-input"
