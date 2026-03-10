@@ -180,7 +180,7 @@ onBeforeUnmount(() => {
   overflow-y: hidden;
 
   &.scrollable {
-    overflow-x: auto;
+    /* overflow-x: auto; */
     width: 100%;
   }
 

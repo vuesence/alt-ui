@@ -51,6 +51,8 @@ const props = withDefaults(defineProps<AltInputProps>(), {
 });
 
 const modelValue = defineModel<string | number | boolean>();
+
+defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
@@ -60,6 +62,7 @@ const modelValue = defineModel<string | number | boolean>();
       <span v-if="props.required" class="required">*</span>
     </label>
     <input
+      v-bind="$attrs"
       v-model="modelValue"
       :type="props.type"
       :placeholder="props.placeholder"

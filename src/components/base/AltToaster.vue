@@ -10,6 +10,8 @@ import { toaster } from "../../utils/toaster";
       :key="toast.id"
       class="toast"
       :type="toast.type"
+      role="status"
+      aria-live="polite"
       :data-testid="`${toast.type}-toast`"
     >
       <div class="content-wrapper">
