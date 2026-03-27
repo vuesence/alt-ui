@@ -117,6 +117,14 @@ const emit = defineEmits<{
 // Models
 const items = defineModel<any[]>("items");
 const modelValue = defineModel<string[]>("modelValue", { default: [] });
+const selectedValues = computed({
+  get() {
+    return modelValue.value ?? [];
+  },
+  set(value: string[]) {
+    modelValue.value = value;
+  },
+});
 
 // Refs
 const inputValue = ref("");
@@ -201,7 +209,7 @@ watch(modelValue, () => {
 <template>
   <!-- ref="comboboxRef" -->
   <Combobox.Root
-    v-model="modelValue"
+    v-model="selectedValues"
     :collection="collection"
     :multiple="true"
     class="cb"
@@ -229,7 +237,7 @@ watch(modelValue, () => {
           :aria-disabled="disabled"
         />
         <Combobox.ClearTrigger
-          v-if="modelValue.length > 0 && !disabled"
+          v-if="selectedValues.length > 0 && !disabled"
           class="cb-clear-trigger"
           aria-label="Clear selection"
         >

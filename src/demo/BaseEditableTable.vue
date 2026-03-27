@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { AltButton, AltIcon, type TableHeader, type TableRow } from "../";
 import type { PropType } from "vue";
+import { computed } from "vue";
 
 const modelValue = defineModel<TableRow[]>();
+const rows = computed(() => modelValue.value ?? []);
 
 const props = defineProps({
   headers: {
@@ -29,7 +31,9 @@ function onCellInput(
   const newValue = target.textContent?.trim() ?? "";
 
   row[header.key] = newValue;
-  modelValue.value![rowIndex] = row;
+  if (modelValue.value) {
+    modelValue.value[rowIndex] = row;
+  }
 }
 
 function onCellPaste(event: ClipboardEvent) {
@@ -50,6 +54,9 @@ function addRow() {
   props.headers.forEach((header) => {
     newRow[header.key] = "";
   });
+  if (!modelValue.value) {
+    modelValue.value = [];
+  }
   modelValue.value.push(newRow);
 }
 
@@ -79,7 +86,7 @@ function deleteRow(index: number) {
       </thead>
       <tbody>
         <tr
-          v-for="(row, rowIndex) in modelValue"
+          v-for="(row, rowIndex) in rows"
           :key="row.id ?? rowIndex"
           :class="row.rowClass"
         >

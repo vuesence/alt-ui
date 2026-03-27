@@ -17,9 +17,10 @@ import AltButton from "./AltButton.vue";
 import AltIcon from "./AltIcon.vue";
 import type { TableHeader, TableRow } from "../../types/table";
 import type { PropType, ComponentPublicInstance } from "vue";
-import { nextTick } from "vue";
+import { computed, nextTick } from "vue";
 
 const modelValue = defineModel<TableRow[] | undefined>();
+const rows = computed(() => modelValue.value ?? []);
 
 const props = defineProps({
   headers: {
@@ -139,7 +140,7 @@ function deleteRow(index: number) {
       </thead>
       <tbody>
         <tr
-          v-for="(row, rowIndex) in modelValue"
+          v-for="(row, rowIndex) in rows"
           :key="row.id ?? rowIndex"
           :class="row.rowClass"
         >

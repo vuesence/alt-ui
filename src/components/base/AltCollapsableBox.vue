@@ -36,7 +36,11 @@ defineProps({
 
 // const emit = defineEmits(['update:modelValue']);
 
-const isOpen = defineModel<boolean>('modelValue');
+const isOpen = defineModel<boolean>("modelValue", { default: true });
+
+function toggleOpen() {
+  isOpen.value = !isOpen.value;
+}
 
 // Watch for external changes to modelValue
 // watch(() => props.modelValue, (newValue) => {
@@ -59,7 +63,7 @@ const isOpen = defineModel<boolean>('modelValue');
 <template>
   <div class="collapsable-box">
     <div
-      @click="isOpen = !isOpen"
+      @click="toggleOpen"
       class="summary-container"
       :class="{ 'is-open': isOpen }"
     >

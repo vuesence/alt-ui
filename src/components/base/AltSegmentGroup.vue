@@ -15,7 +15,7 @@
  */
 import { SegmentGroup } from "@ark-ui/vue/segment-group";
 import type { ComponentPublicInstance, PropType } from "vue";
-import { onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
 
 const props = defineProps({
   items: {
@@ -29,6 +29,14 @@ const props = defineProps({
 });
 
 const modelValue = defineModel<string>();
+const segmentValue = computed({
+  get() {
+    return modelValue.value ?? props.items[0] ?? "";
+  },
+  set(value: string) {
+    modelValue.value = value;
+  },
+});
 
 const segmentRootRef = useTemplateRef<ComponentPublicInstance>("segmentRootRef");
 const showFadeLeft = ref(false);
@@ -78,7 +86,7 @@ onBeforeUnmount(() => {
   >
     <SegmentGroup.Root
       ref="segmentRootRef"
-      v-model="modelValue"
+      v-model="segmentValue"
       orientation="horizontal"
       class="segment-group scrollable"
     >
@@ -101,7 +109,7 @@ onBeforeUnmount(() => {
   </div>
   <SegmentGroup.Root
     v-else
-    v-model="modelValue"
+    v-model="segmentValue"
     orientation="horizontal"
     class="segment-group"
   >

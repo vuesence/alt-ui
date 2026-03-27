@@ -14,6 +14,7 @@
  * @dependency @ark-ui/vue - Switch component
  */
 import { Switch } from "@ark-ui/vue/switch";
+import { computed } from "vue";
 
 interface AltSwitchProps {
   /**
@@ -27,6 +28,14 @@ const props = withDefaults(defineProps<AltSwitchProps>(), {
 });
 
 const checked = defineModel<boolean>();
+const checkedModel = computed({
+  get() {
+    return checked.value ?? false;
+  },
+  set(value: boolean) {
+    checked.value = value;
+  },
+});
 
 const emit = defineEmits<{
   change: [value: boolean];
@@ -39,7 +48,7 @@ function handleCheckedChange(details: { checked: boolean }) {
 
 <template>
   <Switch.Root
-    v-model:checked="checked"
+    v-model:checked="checkedModel"
     class="switch-root"
     @checked-change="handleCheckedChange"
   >
