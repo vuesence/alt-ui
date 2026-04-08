@@ -14,6 +14,9 @@
  * @example
  * <AltInput v-model="name" state="error" placeholder="Enter name" />
  */
+import { computed } from "vue";
+import AltIcon from "../base/AltIcon.vue";
+
 interface AltInputProps {
   /**
    * The placeholder text for the input
@@ -39,6 +42,10 @@ interface AltInputProps {
    * Whether the input is disabled
    */
   disabled?: boolean;
+  /**
+   * Show clear button on the right side
+   */
+  clearable?: boolean;
 }
 
 const props = withDefaults(defineProps<AltInputProps>(), {
@@ -48,9 +55,26 @@ const props = withDefaults(defineProps<AltInputProps>(), {
   label: "",
   required: false,
   disabled: false,
+  clearable: false,
 });
 
 const modelValue = defineModel<string | number | boolean>();
+
+const hasClearButton = computed(() => {
+  if (!props.clearable || props.disabled) {
+    return false;
+  }
+
+  if (modelValue.value === undefined || modelValue.value === null) {
+    return false;
+  }
+
+  return String(modelValue.value).length > 0;
+});
+
+function clearInput() {
+  modelValue.value = "";
+}
 
 defineOptions({ inheritAttrs: false });
 </script>
@@ -61,16 +85,27 @@ defineOptions({ inheritAttrs: false });
       {{ props.label }}
       <span v-if="props.required" class="required">*</span>
     </label>
-    <input
-      v-bind="$attrs"
-      v-model="modelValue"
-      :type="props.type"
-      :placeholder="props.placeholder"
-      :required="props.required"
-      :disabled="props.disabled"
-      class="base-input alt-input"
-      :class="[props.state, { disabled: props.disabled }]"
-    />
+    <div class="input-control" :class="{ 'has-clear': props.clearable }">
+      <input
+        v-bind="$attrs"
+        v-model="modelValue"
+        :type="props.type"
+        :placeholder="props.placeholder"
+        :required="props.required"
+        :disabled="props.disabled"
+        class="base-input alt-input"
+        :class="[props.state, { disabled: props.disabled }]"
+      />
+      <button
+        v-if="hasClearButton"
+        type="button"
+        class="clear-btn"
+        aria-label="Clear input"
+        @click="clearInput"
+      >
+        <AltIcon name="interface/cancel" :size="14" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -81,6 +116,17 @@ defineOptions({ inheritAttrs: false });
   flex-direction: column;
   gap: var(--alt-space-1);
   width: 100%;
+}
+
+.input-control {
+  position: relative;
+  width: 100%;
+
+  &.has-clear {
+    .base-input {
+      padding-right: calc(var(--alt-space-8) + var(--alt-space-1));
+    }
+  }
 }
 
 .input-label {
@@ -133,6 +179,31 @@ defineOptions({ inheritAttrs: false });
     background-color: var(--alt-c-surface-2);
     cursor: not-allowed;
     opacity: 0.7;
+  }
+}
+
+.clear-btn {
+  position: absolute;
+  top: 50%;
+  right: var(--alt-space-2);
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: var(--alt-radius-sm);
+  background: transparent;
+  color: var(--alt-c-icon-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background-color var(--alt-duration-fast) var(--alt-ease-in-out),
+    color var(--alt-duration-fast) var(--alt-ease-in-out);
+
+  &:hover {
+    background-color: var(--alt-c-surface-2);
+    color: var(--alt-c-icon-default);
   }
 }
 </style>

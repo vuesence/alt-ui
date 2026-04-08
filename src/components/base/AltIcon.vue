@@ -46,7 +46,7 @@ interface AltIconProps {
    * - For images: applies to width only, height is auto (preserves aspect ratio)
    */
   size?: string | number;
-  /** 
+  /**
    * Semantic color variant (uses design tokens)
    * Takes precedence over color prop
    */
@@ -207,6 +207,7 @@ const iconMode = computed(() => getIconMode());
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  max-width: fit-content;
   color: inherit;
   transition:
     color var(--alt-duration-fast) var(--alt-ease-in-out),
