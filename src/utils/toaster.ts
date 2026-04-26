@@ -29,12 +29,41 @@ export const toaster = createToaster({
   // duration: 300000,
 });
 
+// Track active toasts by content hash to prevent duplicates
+const activeToasts = new Map<string, { id: string; timestamp: number }>();
+const DEDUP_WINDOW_MS = 3000; // Don't show same toast within 3 seconds
+
+function getToastKey(type: ToastType, description: string): string {
+  return `${type}:${description}`;
+}
+
+function cleanupExpiredToasts(): void {
+  const now = Date.now();
+  for (const [key, value] of activeToasts) {
+    if (now - value.timestamp > DEDUP_WINDOW_MS) {
+      activeToasts.delete(key);
+    }
+  }
+}
+
 const createToast = (type: ToastType, title: string, description: string) => {
-  return toaster.create({
+  cleanupExpiredToasts();
+
+  const key = getToastKey(type, description);
+  const existing = activeToasts.get(key);
+
+  if (existing && Date.now() - existing.timestamp < DEDUP_WINDOW_MS) {
+    return existing.id;
+  }
+
+  const id = toaster.create({
     title,
     description,
     type,
   });
+
+  activeToasts.set(key, { id, timestamp: Date.now() });
+  return id;
 };
 
 // Функция для установки кастомных дефолтных заголовков
