@@ -136,14 +136,17 @@ onBeforeUnmount(() => {
 
 .segment-group-wrapper {
   position: relative;
+  width: 100%;
+  min-width: 0;
   max-width: 100%;
+  flex-shrink: 0;
   overflow: hidden;
 
   /* On mobile/tablet, avoid clipping tab labels during route/layout reflows. */
-  .mobile &,
+  /* .mobile &,
   .tablet & {
     overflow: visible;
-  }
+  } */
 
   &::before,
   &::after {
@@ -190,18 +193,23 @@ onBeforeUnmount(() => {
   align-items: flex-start;
   flex-direction: row;
   border-bottom: 1px solid var(--alt-c-border);
+  width: 100%;
+  min-width: 0;
+  flex-shrink: 0;
   overflow-x: hidden;
   overflow-y: hidden;
 
   &.scrollable {
-    /* overflow-x: auto; */
-    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .mobile &,
   .tablet & {
-    overflow-x: auto;
-    width: 100%;
     gap: var(--alt-space-2);
   }
 
