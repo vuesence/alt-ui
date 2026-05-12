@@ -139,6 +139,12 @@ onBeforeUnmount(() => {
   max-width: 100%;
   overflow: hidden;
 
+  /* On mobile/tablet, avoid clipping tab labels during route/layout reflows. */
+  .mobile &,
+  .tablet & {
+    overflow: visible;
+  }
+
   &::before,
   &::after {
     content: "";
