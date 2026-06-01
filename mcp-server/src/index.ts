@@ -146,7 +146,7 @@ const server = new McpServer({
 // ─── component.list ────────────────────────────────────────
 
 server.tool(
-  "component.list",
+  "component_list",
   "List all alt-ui components with basic info",
   {
     category: z.string().optional().describe("Filter by category: base, form, dialogs, onboarding, tour, theme"),
@@ -171,7 +171,7 @@ server.tool(
 // ─── component.get ─────────────────────────────────────────
 
 server.tool(
-  "component.get",
+  "component_get",
   "Get full documentation for a specific component",
   {
     name: z.string().describe("Component name (e.g. 'AltButton', 'Button', 'AltInput')"),
@@ -179,7 +179,7 @@ server.tool(
   async ({ name }) => {
     const component = getComponentByName(name);
     if (!component) {
-      return { content: [{ type: "text" as const, text: `Component "${name}" not found. Use component.list to see available components.` }] };
+      return { content: [{ type: "text" as const, text: `Component "${name}" not found. Use component_list to see available components.` }] };
     }
     return { content: [{ type: "text" as const, text: formatComponentFull(component) }] };
   },
@@ -188,7 +188,7 @@ server.tool(
 // ─── component.search ──────────────────────────────────────
 
 server.tool(
-  "component.search",
+  "component_search",
   "Search components by keyword in name, description, props, or CSS classes",
   {
     query: z.string().describe("Search keyword"),
@@ -217,7 +217,7 @@ server.tool(
 // ─── component.props ───────────────────────────────────────
 
 server.tool(
-  "component.props",
+  "component_props",
   "Get props for a specific component",
   {
     name: z.string().describe("Component name"),
@@ -246,7 +246,7 @@ server.tool(
 // ─── component.css-classes ─────────────────────────────────
 
 server.tool(
-  "component.css-classes",
+  "component_css_classes",
   "Get available CSS class variants for a component",
   {
     name: z.string().describe("Component name"),
@@ -283,7 +283,7 @@ server.tool(
 // ─── tokens.list ───────────────────────────────────────────
 
 server.tool(
-  "tokens.list",
+  "tokens_list",
   "List design token categories",
   {},
   async () => {
@@ -299,7 +299,7 @@ server.tool(
 // ─── tokens.get ────────────────────────────────────────────
 
 server.tool(
-  "tokens.get",
+  "tokens_get",
   "Get all tokens in a category",
   {
     category: z.string().describe("Token category: colors, typography, spacing, effects, scrollbar"),
@@ -324,7 +324,7 @@ server.tool(
 // ─── tokens.search ─────────────────────────────────────────
 
 server.tool(
-  "tokens.search",
+  "tokens_search",
   "Search tokens by name or value",
   {
     query: z.string().describe("Search query (token name or value)"),
@@ -359,7 +359,7 @@ server.tool(
 // ─── tokens.themes ─────────────────────────────────────────
 
 server.tool(
-  "tokens.themes",
+  "tokens_themes",
   "Get semantic tokens for a specific theme (light, dark, contrast)",
   {
     theme: z.string().optional().describe("Theme name: light, dark, contrast, system. Omit for all."),
@@ -396,7 +396,7 @@ server.tool(
 // ─── badge.classes ─────────────────────────────────────────
 
 server.tool(
-  "badge.classes",
+  "badge_classes",
   "Get available CSS classes for the .alt-badge utility (CSS-only component)",
   {},
   async () => {
