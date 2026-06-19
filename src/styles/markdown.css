@@ -3,6 +3,10 @@
   line-height: var(--alt-line-height-2);
   font-size: var(--alt-font-size-1);
   color: var(--alt-c-text-1);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 
   /* Headings */
   h1,
@@ -100,6 +104,7 @@
   /* Tables */
   table {
     width: 100%;
+    min-width: max-content;
     border-collapse: collapse;
     margin: 0 0 var(--alt-space-4);
     font-size: var(--alt-font-size-1);
