@@ -5,6 +5,7 @@
 ## Философия архитектуры
 
 Наша структура стилей построена на ключевых принципах:
+
 - Модульность и многократное использование
 - Четкое разделение ответственности
 - Оптимизация производительности
@@ -38,7 +39,9 @@ src/assets/styles/
 ## Категории стилей
 
 ### 1. Дизайн-токены
+
 Фундаментальные строительные блоки визуального языка:
+
 - Определения цветов
 - Шкалы отступов
 - Метрики типографики
@@ -46,7 +49,9 @@ src/assets/styles/
 - Характеристики переходов
 
 ### 2. Базовые стили
+
 Глобальные, фундаментальные принципы стилизации:
+
 - CSS-сбросы
 - Стандартная стилизация элементов
 - Объявления шрифтов
@@ -54,14 +59,18 @@ src/assets/styles/
 - Корневые пользовательские свойства
 
 ### 3. Стили тем
+
 Гибкое управление цветовыми схемами:
+
 - Вариации светлого режима
 - Конфигурации темного режима
 - Темы высокой контрастности для доступности
 - Утилиты динамического переключения тем
 
 ### 4. Служебные стили
+
 Атомарные, однотипные вспомогательные классы:
+
 - Утилиты макета
 - Помощники отступов
 - Сокращения типографики
@@ -70,24 +79,28 @@ src/assets/styles/
 ## CSS Architectural Guidelines
 
 ### 1. Naming Conventions
+
 - Use semantic, descriptive class names
 - Avoid overly specific selectors
 - Leverage CSS custom properties
 - Maintain clear, predictable naming patterns
 
 ### 2. Performance Optimization
+
 - Minimize CSS specificity
 - Use efficient selector strategies
 - Avoid deep nesting
 - Implement critical CSS techniques
 
 ### 3. Modularity Principles
+
 - Create component-scoped styles
 - Develop reusable style modules
 - Ensure style encapsulation
 - Support easy style composition
 
 ### 4. Responsive Design
+
 - Implement mobile-first approach
 - Use flexible, proportional units
 - Create adaptive style strategies
@@ -100,12 +113,12 @@ src/assets/styles/
 ```css
 .component {
   --component-padding: var(--alt-space-4);
-  
+
   padding: var(--component-padding);
   background-color: var(--alt-c-surface-1);
   border-radius: var(--alt-radius-base);
-  
-  &__header {
+
+  .component__header {
     font-size: var(--alt-font-size-4);
     margin-bottom: var(--alt-space-2);
   }
@@ -153,4 +166,4 @@ body {
 - Implement logical properties
 - Support internationalization
 - Ensure cross-browser compatibility
-- Maintain accessibility standards 
+- Maintain accessibility standards

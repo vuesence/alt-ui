@@ -1,5 +1,9 @@
 .md,
 .content--markdown {
+  line-height: var(--alt-line-height-2);
+  font-size: var(--alt-font-size-1);
+  color: var(--alt-c-text-1);
+
   /* Headings */
   h1,
   h2,
@@ -7,41 +11,55 @@
   h4,
   h5,
   h6 {
+    color: var(--alt-c-text-1);
+    font-family: var(--alt-font-family-heading);
     font-weight: var(--alt-font-weight-bold);
-    line-height: var(--alt-line-height-0);
-    color: var(--alt-c-text-2);
-  }
-
-  h1 {
-    font-size: var(--alt-font-size-6);
-  }
-  h2 {
-    font-size: var(--alt-font-size-5);
-    margin-top: var(--alt-space-4);
-    margin-bottom: var(--alt-space-6);
-  }
-  h3 {
-    font-size: var(--alt-font-size-4);
-    margin-top: var(--alt-space-4);
-    margin-bottom: var(--alt-space-4);
-  }
-
-  h4 {
-    font-size: var(--alt-font-size-3);
-    margin-top: var(--alt-space-4);
+    margin-top: var(--alt-space-6);
     margin-bottom: var(--alt-space-3);
   }
 
-  p {
-    margin-top: var(--alt-space-4);
+  h1 {
+    font-size: var(--alt-font-size-5);
+  }
+  h2 {
+    font-size: var(--alt-font-size-4);
+    margin-top: var(--alt-space-5);
     margin-bottom: var(--alt-space-4);
+  }
+  h3 {
+    font-size: var(--alt-font-size-3);
+  }
+
+  h4 {
+    font-size: var(--alt-font-size-2);
+  }
+
+  h5 {
+    font-size: var(--alt-font-size-1);
+  }
+
+  h6 {
+    font-size: var(--alt-font-size-0);
+  }
+
+  h1:first-child,
+  h2:first-child,
+  h3:first-child,
+  h4:first-child,
+  h5:first-child,
+  h6:first-child {
+    margin-top: 0;
+  }
+
+  p {
+    margin: 0 0 var(--alt-space-3);
   }
 
   /* Lists */
   ul,
   ol {
     padding-left: var(--alt-space-5);
-    margin: var(--alt-space-4) 0;
+    margin: 0 0 var(--alt-space-4);
   }
 
   ul {
@@ -57,11 +75,12 @@
 
   /* Links */
   a {
-    color: var(--alt-c-brand-1);
+    color: var(--alt-c-brand-1-500);
     text-decoration: underline;
+    text-underline-offset: 2px;
 
     &:hover {
-      color: var(--alt-c-brand-2);
+      color: var(--alt-c-brand-1-600);
     }
   }
 
@@ -82,22 +101,29 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: var(--alt-space-6) 0;
+    margin: 0 0 var(--alt-space-4);
+    font-size: var(--alt-font-size-1);
+    border: 1px solid var(--alt-c-border);
 
     th,
     td {
-      padding: var(--alt-space-3);
+      padding: var(--alt-space-2) var(--alt-space-3);
       border: 1px solid var(--alt-c-border);
       text-align: left;
+      vertical-align: top;
     }
 
     th {
       background: var(--alt-c-surface-2);
-      font-weight: var(--alt-font-weight-bold);
+      font-weight: var(--alt-font-weight-medium);
     }
 
     tr:nth-child(even) {
-      background: var(--alt-c-surface-1);
+      background: var(--alt-c-surface-2);
+    }
+
+    tr:nth-child(even) td {
+      background: var(--alt-c-surface-2);
     }
   }
 
