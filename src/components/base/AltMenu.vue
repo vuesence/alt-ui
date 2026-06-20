@@ -1,8 +1,8 @@
 <script setup lang="ts">
 /**
  * @component AltMenu
- * @description Dropdown menu component wrapping Ark-UI Menu.
- * Renders items from array or uses custom content slot.
+ * @description Generic dropdown menu built on AltDropdown / AltDropdownMenu.
+ * Supports array-driven items and fully custom content slot mode.
  *
  * @slot trigger - Element that triggers the menu
  * @slot content - Custom menu content (overrides default items rendering)
@@ -13,16 +13,17 @@
  *   <template #trigger><AltButton class="text" icon="more" /></template>
  * </AltMenu>
  *
- * @dependency @ark-ui/vue - Menu component
  */
-import { Menu } from "@ark-ui/vue/menu";
-import { type PropType } from "vue";
+import { computed, type PropType, useSlots } from "vue";
 
-interface MenuItem {
-  [key: string]: any;
-}
+import AltDropdown from "./AltDropdown.vue";
+import AltDropdownMenu, {
+  type AltDropdownMenuItem,
+} from "./AltDropdownMenu.vue";
 
-defineProps({
+type MenuItem = unknown;
+
+const props = defineProps({
   items: {
     type: Array as PropType<MenuItem[]>,
     required: true,
@@ -44,37 +45,155 @@ defineProps({
     default: true,
   },
 });
+
+const emit = defineEmits<{
+  (e: "select", value: string): void;
+  (e: "openChange", isOpen: boolean): void;
+}>();
+
+const slots = useSlots();
+
+const hasCustomContent = computed(() => {
+  return typeof slots.content === "function";
+});
+
+function resolveItemValue(item: MenuItem, index: number): string {
+  const source = toRecord(item);
+  const rawValue = source[props.valueKey];
+  if (typeof rawValue === "string" && rawValue.trim().length > 0) {
+    return rawValue;
+  }
+  if (typeof rawValue === "number") {
+    return String(rawValue);
+  }
+
+  return `item-${index}`;
+}
+
+function resolveItemLabel(item: MenuItem): string {
+  const source = toRecord(item);
+  const rawLabel = source[props.labelKey];
+  if (typeof rawLabel === "string") {
+    return rawLabel;
+  }
+
+  return "";
+}
+
+const normalizedItems = computed<AltDropdownMenuItem[]>(() => {
+  return props.items.map((item, index) => {
+    const source = toRecord(item);
+
+    if (source.divider === true) {
+      return {
+        type: "separator",
+        value: `separator-${index}`,
+      };
+    }
+
+    return {
+      type: "item",
+      value: resolveItemValue(item, index),
+      label: resolveItemLabel(item),
+      icon: typeof source.icon === "string" ? source.icon : undefined,
+      disabled: source.disabled === true,
+      danger: source.danger === true,
+      checked: source.checked === true,
+      rightLabel:
+        typeof source.rightLabel === "string" ? source.rightLabel : undefined,
+      keepOpenOnSelect: source.keepOpenOnSelect === true,
+    };
+  });
+});
+
+const itemLookup = computed(() => {
+  const map = new Map<string, MenuItem>();
+  props.items.forEach((item, index) => {
+    const source = toRecord(item);
+    if (source.divider === true) {
+      return;
+    }
+
+    map.set(resolveItemValue(item, index), item);
+  });
+
+  return map;
+});
+
+function handleOpenChange(isOpen: boolean): void {
+  emit("openChange", isOpen);
+}
+
+function handleSelect(item: AltDropdownMenuItem): void {
+  if (item.type !== "item") {
+    return;
+  }
+
+  emit("select", item.value);
+}
+
+function toRecord(item: MenuItem): Record<string, unknown> {
+  if (item && typeof item === "object") {
+    return item as Record<string, unknown>;
+  }
+
+  return {};
+}
 </script>
 
 <template>
-  <Menu.Root :close-on-select="closeOnSelect">
-    <Menu.Trigger class="menu-trigger">
-      <slot name="trigger" />
-      <Menu.Indicator v-if="showTriggerIndicator" class="menu-indicator"
-        >▼</Menu.Indicator
-      >
-    </Menu.Trigger>
-    <Menu.Positioner class="menu-positioner">
-      <Menu.Content class="menu-content">
-        <!-- Use custom content slot if provided, otherwise use default items rendering -->
-        <slot name="content">
-          <Menu.Item
-            v-for="item in items"
-            :key="item[labelKey]"
-            :value="item[valueKey]"
-            class="menu-item"
-          >
-            <slot :item="item">
-              {{ item[labelKey] }}
-            </slot>
-          </Menu.Item>
+  <div class="alt-menu">
+    <AltDropdownMenu
+      v-if="!hasCustomContent"
+      trigger-class="menu-trigger"
+      panel-class="menu-content"
+      :close-on-select="closeOnSelect"
+      :items="normalizedItems"
+      @select="handleSelect"
+      @open-change="handleOpenChange"
+    >
+      <template #trigger>
+        <span class="menu-trigger-inner">
+          <slot name="trigger" />
+          <span v-if="showTriggerIndicator" class="menu-indicator">▼</span>
+        </span>
+      </template>
+
+      <template #item="{ item }">
+        <slot name="item" :item="(itemLookup.get(item.value) ?? item) as any">
+          <slot :item="(itemLookup.get(item.value) ?? item) as any">
+            {{ item.label }}
+          </slot>
         </slot>
-      </Menu.Content>
-    </Menu.Positioner>
-  </Menu.Root>
+      </template>
+    </AltDropdownMenu>
+
+    <AltDropdown
+      v-else
+      trigger-class="menu-trigger"
+      panel-class="menu-content"
+      panel-role="menu"
+      @open-change="handleOpenChange"
+    >
+      <template #trigger>
+        <span class="menu-trigger-inner">
+          <slot name="trigger" />
+          <span v-if="showTriggerIndicator" class="menu-indicator">▼</span>
+        </span>
+      </template>
+
+      <div class="custom-content">
+        <slot name="content" />
+      </div>
+    </AltDropdown>
+  </div>
 </template>
 
 <style scoped>
+.alt-menu {
+  display: inline-flex;
+}
+
 .menu-trigger {
   display: flex;
   align-items: center;
@@ -85,6 +204,12 @@ defineProps({
   transition: background-color var(--alt-transition-fast);
   &:focus-visible {
     outline: 1px solid var(--alt-c-brand-2);
+  }
+
+  .menu-trigger-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--alt-space-2);
   }
 }
 
@@ -101,11 +226,6 @@ defineProps({
   transform: rotate(180deg);
 }
 
-.menu-positioner {
-  position: relative;
-  z-index: var(--alt-z-dropdown);
-}
-
 .menu-content {
   background-color: var(--alt-c-surface-1);
   border-radius: var(--alt-radius-base);
@@ -118,12 +238,9 @@ defineProps({
   &:focus-visible {
     outline: 1px solid var(--alt-c-brand-2);
   }
-  .menu-item {
-    padding: var(--alt-space-2) var(--alt-space-3);
-    cursor: pointer;
-    &:hover {
-      background-color: var(--alt-c-surface-2);
-    }
-  }
+}
+
+.custom-content {
+  min-width: inherit;
 }
 </style>
