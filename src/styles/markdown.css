@@ -5,8 +5,7 @@
   color: var(--alt-c-text-1);
   max-width: 100%;
   min-width: 0;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: visible;
 
   /* Headings */
   h1,
@@ -92,6 +91,10 @@
     line-height: 0.7;
   }
 
+  hr {
+    margin: var(--alt-space-6) 0 var(--alt-space-5);
+  }
+
   /* Code */
   code {
     font-family: var(--alt-font-family-mono);
@@ -102,11 +105,19 @@
   }
 
   /* Tables */
-  table {
+  .md-table-wrap {
     width: 100%;
-    min-width: max-content;
-    border-collapse: collapse;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     margin: 0 0 var(--alt-space-4);
+  }
+
+  table {
+    width: max-content;
+    min-width: 100%;
+    margin: 0;
+    border-collapse: collapse;
     font-size: var(--alt-font-size-1);
     border: 1px solid var(--alt-c-border);
 
@@ -116,6 +127,7 @@
       border: 1px solid var(--alt-c-border);
       text-align: left;
       vertical-align: top;
+      min-width: 120px;
     }
 
     th {
