@@ -1,7 +1,14 @@
 <script setup lang="ts">
 /**
  * @component AltSwitch
- * @description Toggle switch wrapping Ark-UI Switch.
+ * @description Toggle switch with native input implementation.
+ *
+ * This component intentionally uses a strict single-source API:
+ * - `modelValue` for incoming state
+ * - `update:modelValue` for outgoing state changes
+ *
+ * We do NOT keep legacy aliases (`checked`, `checked-change`) to avoid
+ * ambiguous data flow and hidden regressions in host apps.
  *
  * CSS Classes:
  * - `small` — compact switch size
@@ -10,56 +17,127 @@
  *
  * @example
  * <AltSwitch v-model="enabled" label="Enable notifications" />
- *
- * @dependency @ark-ui/vue - Switch component
  */
-import { Switch } from "@ark-ui/vue/switch";
-import { computed } from "vue";
+import { computed, nextTick, ref } from "vue";
 
 interface AltSwitchProps {
+  /**
+   * Current checked state
+   */
+  modelValue?: boolean;
   /**
    * Label text for the switch
    */
   label?: string;
+  /**
+   * Whether the switch is disabled
+   */
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<AltSwitchProps>(), {
+  modelValue: false,
   label: "",
-});
-
-const checked = defineModel<boolean>();
-const checkedModel = computed({
-  get() {
-    return checked.value ?? false;
-  },
-  set(value: boolean) {
-    checked.value = value;
-  },
+  disabled: false,
 });
 
 const emit = defineEmits<{
-  change: [value: boolean];
+  (e: "update:modelValue", value: boolean): void;
+  (e: "change", value: boolean): void;
 }>();
 
-function handleCheckedChange(details: { checked: boolean }) {
-  emit("change", details.checked);
+const isHovered = ref(false);
+const isFocusVisible = ref(false);
+const inputRef = ref<HTMLInputElement | null>(null);
+const transientChecked = ref<boolean | null>(null);
+const resolvedChecked = computed(() => {
+  if (transientChecked.value !== null) {
+    return transientChecked.value;
+  }
+
+  return props.modelValue;
+});
+const switchState = computed(() => (resolvedChecked.value ? "checked" : "unchecked"));
+
+function updateValue(value: boolean): void {
+  emit("update:modelValue", value);
+  emit("change", value);
+}
+
+function handleChange(event: Event): void {
+  const target = event.target as HTMLInputElement;
+  const nextValue = target.checked;
+
+  // Keep immediate visual feedback from the native event,
+  // but treat parent model as the final source of truth.
+  transientChecked.value = nextValue;
+  updateValue(nextValue);
+
+  // Reconcile in the next render tick: parent may accept or reject
+  // the update; both cases resolve to the parent model value.
+  nextTick(() => {
+    transientChecked.value = null;
+
+    if (!inputRef.value) {
+      return;
+    }
+
+    inputRef.value.checked = props.modelValue;
+  });
+}
+
+function handleFocus(event: FocusEvent): void {
+  const target = event.target as HTMLInputElement;
+  isFocusVisible.value = target.matches(":focus-visible");
+}
+
+function handleBlur(): void {
+  isFocusVisible.value = false;
+}
+
+function setHovered(value: boolean): void {
+  isHovered.value = value;
 }
 </script>
 
 <template>
-  <Switch.Root
-    v-model:checked="checkedModel"
+  <label
     class="switch-root"
-    @checked-change="handleCheckedChange"
+    :data-disabled="props.disabled || undefined"
+    @mouseenter="setHovered(true)"
+    @mouseleave="setHovered(false)"
   >
-    <Switch.Control class="control">
-      <Switch.Thumb class="thumb" />
-    </Switch.Control>
-    <Switch.Label v-if="props.label" class="label">
+    <span
+      class="control"
+      :data-state="switchState"
+      :data-checked="resolvedChecked || undefined"
+      :data-disabled="props.disabled || undefined"
+      :aria-checked="resolvedChecked"
+      :data-focus-visible="isFocusVisible || undefined"
+      :data-hover="isHovered || undefined"
+    >
+      <span
+        class="thumb"
+        :data-state="switchState"
+        :data-checked="resolvedChecked || undefined"
+      />
+    </span>
+    <span v-if="props.label" class="label">
       {{ props.label }}
-    </Switch.Label>
-    <Switch.HiddenInput />
-  </Switch.Root>
+    </span>
+    <input
+      ref="inputRef"
+      class="switch-hidden-input"
+      type="checkbox"
+      role="switch"
+      :checked="resolvedChecked"
+      :disabled="props.disabled"
+      :aria-checked="resolvedChecked"
+      @change="handleChange"
+      @focus="handleFocus"
+      @blur="handleBlur"
+    />
+  </label>
 </template>
 
 <style scoped>
@@ -68,6 +146,15 @@ function handleCheckedChange(details: { checked: boolean }) {
   position: relative;
   align-items: center;
   gap: var(--alt-space-2);
+}
+
+.switch-hidden-input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .label {

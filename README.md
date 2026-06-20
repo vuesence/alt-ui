@@ -57,7 +57,6 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', or 'system'
 - `AltDialog`: Modal dialog with customizable content
 - `AltEditableTable`: Interactive table with editable cells
 - `AltEditableText`: Text field that can be toggled between view and edit modes
-- `AltHoverCard`: Rich content card that appears on hover
 - `AltIcon`: Flexible icon component supporting various icon libraries
 - `AltMenu`: Dropdown menu with customizable items
 - `AltSegmentGroup`: Segmented control for selecting from mutually exclusive options

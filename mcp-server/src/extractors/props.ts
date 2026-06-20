@@ -41,40 +41,39 @@ function extractTypescriptProps(content: string): PropMetadata[] {
 
 function parseInterfaceBody(body: string): PropMetadata[] {
   const props: PropMetadata[] = [];
-  const lines = body.split("\n");
+  const topLevelEntries = splitTopLevel(body, ";");
 
-  let currentComment = "";
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    // Collect JSDoc line comments
-    if (trimmed.startsWith("/**") || trimmed.startsWith("*")) {
-      const commentText = trimmed.replace(/^\/?\*+\s?/, "").replace(/\*\/$/, "").trim();
-      if (commentText && !commentText.startsWith("@default")) {
-        currentComment += (currentComment ? " " : "") + commentText;
-      }
+  for (const rawEntry of topLevelEntries) {
+    const entry = rawEntry.trim();
+    if (!entry) {
       continue;
     }
 
-    // Parse property line: name?: Type;
-    const propMatch = trimmed.match(/^(\w+)(\?)?:\s*(.+?);?\s*$/);
-    if (propMatch) {
-      const [, name, optional, type] = propMatch;
-      props.push({
-        name,
-        type: type.replace(/;$/, "").trim(),
-        required: !optional,
-        description: currentComment,
-      });
-      currentComment = "";
+    const commentMatch = entry.match(/\/\*\*([\s\S]*?)\*\//);
+    const description = commentMatch
+      ? commentMatch[1]
+        .split("\n")
+        .map(line => line.replace(/^\s*\*\s?/, "").trim())
+        .filter(line => line && !line.startsWith("@default"))
+        .join(" ")
+      : "";
+
+    const withoutComment = commentMatch
+      ? entry.replace(commentMatch[0], "").trim()
+      : entry;
+
+    const propMatch = withoutComment.match(/^(\w+)(\?)?:\s*([\s\S]+)$/);
+    if (!propMatch) {
       continue;
     }
 
-    // Reset comment if we hit a non-comment, non-prop line
-    if (trimmed && !trimmed.startsWith("//")) {
-      currentComment = "";
-    }
+    const [, name, optional, type] = propMatch;
+    props.push({
+      name,
+      type: type.trim(),
+      required: !optional,
+      description,
+    });
   }
 
   return props;
@@ -121,16 +120,157 @@ function extractRuntimeProps(content: string): PropMetadata[] {
 export function extractDefaults(scriptContent: string): Record<string, string> {
   const defaults: Record<string, string> = {};
 
-  const defaultsMatch = scriptContent.match(/withDefaults\s*\([\s\S]*?,\s*\{([\s\S]*?)\}\s*\)/);
-  if (!defaultsMatch) return defaults;
+  const withDefaultsIndex = scriptContent.indexOf("withDefaults(");
+  if (withDefaultsIndex === -1) {
+    return defaults;
+  }
 
-  const body = defaultsMatch[1];
-  const propRegex = /(\w+):\s*([^,\n}]+)/g;
-  let match;
+  const openParenIndex = scriptContent.indexOf("(", withDefaultsIndex);
+  const closeParenIndex = findMatchingBracket(
+    scriptContent,
+    openParenIndex,
+    "(",
+    ")",
+  );
+  if (openParenIndex === -1 || closeParenIndex === -1) {
+    return defaults;
+  }
 
-  while ((match = propRegex.exec(body)) !== null) {
-    defaults[match[1]] = match[2].trim();
+  const argsBody = scriptContent.slice(openParenIndex + 1, closeParenIndex);
+  const args = splitTopLevel(argsBody, ",");
+  if (args.length < 2) {
+    return defaults;
+  }
+
+  const defaultsArg = args.slice(1).join(",").trim();
+  if (!defaultsArg.startsWith("{") || !defaultsArg.endsWith("}")) {
+    return defaults;
+  }
+
+  const objectBody = defaultsArg.slice(1, -1);
+  const entries = splitTopLevel(objectBody, ",");
+  for (const entryRaw of entries) {
+    const entry = entryRaw.trim();
+    if (!entry) {
+      continue;
+    }
+
+    const separatorIndex = entry.indexOf(":");
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    const key = entry.slice(0, separatorIndex).trim();
+    const value = entry.slice(separatorIndex + 1).trim();
+    if (!key) {
+      continue;
+    }
+
+    defaults[key] = value;
   }
 
   return defaults;
+}
+
+function splitTopLevel(input: string, separator: string): string[] {
+  const parts: string[] = [];
+  let buffer = "";
+  let curlyDepth = 0;
+  let squareDepth = 0;
+  let parenDepth = 0;
+  let angleDepth = 0;
+  let stringQuote: "'" | "\"" | null = null;
+  let escaped = false;
+
+  for (let index = 0; index < input.length; index += 1) {
+    const char = input[index];
+
+    if (stringQuote) {
+      buffer += char;
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+
+      if (char === "\\") {
+        escaped = true;
+        continue;
+      }
+
+      if (char === stringQuote) {
+        stringQuote = null;
+      }
+      continue;
+    }
+
+    if (char === "'" || char === "\"") {
+      stringQuote = char;
+      buffer += char;
+      continue;
+    }
+
+    if (char === "{") {
+      curlyDepth += 1;
+    } else if (char === "}") {
+      curlyDepth -= 1;
+    } else if (char === "[") {
+      squareDepth += 1;
+    } else if (char === "]") {
+      squareDepth -= 1;
+    } else if (char === "(") {
+      parenDepth += 1;
+    } else if (char === ")") {
+      parenDepth -= 1;
+    } else if (char === "<") {
+      angleDepth += 1;
+    } else if (char === ">") {
+      angleDepth = Math.max(0, angleDepth - 1);
+    }
+
+    if (
+      char === separator &&
+      curlyDepth === 0 &&
+      squareDepth === 0 &&
+      parenDepth === 0 &&
+      angleDepth === 0
+    ) {
+      parts.push(buffer);
+      buffer = "";
+      continue;
+    }
+
+    buffer += char;
+  }
+
+  if (buffer.trim()) {
+    parts.push(buffer);
+  }
+
+  return parts;
+}
+
+function findMatchingBracket(
+  input: string,
+  startIndex: number,
+  openBracket: string,
+  closeBracket: string,
+): number {
+  if (startIndex < 0 || input[startIndex] !== openBracket) {
+    return -1;
+  }
+
+  let depth = 1;
+  for (let index = startIndex + 1; index < input.length; index += 1) {
+    const char = input[index];
+    if (char === openBracket) {
+      depth += 1;
+    } else if (char === closeBracket) {
+      depth -= 1;
+      if (depth === 0) {
+        return index;
+      }
+    }
+  }
+
+  return -1;
 }

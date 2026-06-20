@@ -1,8 +1,8 @@
 <script setup lang="ts">
 /**
  * @component AltTabs
- * @description Tab container component wrapping Ark-UI Tabs.
- * Use with AltTabsTrigger for tab headers.
+ * @description Tab container component with keyboard navigation support.
+ * Use together with AltTabsTrigger.
  *
  * @example
  * <AltTabs v-model="activeTab">
@@ -10,57 +10,137 @@
  *     <AltTabsTrigger value="tab1">Tab 1</AltTabsTrigger>
  *     <AltTabsTrigger value="tab2">Tab 2</AltTabsTrigger>
  *   </template>
- *   <template #content>
- *     <Tabs.Content value="tab1">Content 1</Tabs.Content>
- *     <Tabs.Content value="tab2">Content 2</Tabs.Content>
+ *   <template #content="{ activeValue }">
+ *     <div v-if="activeValue === 'tab1'">Content 1</div>
+ *     <div v-else-if="activeValue === 'tab2'">Content 2</div>
  *   </template>
  * </AltTabs>
  *
  * @slot tabs - Tab trigger buttons
  * @slot content - Tab content panels
- * @slot default - Alternative to content slot
- * @dependency @ark-ui/vue - Tabs component
+ * @slot default - Alternative to content slot, receives { activeValue }
  */
-import { ref, watch } from "vue";
-import { Tabs } from "@ark-ui/vue/tabs";
+import { computed, provide, ref } from "vue";
 
-const props = withDefaults(defineProps<{ modelValue?: string }>(), {
-  modelValue: "",
-});
+import { ALT_TABS_CONTEXT } from "./tabs-context";
+
+const props = defineProps<{ modelValue?: string }>();
 
 const emit = defineEmits<{ "update:modelValue": [value: string] }>();
 
-const activeValue = ref(props.modelValue);
+const triggerEntries: Array<{ value: string; element: HTMLElement }> = [];
+const uncontrolledValue = ref(props.modelValue ?? "");
+const isControlled = computed(() => props.modelValue !== undefined);
+const activeValue = computed(() => {
+  if (isControlled.value) {
+    return props.modelValue ?? "";
+  }
 
-watch(
-  () => props.modelValue,
-  (v) => {
-    activeValue.value = v ?? "";
-  },
-  { immediate: true },
-);
-
-watch(activeValue, (v) => {
-  emit("update:modelValue", v);
+  return uncontrolledValue.value;
 });
 
-function handleValueUpdate(v: string) {
-  activeValue.value = v;
+function setActiveValue(value: string): void {
+  if (!isControlled.value) {
+    uncontrolledValue.value = value;
+  }
+
+  emit("update:modelValue", value);
 }
+
+function isSelected(value: string): boolean {
+  return activeValue.value === value;
+}
+
+function selectTab(value: string): void {
+  if (activeValue.value === value) {
+    return;
+  }
+
+  setActiveValue(value);
+}
+
+function registerTrigger(value: string, element: HTMLElement): void {
+  const exists = triggerEntries.some(
+    (entry) => entry.value === value && entry.element === element,
+  );
+  if (exists) {
+    return;
+  }
+
+  triggerEntries.push({ value, element });
+  if (!isControlled.value && !uncontrolledValue.value) {
+    uncontrolledValue.value = value;
+  }
+}
+
+function unregisterTrigger(value: string, element: HTMLElement): void {
+  const index = triggerEntries.findIndex((entry) => {
+    return entry.value === value && entry.element === element;
+  });
+  if (index === -1) {
+    return;
+  }
+
+  triggerEntries.splice(index, 1);
+
+  if (!isControlled.value && uncontrolledValue.value === value) {
+    uncontrolledValue.value = triggerEntries[0]?.value ?? "";
+  }
+}
+
+function focusSibling(
+  currentValue: string,
+  direction: "next" | "previous" | "first" | "last",
+): void {
+  if (triggerEntries.length === 0) {
+    return;
+  }
+
+  const entries = triggerEntries;
+  if (direction === "first") {
+    entries[0].element.focus();
+    selectTab(entries[0].value);
+    return;
+  }
+
+  if (direction === "last") {
+    const last = entries[entries.length - 1];
+    last.element.focus();
+    selectTab(last.value);
+    return;
+  }
+
+  const currentIndex = entries.findIndex((entry) => entry.value === currentValue);
+  if (currentIndex === -1) {
+    return;
+  }
+
+  const delta = direction === "next" ? 1 : -1;
+  const nextIndex = (currentIndex + delta + entries.length) % entries.length;
+  const nextEntry = entries[nextIndex];
+  nextEntry.element.focus();
+  selectTab(nextEntry.value);
+}
+
+provide(ALT_TABS_CONTEXT, {
+  activeValue,
+  selectTab,
+  isSelected,
+  registerTrigger,
+  unregisterTrigger,
+  focusSibling,
+});
 </script>
 
 <template>
-  <Tabs.Root
-    :model-value="activeValue"
-    @update:model-value="handleValueUpdate"
-  >
-    <Tabs.List class="tabs-list">
+  <div class="tabs-root">
+    <div class="tabs-list" role="tablist" aria-orientation="horizontal">
       <slot name="tabs"></slot>
-    </Tabs.List>
-    <slot name="content">
-      <slot></slot>
+    </div>
+    <slot name="content" :active-value="activeValue">
+      <slot :active-value="activeValue"></slot>
     </slot>
-  </Tabs.Root>
+  </div>
 </template>
 
 <style scoped>

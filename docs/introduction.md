@@ -14,7 +14,7 @@ Alt-UI — современная библиотека компонентов п
 - AltButton
 - AltIcon
 - AltDialog
-- AltHoverCard
+- AltTooltip
 - AltMenu
 - AltSpinner
 - AltTable

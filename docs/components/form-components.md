@@ -68,7 +68,7 @@ function validate() {
 ## AltSelect
 
 ### Описание
-Компонент выпадающего списка для выбора из предопределенных опций.
+Компонент выпадающего списка для выбора из предопределенных опций на основе нативного HTML `<select>`.
 
 ### Props
 
@@ -369,6 +369,8 @@ graph TD
 
 Чекбокс с поддержкой промежуточного состояния.
 
+> Контракт компонента: используйте только `v-model` (`modelValue`).
+
 ```vue
 <AltCheckbox
   v-model="checked"
@@ -382,6 +384,7 @@ graph TD
 |------|-----|--------------|-----------|
 | modelValue | boolean | false | Состояние |
 | label | string | - | Текст метки |
+| disabled | boolean | false | Блокировка взаимодействия |
 | indeterminate | boolean | false | Промежуточное состояние |
 
 ### AltRadioGroup
@@ -408,6 +411,8 @@ graph TD
 
 Переключатель.
 
+> Контракт компонента: используйте только `v-model` (`modelValue`) и `@change`.
+
 ```vue
 <AltSwitch
   v-model="enabled"
@@ -421,18 +426,20 @@ graph TD
 |------|-----|--------------|-----------|
 | modelValue | boolean | false | Состояние |
 | label | string | - | Текст метки |
-| size | 'sm' \| 'md' \| 'lg' | 'md' | Размер |
+| disabled | boolean | false | Блокировка взаимодействия |
 
 ### AltCombobox
 
-Комбинированное поле ввода с выпадающим списком и поддержкой автодополнения.
+Комбинированное поле ввода с поиском по списку и возможностью ручного ввода.
 
 ```vue
 <AltCombobox
   v-model="value"
-  :options="options"
-  :loading="isLoading"
-  @search="handleSearch"
+  title="Biomarker"
+  input-placeholder="Type to search..."
+  :items="biomarkerItems"
+  label-key="name"
+  @on-item-select="handleItemSelect"
 />
 ```
 
@@ -440,10 +447,12 @@ graph TD
 
 | Prop | Тип | По умолчанию | Описание |
 |------|-----|--------------|-----------|
-| modelValue | any | null | Выбранное значение |
-| options | Option[] | [] | Массив опций |
-| loading | boolean | false | Состояние загрузки |
-| multiple | boolean | false | Множественный выбор |
+| modelValue | string | '' | Текущее значение в поле |
+| title | string | 'Select' | Подпись поля |
+| inputPlaceholder | string | 'Search...' | Placeholder для input |
+| items | Array<string \| object> | [] | Список значений для выбора |
+| labelKey | string | 'label' | Ключ текстового значения для object-элементов |
+| allowCustomValues | boolean | true | Разрешить значения вне списка |
 
 ## Интеграция с форм-менеджерами
 

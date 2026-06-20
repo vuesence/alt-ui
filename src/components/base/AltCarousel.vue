@@ -1,115 +1,265 @@
 <script setup lang="ts">
 /**
  * @component AltCarousel
- * @description Image/content carousel wrapping Ark-UI Carousel.
- * Supports autoplay, looping, pagination indicators, and navigation controls.
- *
- * @slot items - Carousel slide items (use Carousel.Item from @ark-ui/vue)
- * @slot prev-trigger - Custom previous button content
- * @slot next-trigger - Custom next button content
- *
- * @example
- * <AltCarousel :slide-count="3" autoplay loop>
- *   <template #items>
- *     <Carousel.Item v-for="i in 3" :key="i" :index="i - 1">
- *       <img :src="`/slide-${i}.jpg`" />
- *     </Carousel.Item>
- *   </template>
- * </AltCarousel>
- *
- * @dependency @ark-ui/vue - Carousel component
+ * @description Lightweight carousel with native DOM and CSS transforms.
  */
-import { Carousel } from "@ark-ui/vue/carousel";
-import { ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, onUpdated, ref } from "vue";
+
 import AltIcon from "./AltIcon.vue";
 
-const props = defineProps({
-  slideCount: {
-    type: Number,
-    required: true,
-  },
-  autoplay: {
-    type: Boolean,
-    default: false,
-  },
-  loop: {
-    type: Boolean,
-    default: false,
-  },
-  slideDuration: {
-    type: Number,
-    default: 3000,
-  },
-  showControls: {
-    type: Boolean,
-    default: true,
-  },
-  slidesPerMove: {
-    type: Number,
-    default: 1,
-  },
-  slidesPerPage: {
-    type: Number,
-    default: 1,
-  },
+interface AltCarouselProps {
+  slideCount: number;
+  autoplay?: boolean;
+  loop?: boolean;
+  slideDuration?: number;
+  showControls?: boolean;
+  slidesPerMove?: number;
+  slidesPerPage?: number;
+}
+
+const props = withDefaults(defineProps<AltCarouselProps>(), {
+  autoplay: false,
+  loop: false,
+  slideDuration: 3000,
+  showControls: true,
+  slidesPerMove: 1,
+  slidesPerPage: 1,
 });
 
-const page = ref(0);
+const viewportRef = ref<HTMLElement | null>(null);
+const currentPage = ref(0);
+const viewportWidth = ref(0);
+
+let autoplayTimer: ReturnType<typeof setInterval> | null = null;
+let resizeObserver: ResizeObserver | null = null;
+
+const normalizedSlidesPerPage = computed(() => {
+  return Math.max(1, Math.floor(props.slidesPerPage));
+});
+
+const normalizedSlidesPerMove = computed(() => {
+  return Math.max(1, Math.floor(props.slidesPerMove));
+});
+
+const pagePositions = computed(() => {
+  const maxStart = Math.max(0, props.slideCount - normalizedSlidesPerPage.value);
+  const positions: number[] = [0];
+  let cursor = 0;
+
+  while (cursor + normalizedSlidesPerMove.value <= maxStart) {
+    cursor += normalizedSlidesPerMove.value;
+    positions.push(cursor);
+  }
+
+  if (positions[positions.length - 1] !== maxStart) {
+    positions.push(maxStart);
+  }
+
+  return positions;
+});
+
+const currentSlideIndex = computed(() => {
+  return pagePositions.value[currentPage.value] ?? 0;
+});
+
+const canGoPrev = computed(() => {
+  if (props.loop) {
+    return pagePositions.value.length > 1;
+  }
+
+  return currentPage.value > 0;
+});
+
+const canGoNext = computed(() => {
+  if (props.loop) {
+    return pagePositions.value.length > 1;
+  }
+
+  return currentPage.value < pagePositions.value.length - 1;
+});
+
+const trackStyle = computed<Record<string, string>>(() => {
+  const itemWidth = viewportWidth.value / normalizedSlidesPerPage.value;
+  const offset = currentSlideIndex.value * itemWidth;
+  return {
+    transform: `translate3d(-${offset}px, 0, 0)`,
+    "--alt-carousel-slides-per-page": String(normalizedSlidesPerPage.value),
+  };
+});
+
+function clampPageIndex(page: number): number {
+  if (pagePositions.value.length === 0) {
+    return 0;
+  }
+
+  return Math.min(Math.max(page, 0), pagePositions.value.length - 1);
+}
+
+function synchronizePageBounds(): void {
+  currentPage.value = clampPageIndex(currentPage.value);
+}
+
+function updateViewportWidth(): void {
+  viewportWidth.value = viewportRef.value?.clientWidth ?? 0;
+}
+
+function goToPage(page: number): void {
+  currentPage.value = clampPageIndex(page);
+}
+
+function goToPrevPage(): void {
+  if (pagePositions.value.length <= 1) {
+    return;
+  }
+
+  if (props.loop && currentPage.value <= 0) {
+    currentPage.value = pagePositions.value.length - 1;
+    return;
+  }
+
+  goToPage(currentPage.value - 1);
+}
+
+function goToNextPage(): void {
+  if (pagePositions.value.length <= 1) {
+    return;
+  }
+
+  if (props.loop && currentPage.value >= pagePositions.value.length - 1) {
+    currentPage.value = 0;
+    return;
+  }
+
+  goToPage(currentPage.value + 1);
+}
+
+function stopAutoplay(): void {
+  if (autoplayTimer === null) {
+    return;
+  }
+
+  clearInterval(autoplayTimer);
+  autoplayTimer = null;
+}
+
+function autoplayTick(): void {
+  goToNextPage();
+}
+
+function synchronizeAutoplay(): void {
+  stopAutoplay();
+  if (!props.autoplay || pagePositions.value.length <= 1 || document.hidden) {
+    return;
+  }
+
+  autoplayTimer = setInterval(autoplayTick, Math.max(1000, props.slideDuration));
+}
+
+function handleVisibilityChange(): void {
+  synchronizeAutoplay();
+}
+
+onMounted(() => {
+  updateViewportWidth();
+  synchronizePageBounds();
+  synchronizeAutoplay();
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  if (viewportRef.value) {
+    resizeObserver = new ResizeObserver(updateViewportWidth);
+    resizeObserver.observe(viewportRef.value);
+  }
+});
+
+onUpdated(() => {
+  updateViewportWidth();
+  synchronizePageBounds();
+  synchronizeAutoplay();
+});
+
+onBeforeUnmount(() => {
+  stopAutoplay();
+  document.removeEventListener("visibilitychange", handleVisibilityChange);
+  resizeObserver?.disconnect();
+});
 </script>
 
 <template>
-  <div class="carousel-container">
-    <Carousel.Root
-      v-model:page="page"
-      :slide-count="props.slideCount"
-      :autoplay="props.autoplay"
-      :loop="props.loop"
-      :slide-duration="props.slideDuration"
-      :slides-per-move="props.slidesPerMove"
-      :slides-per-page="props.slidesPerPage"
-    >
-      <Carousel.ItemGroup>
-        <slot name="items"></slot>
-      </Carousel.ItemGroup>
-
-      <div v-if="props.showControls" class="carousel-controls">
-        <Carousel.Control>
-          <Carousel.PrevTrigger class="carousel-nav-button prev">
-            <slot name="prev-trigger">
-              <AltIcon name="chevron-left" size="24" />
-            </slot>
-          </Carousel.PrevTrigger>
-        </Carousel.Control>
-        <Carousel.Control>
-          <Carousel.NextTrigger class="carousel-nav-button next">
-            <slot name="next-trigger">
-              <AltIcon name="chevron-right" size="24" />
-            </slot>
-          </Carousel.NextTrigger>
-        </Carousel.Control>
-      </div>
-
-      <Carousel.IndicatorGroup class="carousel-indicators">
-        <Carousel.Indicator
-          v-for="idx in props.slideCount"
-          :key="idx - 1"
-          :index="idx - 1"
-          class="carousel-indicator"
+  <div class="alt-carousel">
+    <div ref="viewportRef" class="alt-carousel__viewport">
+      <div class="alt-carousel__track" :style="trackStyle">
+        <slot
+          name="items"
+          :current-page="currentPage"
+          :current-index="currentSlideIndex"
+          :slides-per-page="normalizedSlidesPerPage"
         />
-      </Carousel.IndicatorGroup>
-    </Carousel.Root>
+      </div>
+    </div>
+
+    <div v-if="props.showControls" class="alt-carousel__controls">
+      <button
+        type="button"
+        class="alt-carousel__nav-button alt-carousel__nav-button--prev"
+        :disabled="!canGoPrev"
+        aria-label="Previous slide"
+        @click="goToPrevPage"
+      >
+        <slot name="prev-trigger">
+          <AltIcon name="chevron-left" size="24" />
+        </slot>
+      </button>
+      <button
+        type="button"
+        class="alt-carousel__nav-button alt-carousel__nav-button--next"
+        :disabled="!canGoNext"
+        aria-label="Next slide"
+        @click="goToNextPage"
+      >
+        <slot name="next-trigger">
+          <AltIcon name="chevron-right" size="24" />
+        </slot>
+      </button>
+    </div>
+
+    <div class="alt-carousel__indicators">
+      <button
+        v-for="(_, pageIndex) in pagePositions"
+        :key="pageIndex"
+        type="button"
+        class="alt-carousel__indicator"
+        :class="{ 'is-current': pageIndex === currentPage }"
+        :aria-label="`Go to slide ${pageIndex + 1}`"
+        @click="goToPage(pageIndex)"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
-.carousel-container {
+.alt-carousel {
   width: 100%;
   position: relative;
-  /* overflow: hidden; */
   border-radius: var(--alt-radius-md);
 }
 
-.carousel-controls {
+.alt-carousel__viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.alt-carousel__track {
+  display: flex;
+  transition: transform var(--alt-duration-fast) var(--alt-ease-in-out);
+  will-change: transform;
+}
+
+:deep(.alt-carousel__track > *) {
+  flex: 0 0 calc(100% / var(--alt-carousel-slides-per-page, 1));
+  min-width: 0;
+}
+
+.alt-carousel__controls {
   position: absolute;
   top: 80%;
   transform: translateY(-50%);
@@ -121,7 +271,7 @@ const page = ref(0);
   pointer-events: none;
 }
 
-.carousel-nav-button {
+.alt-carousel__nav-button {
   background-color: var(--alt-c-surface-3);
   color: var(--alt-c-text-1);
   border-radius: var(--alt-radius-full);
@@ -131,18 +281,23 @@ const page = ref(0);
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.7;
   border: 1px solid var(--alt-c-text-3);
   transition: var(--alt-transition-all);
   pointer-events: auto;
 }
 
-.carousel-nav-button:hover {
-  opacity: 0.7;
+.alt-carousel__nav-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.alt-carousel__nav-button:hover:not(:disabled) {
+  opacity: 0.95;
   background-color: var(--alt-c-surface-2);
 }
 
-.carousel-indicators {
+.alt-carousel__indicators {
   position: absolute;
   bottom: var(--alt-space-3);
   left: 0;
@@ -154,25 +309,25 @@ const page = ref(0);
   padding: 0 var(--alt-space-4);
 }
 
-.carousel-indicator {
+.alt-carousel__indicator {
   height: 4px;
+  flex: 1;
+  border: none;
   background-color: var(--alt-c-surface-3);
   opacity: 0.5;
   cursor: pointer;
   transition: var(--alt-transition-all);
-  flex: 1;
 }
 
-.carousel-indicator[data-current] {
+.alt-carousel__indicator.is-current {
   background-color: var(--alt-c-brand-1-500);
   opacity: 1;
 }
 
-/* For non-mobile screens, limit the width of indicators */
 .tablet,
 .desktop,
 .desktop-large {
-  .carousel-indicators {
+  .alt-carousel__indicators {
     left: 50%;
     right: auto;
     transform: translateX(-50%);
@@ -180,24 +335,9 @@ const page = ref(0);
     max-width: 400px;
   }
 
-  .carousel-indicator {
+  .alt-carousel__indicator {
     width: 36px;
     flex: 0 1 auto;
   }
 }
-
-/* Responsive adjustments */
-/* @media (min-width: 1024px) {
-  .carousel-indicators {
-    width: 60%;
-    max-width: 600px;
-  }
-} */
-
-/* .desktop {
-  .carousel-indicators {
-    width: 50%;
-    max-width: 800px;
-  }
-} */
 </style>

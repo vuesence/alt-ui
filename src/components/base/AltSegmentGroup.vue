@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * @component AltSegmentGroup
- * @description Segmented control / tab bar using Ark-UI SegmentGroup.
+ * @description Segmented control / tab bar with animated indicator.
  * Displays as horizontal tabs with animated indicator.
  * Includes built-in scroll fade effect for mobile overflow.
  *
@@ -10,12 +10,15 @@
  *
  * @example
  * <AltSegmentGroup v-model="tab" :items="['Overview', 'Details', 'History']" />
- *
- * @dependency @ark-ui/vue - SegmentGroup component
  */
-import { SegmentGroup } from "@ark-ui/vue/segment-group";
-import type { ComponentPublicInstance, PropType } from "vue";
-import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
+import type { PropType } from "vue";
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  onUpdated,
+  ref,
+} from "vue";
 
 const props = defineProps({
   items: {
@@ -29,24 +32,34 @@ const props = defineProps({
 });
 
 const modelValue = defineModel<string>();
-const segmentValue = computed({
-  get() {
-    return modelValue.value ?? props.items[0] ?? "";
-  },
-  set(value: string) {
-    modelValue.value = value;
-  },
-});
-
-const segmentRootRef = useTemplateRef<ComponentPublicInstance>("segmentRootRef");
+const segmentRootRef = ref<HTMLElement | null>(null);
+const itemRefs = new Map<string, HTMLButtonElement>();
 const showFadeLeft = ref(false);
 const showFadeRight = ref(false);
+const indicatorWidth = ref(0);
+const indicatorTranslateX = ref(0);
+const indicatorVisible = ref(false);
+
+const selectedValue = computed(() => {
+  const current = modelValue.value;
+  if (current && props.items.includes(current)) {
+    return current;
+  }
+
+  return props.items[0] ?? "";
+});
 
 function getScrollEl(): HTMLElement | null {
-  return segmentRootRef.value?.$el ?? null;
+  return segmentRootRef.value;
 }
 
 function updateFadeState() {
+  if (!props.scrollFade) {
+    showFadeLeft.value = false;
+    showFadeRight.value = false;
+    return;
+  }
+
   const el = getScrollEl();
   if (!el) {
     return;
@@ -56,20 +69,117 @@ function updateFadeState() {
   showFadeRight.value = scrollLeft + clientWidth < scrollWidth - 4;
 }
 
+function setItemRef(element: HTMLButtonElement | null, item: string): void {
+  if (!element) {
+    itemRefs.delete(item);
+    return;
+  }
+
+  itemRefs.set(item, element);
+}
+
+function updateIndicator(): void {
+  const currentItem = selectedValue.value;
+  const currentElement = itemRefs.get(currentItem);
+  if (!currentItem || !currentElement) {
+    indicatorVisible.value = false;
+    return;
+  }
+
+  indicatorWidth.value = currentElement.offsetWidth;
+  indicatorTranslateX.value = currentElement.offsetLeft;
+  indicatorVisible.value = true;
+}
+
+function commitSelection(value: string): void {
+  modelValue.value = value;
+}
+
+function handleItemClick(item: string): void {
+  if (selectedValue.value === item) {
+    return;
+  }
+
+  commitSelection(item);
+}
+
+function focusByOffset(currentItem: string, offset: number): void {
+  if (props.items.length === 0) {
+    return;
+  }
+
+  const currentIndex = props.items.indexOf(currentItem);
+  if (currentIndex === -1) {
+    return;
+  }
+
+  const nextIndex = (currentIndex + offset + props.items.length) % props.items.length;
+  const nextItem = props.items[nextIndex];
+  itemRefs.get(nextItem)?.focus();
+  commitSelection(nextItem);
+}
+
+function handleItemKeydown(event: KeyboardEvent, item: string): void {
+  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+    event.preventDefault();
+    focusByOffset(item, 1);
+    return;
+  }
+
+  if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+    event.preventDefault();
+    focusByOffset(item, -1);
+    return;
+  }
+
+  if (event.key === "Home") {
+    event.preventDefault();
+    const first = props.items[0];
+    if (!first) {
+      return;
+    }
+
+    itemRefs.get(first)?.focus();
+    commitSelection(first);
+    return;
+  }
+
+  if (event.key === "End") {
+    event.preventDefault();
+    const last = props.items[props.items.length - 1];
+    if (!last) {
+      return;
+    }
+
+    itemRefs.get(last)?.focus();
+    commitSelection(last);
+  }
+}
+
 let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
-  if (!props.scrollFade) {
-    return;
-  }
   const el = getScrollEl();
   if (!el) {
     return;
   }
+
   el.addEventListener("scroll", updateFadeState, { passive: true });
-  resizeObserver = new ResizeObserver(updateFadeState);
+  resizeObserver = new ResizeObserver(() => {
+    updateFadeState();
+    updateIndicator();
+  });
   resizeObserver.observe(el);
-  requestAnimationFrame(updateFadeState);
+
+  requestAnimationFrame(() => {
+    updateFadeState();
+    updateIndicator();
+  });
+});
+
+onUpdated(() => {
+  updateFadeState();
+  updateIndicator();
 });
 
 onBeforeUnmount(() => {
@@ -80,55 +190,53 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    v-if="scrollFade"
     class="segment-group-wrapper"
-    :class="{ 'fade-left': showFadeLeft, 'fade-right': showFadeRight }"
+    :class="{
+      'fade-enabled': props.scrollFade,
+      'fade-left': props.scrollFade && showFadeLeft,
+      'fade-right': props.scrollFade && showFadeRight,
+    }"
   >
-    <SegmentGroup.Root
+    <div
       ref="segmentRootRef"
-      v-model="segmentValue"
-      orientation="horizontal"
-      class="segment-group scrollable"
+      class="segment-group"
+      :class="{ scrollable: props.scrollFade }"
+      role="tablist"
+      aria-orientation="horizontal"
     >
-      <SegmentGroup.Item
-        v-for="item in props.items"
+      <button
+        v-for="(item, index) in props.items"
         :key="item"
-        :value="item"
+        :ref="
+          (element) => setItemRef(element as HTMLButtonElement | null, item)
+        "
+        type="button"
+        role="tab"
         class="item"
+        :data-state="selectedValue === item ? 'checked' : 'unchecked'"
+        :aria-selected="selectedValue === item"
+        :tabindex="selectedValue === item || (selectedValue === '' && index === 0) ? 0 : -1"
+        @click="handleItemClick(item)"
+        @keydown="handleItemKeydown($event, item)"
       >
-        <SegmentGroup.ItemText class="item-text">
+        <span class="item-text">
           <slot name="item" :item="item">
             {{ item }}
           </slot>
-        </SegmentGroup.ItemText>
-        <SegmentGroup.ItemControl class="item-control" />
-        <SegmentGroup.ItemHiddenInput />
-      </SegmentGroup.Item>
-      <SegmentGroup.Indicator class="indicator" />
-    </SegmentGroup.Root>
+        </span>
+        <span class="item-control" aria-hidden="true" />
+      </button>
+
+      <span
+        class="indicator"
+        :style="{
+          '--width': `${indicatorWidth}px`,
+          transform: `translateX(${indicatorTranslateX}px) translateY(1px)`,
+          opacity: indicatorVisible ? '1' : '0',
+        }"
+      />
+    </div>
   </div>
-  <SegmentGroup.Root
-    v-else
-    v-model="segmentValue"
-    orientation="horizontal"
-    class="segment-group"
-  >
-    <SegmentGroup.Item
-      v-for="item in props.items"
-      :key="item"
-      :value="item"
-      class="item"
-    >
-      <SegmentGroup.ItemText class="item-text">
-        <slot name="item" :item="item">
-          {{ item }}
-        </slot>
-      </SegmentGroup.ItemText>
-      <SegmentGroup.ItemControl class="item-control" />
-      <SegmentGroup.ItemHiddenInput />
-    </SegmentGroup.Item>
-    <SegmentGroup.Indicator class="indicator" />
-  </SegmentGroup.Root>
 </template>
 
 <style scoped>
@@ -189,6 +297,7 @@ onBeforeUnmount(() => {
 }
 
 .segment-group {
+  position: relative;
   display: flex;
   align-items: flex-start;
   flex-direction: row;
@@ -214,15 +323,24 @@ onBeforeUnmount(() => {
   }
 
   .indicator {
+    position: absolute;
+    left: 0;
     transform: translateY(1px);
     width: var(--width);
     height: 0 !important;
     bottom: 0;
+    pointer-events: none;
     border-bottom: var(--alt-space-1) solid var(--alt-c-brand-1-500);
-    transition: var(--alt-transition-transform);
+    transition:
+      transform var(--alt-transition-base),
+      width var(--alt-transition-base),
+      opacity var(--alt-transition-base);
   }
 
   .item {
+    appearance: none;
+    border: none;
+    background: transparent;
     font-size: var(--alt-font-size-2);
     font-weight: var(--alt-font-weight-medium);
     line-height: var(--alt-line-height-2);

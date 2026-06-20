@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * @component AltRadioGroup
- * @description Radio button group wrapping Ark-UI RadioGroup.
+ * @description Radio button group with native input implementation.
  * Supports horizontal/vertical orientation and size variants.
  *
  * @example
@@ -10,12 +10,10 @@
  *   :items="[{ value: 'a', label: 'Option A' }, { value: 'b', label: 'Option B' }]"
  *   orientation="horizontal"
  * />
- *
- * @dependency @ark-ui/vue - RadioGroup component
  */
-import { RadioGroup } from "@ark-ui/vue/radio-group";
+import { computed, ref } from "vue";
+import { useUniqueId } from "../../utils/useUniqueId";
 
-// Создаем свой интерфейс, вместо импорта
 interface ValueChangeDetails {
   value: string | null;
 }
@@ -60,54 +58,119 @@ interface AltRadioGroupProps {
 const props = withDefaults(defineProps<AltRadioGroupProps>(), {
   orientation: "vertical",
   size: "md",
+  disabled: false,
 });
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string | null): void;
   (e: "valueChange", details: ValueChangeDetails): void;
 }>();
+
+const generatedName = useUniqueId("alt-radio-group");
+const focusedValue = ref<string | null>(null);
+const hoveredValue = ref<string | null>(null);
+const focusVisibleValue = ref<string | null>(null);
+
+const groupName = computed(() => {
+  if (props.name && props.name.length > 0) {
+    return props.name;
+  }
+
+  return generatedName;
+});
+
+const selectedValue = computed(() => props.modelValue ?? null);
+
+function isItemDisabled(item: RadioItem): boolean {
+  return Boolean(props.disabled || item.disabled);
+}
+
+function getItemState(itemValue: string): "checked" | "unchecked" {
+  return selectedValue.value === itemValue ? "checked" : "unchecked";
+}
+
+function updateValue(value: string): void {
+  emit("update:modelValue", value);
+  emit("valueChange", { value });
+}
+
+function handleInputChange(value: string): void {
+  updateValue(value);
+}
+
+function handleFocus(event: FocusEvent, value: string): void {
+  const target = event.target as HTMLInputElement;
+  focusedValue.value = value;
+  focusVisibleValue.value = target.matches(":focus-visible") ? value : null;
+}
+
+function handleBlur(value: string): void {
+  if (focusedValue.value === value) {
+    focusedValue.value = null;
+  }
+
+  if (focusVisibleValue.value === value) {
+    focusVisibleValue.value = null;
+  }
+}
+
+function setHoveredValue(value: string | null): void {
+  hoveredValue.value = value;
+}
 </script>
 
 <template>
-  <RadioGroup.Root
-    :model-value="props.modelValue"
-    :name="props.name"
-    :disabled="props.disabled"
-    :orientation="props.orientation"
+  <div
     class="radioGroup__root"
     :class="`radioGroup__root--size_${props.size}`"
-    @update:model-value="(value: string | null) => emit('update:modelValue', value)"
-    @value-change="(details: ValueChangeDetails) => emit('valueChange', details)"
+    :data-orientation="props.orientation"
+    role="radiogroup"
+    :aria-orientation="props.orientation"
+    :aria-disabled="props.disabled ? 'true' : 'false'"
   >
-    <RadioGroup.Label
+    <span
       v-if="props.label"
       class="radioGroup__label"
       :class="`radioGroup__label--size_${props.size}`"
     >
       {{ props.label }}
-    </RadioGroup.Label>
-    <RadioGroup.Indicator />
-    <RadioGroup.Item
+    </span>
+    <label
       v-for="item in props.items"
       :key="item.value"
-      :value="item.value"
-      :disabled="item.disabled"
       class="radioGroup__item"
       :class="`radioGroup__item--size_${props.size}`"
+      :data-disabled="isItemDisabled(item) || undefined"
+      @mouseenter="setHoveredValue(item.value)"
+      @mouseleave="setHoveredValue(null)"
     >
-      <RadioGroup.ItemControl
+      <span
         class="radioGroup__itemControl"
         :class="`radioGroup__itemControl--size_${props.size}`"
+        :data-state="getItemState(item.value)"
+        :data-disabled="isItemDisabled(item) || undefined"
+        :data-focus-visible="focusVisibleValue === item.value || undefined"
+        :data-hover="hoveredValue === item.value || undefined"
       />
-      <RadioGroup.ItemText
+      <span
         class="radioGroup__itemText"
         :class="`radioGroup__itemText--size_${props.size}`"
       >
         {{ item.label }}
-      </RadioGroup.ItemText>
-      <RadioGroup.ItemHiddenInput />
-    </RadioGroup.Item>
-  </RadioGroup.Root>
+      </span>
+      <input
+        class="radioGroup__itemHiddenInput"
+        type="radio"
+        :name="groupName"
+        :value="item.value"
+        :checked="selectedValue === item.value"
+        :disabled="isItemDisabled(item)"
+        @change="handleInputChange(item.value)"
+        @focus="handleFocus($event, item.value)"
+        @blur="handleBlur(item.value)"
+      />
+    </label>
+  </div>
 </template>
 
 <style scoped>
@@ -135,6 +198,7 @@ const emit = defineEmits<{
   align-items: center;
   gap: var(--alt-space-2);
   cursor: pointer;
+  position: relative;
 }
 
 .radioGroup__item[data-disabled] {
@@ -166,6 +230,15 @@ const emit = defineEmits<{
 
 .radioGroup__itemControl[data-hover]:not([data-disabled]) {
   border-color: var(--alt-c-brand-1-400);
+}
+
+.radioGroup__itemHiddenInput {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .radioGroup__itemText {

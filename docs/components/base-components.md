@@ -223,7 +223,7 @@ package "Base Components" {
   [AltToaster]
   [AltMenu]
   [AltTabs]
-  [AltHoverCard]
+  [AltTooltip]
   [AltSpinner]
 }
 

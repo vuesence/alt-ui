@@ -2,7 +2,7 @@
 export { default as AltButton } from "./components/base/AltButton.vue";
 export { default as AltIcon } from "./components/base/AltIcon.vue";
 export { default as AltDialog } from "./components/base/AltDialog.vue";
-export { default as AltHoverCard } from "./components/base/AltHoverCard.vue";
+export { default as AltTooltip } from "./components/base/AltTooltip.vue";
 export { default as AltInfoTooltip } from "./components/base/AltInfoTooltip.vue";
 export { default as AltDropdown } from "./components/base/AltDropdown.vue";
 export { default as AltDropdownMenu } from "./components/base/AltDropdownMenu.vue";

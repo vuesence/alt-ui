@@ -1,8 +1,14 @@
 <script setup lang="ts">
 /**
  * @component AltCheckbox
- * @description Checkbox component wrapping Ark-UI Checkbox.
+ * @description Checkbox component with native input implementation.
  * Supports checked, unchecked, and indeterminate states.
+ *
+ * The public contract is intentionally strict:
+ * - incoming state via `modelValue`
+ * - outgoing changes via `update:modelValue`
+ *
+ * We do not keep legacy aliases to avoid ambiguous state ownership.
  *
  * @slot default - Additional label content after the label text
  *
@@ -11,11 +17,8 @@
  *
  * @example
  * <AltCheckbox v-model="selectAll" :indeterminate="isPartial" />
- *
- * @dependency @ark-ui/vue - Checkbox component
  */
-import { Checkbox, type CheckboxCheckedState } from "@ark-ui/vue/checkbox";
-import { computed } from "vue";
+import { computed, nextTick, ref } from "vue";
 import AltIcon from "../base/AltIcon.vue";
 
 interface AltCheckboxProps {
@@ -47,36 +50,99 @@ const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
 }>();
 
-const checked = computed({
-  get: () => (props.indeterminate ? "indeterminate" : props.modelValue),
-  set: (value: CheckboxCheckedState) => {
-    if (value !== "indeterminate") {
-      emit("update:modelValue", value);
-    }
-  },
+const inputRef = ref<HTMLInputElement | null>(null);
+const isFocusVisible = ref(false);
+const transientChecked = ref<boolean | null>(null);
+const resolvedChecked = computed(() => {
+  if (transientChecked.value !== null) {
+    return transientChecked.value;
+  }
+
+  return props.modelValue;
 });
+
+const checkboxState = computed(() => {
+  if (props.indeterminate) {
+    return "indeterminate";
+  }
+
+  return resolvedChecked.value ? "checked" : "unchecked";
+});
+
+function updateValue(value: boolean): void {
+  emit("update:modelValue", value);
+}
+
+function handleChange(event: Event): void {
+  const target = event.target as HTMLInputElement;
+  const nextValue = target.checked;
+
+  // Use transient state for immediate feedback, then reconcile with model.
+  transientChecked.value = nextValue;
+  updateValue(nextValue);
+
+  // Parent model is authoritative for controlled usage.
+  nextTick(() => {
+    transientChecked.value = null;
+
+    if (!inputRef.value) {
+      return;
+    }
+
+    inputRef.value.checked = props.modelValue;
+  });
+}
+
+function handleFocus(event: FocusEvent): void {
+  const target = event.target as HTMLInputElement;
+  isFocusVisible.value = target.matches(":focus-visible");
+}
+
+function handleBlur(): void {
+  isFocusVisible.value = false;
+}
 </script>
 
 <template>
-  <Checkbox.Root
-    v-model:checked="checked"
-    :disabled="props.disabled"
+  <label
     class="base-checkbox"
+    :data-disabled="props.disabled || undefined"
   >
-    <Checkbox.Control class="checkbox-control">
-      <Checkbox.Indicator>
-        <AltIcon name="check" size="16" class="checkbox-icon" />
-      </Checkbox.Indicator>
-      <Checkbox.Indicator indeterminate>
-        <AltIcon name="minus" size="16" class="checkbox-icon" />
-      </Checkbox.Indicator>
-    </Checkbox.Control>
-    <Checkbox.Label class="checkbox-label">
+    <span
+      class="checkbox-control"
+      :data-state="checkboxState"
+      :data-focus-visible="isFocusVisible || undefined"
+    >
+      <AltIcon
+        v-if="checkboxState === 'checked'"
+        name="check"
+        size="16"
+        class="checkbox-icon"
+      />
+      <AltIcon
+        v-else-if="checkboxState === 'indeterminate'"
+        name="minus"
+        size="16"
+        class="checkbox-icon"
+      />
+    </span>
+    <span class="checkbox-label">
       <span v-if="props.label">{{ props.label }}</span>
       <slot />
-    </Checkbox.Label>
-    <Checkbox.HiddenInput />
-  </Checkbox.Root>
+    </span>
+    <input
+      ref="inputRef"
+      class="checkbox-hidden-input"
+      type="checkbox"
+      :checked="resolvedChecked"
+      :indeterminate="props.indeterminate"
+      :disabled="props.disabled"
+      :aria-checked="props.indeterminate ? 'mixed' : resolvedChecked"
+      @change="handleChange"
+      @focus="handleFocus"
+      @blur="handleBlur"
+    />
+  </label>
 </template>
 
 <style scoped>
@@ -86,11 +152,21 @@ const checked = computed({
   gap: var(--alt-space-2);
   cursor: pointer;
   user-select: none;
+  position: relative;
 }
 
 .base-checkbox[data-disabled] {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+.checkbox-hidden-input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .checkbox-control {
