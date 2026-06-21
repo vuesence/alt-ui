@@ -1,10 +1,30 @@
 <script setup lang="ts">
 import { Toaster } from "vue-sonner";
+
+import AltIcon from "./AltIcon.vue";
 import "vue-sonner/style.css";
 </script>
 
 <template>
-  <Toaster position="bottom-center" close-button expand />
+  <Toaster
+    position="bottom-center"
+    close-button
+    close-button-position="top-right"
+    expand
+  >
+    <template #success-icon>
+      <AltIcon name="success" size="20" class="toast-type-icon" />
+    </template>
+    <template #error-icon>
+      <AltIcon name="error" size="20" class="toast-type-icon" />
+    </template>
+    <template #warning-icon>
+      <AltIcon name="warning" size="20" class="toast-type-icon" />
+    </template>
+    <template #info-icon>
+      <AltIcon name="info" size="20" class="toast-type-icon" />
+    </template>
+  </Toaster>
 </template>
 
 <style lang="css" scoped>
@@ -58,9 +78,12 @@ import "vue-sonner/style.css";
   margin-left: var(--alt-space-2);
   margin-right: var(--alt-space-2);
   margin-top: 2px;
+  flex-shrink: 0;
+}
+
+:global([data-sonner-toast] [data-icon] .toast-type-icon) {
   opacity: 0.65;
   color: var(--alt-c-text-2);
-  flex-shrink: 0;
 }
 
 :global([data-sonner-toast] [data-content]) {
@@ -120,6 +143,7 @@ import "vue-sonner/style.css";
   width: auto;
   height: auto;
   padding: 0;
+  line-height: 0;
   color: var(--alt-c-text-3);
   transition: color var(--alt-transition-base) var(--alt-ease-out);
   border: none;

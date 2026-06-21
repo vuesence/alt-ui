@@ -41,25 +41,8 @@ export { default as AltPromptDialog } from "./components/dialogs/AltPromptDialog
 export { default as AltSidePanel } from "./components/dialogs/AltSidePanel.vue";
 export type { SidePanelOptions } from "./components/dialogs/dialogState";
 
-// Onboarding
-export { default as OnboardingTooltip } from "./components/Onboarding/OnboardingTooltip.vue";
-export { useOnboarding } from "./components/Onboarding/useOnboarding";
-export type {
-  OnboardingTooltipConfig,
-  TooltipPlacement,
-} from "./components/Onboarding/useOnboarding";
-
-// Tour
-export { default as TourComponent } from "./components/Tour/TourComponent.vue";
-export { default as TourStepContent } from "./components/Tour/TourStepContent.vue";
-export { useTourManager } from "./components/Tour/useTourManager";
-export { useTourKeyboardEvents } from "./components/Tour/useTourKeyboardEvents";
-export { Tour } from "./components/Tour/Tour";
-export type {
-  TourData,
-  TourStepAction,
-  TourStepData,
-} from "./components/Tour/types";
+// Onboarding/Tour exports are intentionally disabled.
+// Keep source files in repository as backup, but do not expose them in public API.
 
 // Theme Components
 export { ThemeProvider, themeProvider } from "./components/ThemeProvider";

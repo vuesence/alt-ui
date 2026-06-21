@@ -1,0 +1,17 @@
+import { ref } from "vue";
+import { useUserService } from "@/app/composables/useUserService";
+
+export function useAppOnboarding() {
+  const { isAuthenticated } = useUserService();
+  const onboardingCompleted = ref(false);
+
+  const onTooltipDismissed = () => {
+    onboardingCompleted.value = true;
+  };
+
+  return {
+    onboardingCompleted,
+    onTooltipDismissed,
+    isAuthenticated,
+  };
+}

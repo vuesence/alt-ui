@@ -37,17 +37,14 @@
  * @example
  * <AltButton class="text small" icon="settings" />
  *
- * @dependency vue-router - For `to` prop navigation
+ * @dependency none
  */
-import { useRouter } from "vue-router";
 import AltSpinner from "./AltSpinner.vue";
 import AltIcon from "./AltIcon.vue";
 
-const router = useRouter();
-
 const props = defineProps({
   to: {
-    type: [String, Object],
+    type: String,
     default: "",
   },
   loading: {
@@ -90,11 +87,11 @@ function click(event: MouseEvent) {
   }
 
   if (props.to) {
-    const to = typeof props.to === "object" ? props.to : { name: props.to };
-    router.push(to);
-  } else {
-    emit("click", event);
+    globalThis.location.assign(props.to);
+    return;
   }
+
+  emit("click", event);
 }
 </script>
 
