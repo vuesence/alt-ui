@@ -27,10 +27,5 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": [
-    "src/components/Onboarding/**",
-    "src/components/Tour/**",
-    "src/demo/OnboardingDemo.vue"
-  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

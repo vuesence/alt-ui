@@ -37,13 +37,26 @@
  * @example
  * <AltButton class="text small" icon="settings" />
  *
- * @dependency none
+ * @dependency none (router-agnostic)
  */
+import { computed } from "vue";
 import AltSpinner from "./AltSpinner.vue";
 import AltIcon from "./AltIcon.vue";
 
 const props = defineProps({
-  to: {
+  as: {
+    type: String as () => "button" | "a" | "span",
+    default: "button",
+  },
+  href: {
+    type: String,
+    default: "",
+  },
+  target: {
+    type: String,
+    default: "",
+  },
+  rel: {
     type: String,
     default: "",
   },
@@ -79,15 +92,46 @@ const props = defineProps({
 
 const emit = defineEmits(["click"]);
 
+const isAnchor = computed(() => props.as === "a" || props.href !== "");
+const resolvedTag = computed(() => {
+  if (isAnchor.value) {
+    return "a";
+  }
+
+  return props.as;
+});
+const anchorRel = computed(() => {
+  if (!isAnchor.value) {
+    return undefined;
+  }
+
+  const baseRel = props.rel.trim();
+  if (props.target !== "_blank") {
+    return baseRel === "" ? undefined : baseRel;
+  }
+
+  if (baseRel === "") {
+    return "noopener noreferrer";
+  }
+
+  const tokens = new Set(baseRel.split(/\s+/).filter(Boolean));
+  tokens.add("noopener");
+  tokens.add("noreferrer");
+
+  return [...tokens].join(" ");
+});
+
 function click(event: MouseEvent) {
-  // If this is a submit button, don't interfere with normal submit behavior
-  // The form's @submit.prevent will handle preventing default
-  if (props.type === "submit") {
+  if (props.disabled || props.loading) {
+    if (isAnchor.value) {
+      event.preventDefault();
+    }
+
     return;
   }
 
-  if (props.to) {
-    globalThis.location.assign(props.to);
+  // If this is a submit button, don't interfere with normal submit behavior.
+  if (resolvedTag.value === "button" && props.type === "submit") {
     return;
   }
 
@@ -96,10 +140,15 @@ function click(event: MouseEvent) {
 </script>
 
 <template>
-  <button
-    :type="type"
+  <component
+    :is="resolvedTag"
+    :type="isAnchor ? undefined : type"
+    :href="isAnchor ? href || undefined : undefined"
+    :target="isAnchor && target ? target : undefined"
+    :rel="anchorRel"
     class="base-button alt-button"
-    :disabled="disabled || loading"
+    :disabled="resolvedTag === 'button' ? disabled || loading : undefined"
+    :aria-disabled="resolvedTag !== 'button' ? (disabled || loading ? 'true' : undefined) : undefined"
     :aria-busy="loading"
     @click="click"
   >
@@ -118,7 +167,7 @@ function click(event: MouseEvent) {
       size="auto"
       class="button-icon button-icon--right"
     />
-  </button>
+  </component>
 </template>
 
 <style scoped>
@@ -143,6 +192,7 @@ function click(event: MouseEvent) {
   line-height: 1;
   white-space: nowrap;
   vertical-align: middle;
+  text-decoration: none;
   cursor: pointer;
   user-select: none;
   background-color: var(--alt-c-surface-2);

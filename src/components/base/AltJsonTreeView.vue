@@ -19,9 +19,8 @@
  *   class="compact bordered"
  * />
  *
- * @dependency big-json-viewer
+ * @dependency big-json-viewer (lazy-loaded)
  */
-import { BigJsonViewerDom } from "big-json-viewer";
 import { onBeforeUnmount, onMounted, useTemplateRef, watch } from "vue";
 
 export interface AltJsonTreeViewProps {
@@ -34,7 +33,29 @@ const props = withDefaults(defineProps<AltJsonTreeViewProps>(), {
 });
 
 const containerRef = useTemplateRef<HTMLDivElement>("container");
-let viewer: BigJsonViewerDom | null = null;
+let viewer: {
+  destroy: () => void;
+  getRootElement: () => Element & { openAll: (depth: number) => void };
+} | null = null;
+let viewerModulePromise: Promise<typeof import("big-json-viewer")> | null = null;
+let viewerCssLoaded = false;
+
+function loadViewerModule() {
+  if (!viewerModulePromise) {
+    viewerModulePromise = import("big-json-viewer");
+  }
+
+  return viewerModulePromise;
+}
+
+async function ensureViewerStyles() {
+  if (viewerCssLoaded) {
+    return;
+  }
+
+  await import("big-json-viewer/styles/default.css");
+  viewerCssLoaded = true;
+}
 
 async function renderTree() {
   if (!containerRef.value) {
@@ -42,6 +63,9 @@ async function renderTree() {
   }
   destroy();
   containerRef.value.innerHTML = "";
+
+  await ensureViewerStyles();
+  const { BigJsonViewerDom } = await loadViewerModule();
 
   const jsonString = JSON.stringify(props.data);
   const buf = new ArrayBuffer(jsonString.length * 2);
@@ -164,8 +188,4 @@ onBeforeUnmount(() => {
     color: var(--alt-c-brand-1);
   }
 }
-</style>
-
-<style>
-@import "big-json-viewer/styles/default.css";
 </style>
