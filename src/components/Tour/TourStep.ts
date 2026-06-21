@@ -1,5 +1,4 @@
-import type { TourStepAction, TourStepData } from "./types";
-import type { RouteLocationRaw } from "vue-router";
+import type { TourStepAction } from "./types";
 
 /**
  * Class representing a tour step

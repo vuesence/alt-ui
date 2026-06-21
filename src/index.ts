@@ -41,7 +41,7 @@ export { default as AltPromptDialog } from "./components/dialogs/AltPromptDialog
 export { default as AltSidePanel } from "./components/dialogs/AltSidePanel.vue";
 export type { SidePanelOptions } from "./components/dialogs/dialogState";
 
-// Onboarding Components
+// Onboarding
 export { default as OnboardingTooltip } from "./components/Onboarding/OnboardingTooltip.vue";
 export { useOnboarding } from "./components/Onboarding/useOnboarding";
 export type {
@@ -49,7 +49,7 @@ export type {
   TooltipPlacement,
 } from "./components/Onboarding/useOnboarding";
 
-// Tour Components
+// Tour
 export { default as TourComponent } from "./components/Tour/TourComponent.vue";
 export { default as TourStepContent } from "./components/Tour/TourStepContent.vue";
 export { useTourManager } from "./components/Tour/useTourManager";
@@ -57,8 +57,8 @@ export { useTourKeyboardEvents } from "./components/Tour/useTourKeyboardEvents";
 export { Tour } from "./components/Tour/Tour";
 export type {
   TourData,
-  TourStepData,
   TourStepAction,
+  TourStepData,
 } from "./components/Tour/types";
 
 // Theme Components

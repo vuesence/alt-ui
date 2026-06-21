@@ -65,13 +65,6 @@ Alt-UI — современная библиотека компонентов п
 ## Установка
 
 ```bash
-# npm
-npm install alt-ui
-
-# yarn
-yarn add alt-ui
-
-# pnpm
 pnpm add alt-ui
 ```
 
@@ -81,7 +74,7 @@ pnpm add alt-ui
 
 ```vue
 <script setup>
-import { AltButton, AltInput, themeProvider } from 'alt-ui';
+import { AltButton, AltInput, AltToaster, themeProvider } from "alt-ui";
 import 'alt-ui/styles';
 
 // Применяем тему
@@ -91,8 +84,9 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', или 'syste
 <template>
   <div>
     <AltInput label="Имя пользователя" placeholder="Введите имя пользователя" />
-    <AltButton variant="primary">Отправить</AltButton>
+    <AltButton class="primary">Отправить</AltButton>
   </div>
+  <AltToaster />
 </template>
 ```
 

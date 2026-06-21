@@ -18,13 +18,6 @@ A modern, accessible, and themeable UI component library built with Vue 3 and Ty
 ## Installation
 
 ```bash
-# npm
-npm install alt-ui
-
-# yarn
-yarn add alt-ui
-
-# pnpm
 pnpm add alt-ui
 ```
 
@@ -32,7 +25,7 @@ pnpm add alt-ui
 
 ```vue
 <script setup>
-import { AltButton, AltInput, themeProvider } from 'alt-ui';
+import { AltButton, AltInput, AltToaster, themeProvider } from 'alt-ui';
 import 'alt-ui/styles';
 
 // Apply a theme
@@ -42,9 +35,17 @@ themeProvider.applyTheme('light'); // 'light', 'dark', 'contrast', or 'system'
 <template>
   <div>
     <AltInput label="Username" placeholder="Enter your username" />
-    <AltButton variant="primary">Submit</AltButton>
+    <AltButton class="primary">Submit</AltButton>
   </div>
+  <AltToaster />
 </template>
+```
+
+```ts
+import { toast } from "alt-ui";
+
+toast.success("Profile saved", "Success");
+toast.error("Failed to save profile", "Error");
 ```
 
 ## Available Components
@@ -100,14 +101,10 @@ import { ThemeToggle } from 'alt-ui';
 Alt-UI is built with TypeScript and provides comprehensive type definitions:
 
 ```ts
-import type { ButtonProps, TableColumn } from 'alt-ui';
+import type { ThemeName, TableColumn } from "alt-ui";
 
-// Type-safe component props
-const buttonProps: ButtonProps = {
-  variant: 'primary',
-  size: 'md',
-  disabled: false,
-};
+const defaultTheme: ThemeName = "system";
+const columns: TableColumn[] = [];
 ```
 
 ## Documentation

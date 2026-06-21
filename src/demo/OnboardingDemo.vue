@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import OnboardingTooltip from '../components/Onboarding/OnboardingTooltip.vue';
 import { useOnboarding } from '../components/Onboarding/useOnboarding';
 import AltButton from '../components/base/AltButton.vue';
 
-const tooltipRef = ref();
 const demoComplete = ref(false);
 
 const {
@@ -48,7 +47,7 @@ const startDemo = () => {
       </div>
     </div>
 
-    <OnboardingTooltip ref="tooltipRef" @dismissed="demoComplete = true" />
+    <OnboardingTooltip @dismissed="demoComplete = true" />
   </div>
 </template>
 

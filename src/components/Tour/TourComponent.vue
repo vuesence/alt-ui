@@ -1,54 +1,36 @@
 <script setup lang="ts">
-import { HoverCard } from "@ark-ui/vue/hover-card";
-import {
-  computed,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-  type CSSProperties,
-} from "vue";
-import TourStepContent from "./TourStepContent.vue";
-import { useTourKeyboardEvents } from "./useTourKeyboardEvents";
-import { useTourManager } from "./useTourManager";
-import type { TourData } from "./types";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import type { Router } from "vue-router";
 import AltButton from "../base/AltButton.vue";
+import TourStepContent from "./TourStepContent.vue";
+import type { TourData } from "./types";
+import { useTourKeyboardEvents } from "./useTourKeyboardEvents";
+import { useTourManager } from "./useTourManager";
 
-/**
- * Props for TourComponent
- */
 interface TourProps {
-  /** Tours configuration */
   tours?: Record<string, TourData>;
-  /** Initial tour to start (optional) */
   initialTourId?: string;
-  /** Function to translate strings */
   translate?: (key: string) => string;
-  /** Button texts */
   texts?: {
     next?: string;
     prev?: string;
     close?: string;
     endTour?: string;
   };
-  /** Router instance */
   router?: Router;
 }
 
 const props = withDefaults(defineProps<TourProps>(), {
   tours: () => ({}),
-  initialTourId: '',
+  initialTourId: "",
 });
 
-// Define emits
 const emit = defineEmits<{
-  (e: 'close'): void;
+  (e: "close"): void;
 }>();
 
-// Tour manager options
 const options = {
-  storageKeyPrefix: 'tour',
+  storageKeyPrefix: "tour",
   translate: props.translate || ((key) => key),
   router: props.router,
 };
@@ -65,37 +47,30 @@ const {
   startTour,
 } = useTourManager(props.tours, options);
 
-// Emit close event when tour is closed
 watch(isTooltipVisible, (newValue) => {
   if (!newValue) {
-    emit('close');
+    emit("close");
   }
 });
 
-// Animation state tracking
 const isChangingStep = ref(false);
-// Store the target element position
 const targetPosition = ref<DOMRect | null>(null);
+const DEFAULT_OFFSET_PX = 18;
 
-// Update position on scroll and resize
-const updatePosition = () => {
-  if (targetElement.value) {
-    targetPosition.value = targetElement.value.getBoundingClientRect();
+function updatePosition(): void {
+  if (!targetElement.value) {
+    targetPosition.value = null;
+    return;
   }
-};
+  targetPosition.value = targetElement.value.getBoundingClientRect();
+}
 
-// Start initial tour if specified
 onMounted(() => {
   if (props.initialTourId) {
     startTour(props.initialTourId);
   }
-});
-
-// Add and clean up scroll event listener
-onMounted(() => {
   window.addEventListener("scroll", updatePosition, { passive: true });
   window.addEventListener("resize", updatePosition, { passive: true });
-  // Initial position update
   updatePosition();
 });
 
@@ -104,7 +79,6 @@ onUnmounted(() => {
   window.removeEventListener("resize", updatePosition);
 });
 
-// Watch for changes in targetElement and update position
 watch(
   targetElement,
   () => {
@@ -113,29 +87,26 @@ watch(
   { immediate: true },
 );
 
-// Handle dismissal
-const handleDismiss = () => {
+function handleDismiss(): void {
   stopTour();
-};
+}
 
-// Handle step transitions
-const handleNextStep = () => {
+function handleNextStep(): void {
   isChangingStep.value = true;
   nextStep();
-  setTimeout(() => {
+  window.setTimeout(() => {
     isChangingStep.value = false;
   }, 300);
-};
+}
 
-const handlePrevStep = () => {
+function handlePrevStep(): void {
   isChangingStep.value = true;
   prevStep();
-  setTimeout(() => {
+  window.setTimeout(() => {
     isChangingStep.value = false;
   }, 300);
-};
+}
 
-// Check if the tooltip should use a virtual center point
 const hasNoTargetElement = computed(() => {
   return (
     !targetElement.value ||
@@ -144,15 +115,17 @@ const hasNoTargetElement = computed(() => {
   );
 });
 
-// Trigger style - critical for HoverCard positioning
-const triggerStyles = computed<CSSProperties>(() => {
+const effectivePlacement = computed(() => {
+  return hasNoTargetElement.value
+    ? "bottom"
+    : currentTourStep.value?.placement || "bottom";
+});
+
+const triggerStyles = computed(() => {
   if (hasNoTargetElement.value) {
-    // For centered mode, create a trigger in the upper center of the screen
     return {
       top: "35%",
       left: "50%",
-      // width: "40px",
-      // height: "40px",
       width: "0px",
       height: "0px",
       transform: "translate(-50%, -50%)",
@@ -164,10 +137,7 @@ const triggerStyles = computed<CSSProperties>(() => {
     return {};
   }
 
-  // Use our reactive position that updates on scroll
   const rect = targetPosition.value || targetElement.value.getBoundingClientRect();
-
-  // For targeted elements, create a trigger that matches the element
   return {
     top: `${rect.top}px`,
     left: `${rect.left}px`,
@@ -177,25 +147,49 @@ const triggerStyles = computed<CSSProperties>(() => {
   };
 });
 
-// Tooltip positioning configuration
-const tooltipPositioning = computed(() => {
+const tooltipWrapperStyles = computed(() => {
+  if (hasNoTargetElement.value) {
+    return {
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    };
+  }
+
+  if (!targetElement.value) {
+    return {};
+  }
+
+  const rect = targetPosition.value || targetElement.value.getBoundingClientRect();
+  if (effectivePlacement.value === "top") {
+    return {
+      top: `${Math.max(12, rect.top - DEFAULT_OFFSET_PX)}px`,
+      left: `${rect.left + rect.width / 2}px`,
+      transform: "translate(-50%, -100%)",
+    };
+  }
+  if (effectivePlacement.value === "left") {
+    return {
+      top: `${rect.top + rect.height / 2}px`,
+      left: `${Math.max(12, rect.left - DEFAULT_OFFSET_PX)}px`,
+      transform: "translate(-100%, -50%)",
+    };
+  }
+  if (effectivePlacement.value === "right") {
+    return {
+      top: `${rect.top + rect.height / 2}px`,
+      left: `${rect.right + DEFAULT_OFFSET_PX}px`,
+      transform: "translateY(-50%)",
+    };
+  }
+
   return {
-    placement: (hasNoTargetElement.value
-      ? "bottom"
-      : currentTourStep.value?.placement || "bottom") as
-      | "bottom"
-      | "top"
-      | "left"
-      | "right",
-    gutter: 20,
-    strategy: "fixed" as const,
-    offset: hasNoTargetElement.value
-      ? { mainAxis: 0, crossAxis: 0 }
-      : undefined,
+    top: `${rect.bottom + DEFAULT_OFFSET_PX}px`,
+    left: `${rect.left + rect.width / 2}px`,
+    transform: "translateX(-50%)",
   };
 });
 
-// Add keyboard event handling
 useTourKeyboardEvents({
   isTooltipVisible,
   hasNextStep,
@@ -208,66 +202,48 @@ useTourKeyboardEvents({
 
 <template>
   <div v-if="isTooltipVisible" class="tour-component">
-    <!-- End Tour button in top right corner -->
     <div class="tour-end-button">
       <AltButton class="small secondary" @click="handleDismiss">
-        {{ texts?.endTour || 'End Tour' }}
+        {{ texts?.endTour || "End Tour" }}
       </AltButton>
     </div>
 
-    <HoverCard.Root
-      :open="isTooltipVisible"
-      :positioning="tooltipPositioning"
-      :open-delay="300"
-      :close-delay="500"
-    >
-      <!-- The trigger is the key element for positioning -->
-      <HoverCard.Trigger as="div" class="tour-trigger" :style="triggerStyles" />
+    <div class="tour-trigger" :style="triggerStyles" />
 
-      <!-- Content is teleported to body to avoid clipping issues -->
-      <Teleport to="body">
-        <HoverCard.Positioner style="z-index: var(--alt-z-tooltip)">
-          <HoverCard.Content class="tour-tooltip">
-            <!-- Only show arrow when not using the centered mode -->
-            <template v-if="!hasNoTargetElement">
-              <HoverCard.Arrow
-                class="arrow"
-                :class="{ 'is-changing-step': isChangingStep }"
-              >
-                <HoverCard.ArrowTip class="arrow-tip" />
-              </HoverCard.Arrow>
-            </template>
+    <Teleport to="body">
+      <div class="tour-tooltip-wrapper" :style="tooltipWrapperStyles">
+        <div
+          v-if="!hasNoTargetElement"
+          class="arrow"
+          :class="[`arrow-${effectivePlacement}`, { 'is-changing-step': isChangingStep }]"
+        />
 
-            <!-- The actual tour step content -->
-            <TourStepContent
-              v-if="currentTourStep"
-              :title="currentTourStep.title"
-              :content="currentTourStep.content"
-              :progress="currentTourStep.progress"
-              :is-changing-step="isChangingStep"
-              :has-prev-step="hasPrevStep"
-              :has-next-step="hasNextStep"
-              :next-text="texts?.next"
-              :prev-text="texts?.prev"
-              :close-text="texts?.close"
-              @prev="handlePrevStep"
-              @next="handleNextStep"
-              @dismiss="handleDismiss"
-            />
-          </HoverCard.Content>
-        </HoverCard.Positioner>
-      </Teleport>
-    </HoverCard.Root>
+        <div class="tour-tooltip">
+          <TourStepContent
+            v-if="currentTourStep"
+            :title="currentTourStep.title"
+            :content="currentTourStep.content"
+            :progress="currentTourStep.progress"
+            :is-changing-step="isChangingStep"
+            :has-prev-step="hasPrevStep"
+            :has-next-step="hasNextStep"
+            :next-text="texts?.next"
+            :prev-text="texts?.prev"
+            :close-text="texts?.close"
+            @prev="handlePrevStep"
+            @next="handleNextStep"
+            @dismiss="handleDismiss"
+          />
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <style scoped>
 .tour-component {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: var(--alt-z-tooltip);
   pointer-events: none;
 }
@@ -287,12 +263,17 @@ useTourKeyboardEvents({
   border-radius: unset;
   border: none;
   z-index: calc(var(--alt-z-tooltip) + 1);
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 0px 9999px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
   transition: all 0.3s ease-in-out;
 }
 
-.tour-tooltip {
+.tour-tooltip-wrapper {
+  position: fixed;
+  z-index: calc(var(--alt-z-tooltip) + 2);
   pointer-events: auto;
+}
+
+.tour-tooltip {
   animation: fade-in 0.3s ease-in-out;
   transition:
     opacity 0.3s ease,
@@ -300,8 +281,12 @@ useTourKeyboardEvents({
 }
 
 .arrow {
-  --arrow-size: 0.75rem;
-  --arrow-background: var(--alt-c-surface-1);
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-left: 1px solid var(--alt-c-border);
+  border-top: 1px solid var(--alt-c-border);
+  background: var(--alt-c-surface-1);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -309,15 +294,30 @@ useTourKeyboardEvents({
 
 .arrow.is-changing-step {
   opacity: 0.5;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
 }
 
-.arrow-tip {
-  border-top-width: 1px;
-  border-left-width: 1px;
-  border-color: var(--alt-c-border);
+.arrow-bottom {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.arrow-top {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%) rotate(225deg);
+}
+
+.arrow-left {
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%) rotate(135deg);
+}
+
+.arrow-right {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 @keyframes fade-in {

@@ -1,5 +1,4 @@
 import type { AltProps } from "./index";
-import type { RouteLocationRaw } from "vue-router";
 // Button Props
 // export interface ButtonProps extends AltProps {
 //   // variant?: "primary" | "secondary" | "text";

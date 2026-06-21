@@ -19,17 +19,16 @@ export default defineComponent({
   },
   setup(props) {
     const toggleContainer = ref<HTMLElement | null>(null);
-    let themeToggle: ThemeToggle | null = null;
-    
+
     onMounted(() => {
       if (toggleContainer.value) {
-        themeToggle = new ThemeToggle({
+        new ThemeToggle({
           element: toggleContainer.value,
           themes: props.themes
         });
       }
     });
-    
+
     return {
       toggleContainer
     };

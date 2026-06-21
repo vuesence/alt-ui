@@ -1,12 +1,13 @@
-import { createToaster } from "@ark-ui/vue/toast";
+import { toast as sonnerToast } from "vue-sonner";
 
 type ToastType = "info" | "success" | "error" | "warning" | "loading";
+type ToastId = string;
 
 interface ToastOptions {
   title: string;
   description: string;
   type: ToastType;
-  id?: string;
+  id?: ToastId;
   duration?: number;
   action?: {
     label: string;
@@ -23,14 +24,8 @@ let defaultTitles: Record<ToastType, string> = {
   loading: "Loading",
 };
 
-export const toaster = createToaster({
-  placement: "bottom",
-  gap: 12,
-  // duration: 300000,
-});
-
 // Track active toasts by content hash to prevent duplicates
-const activeToasts = new Map<string, { id: string; timestamp: number }>();
+const activeToasts = new Map<string, { id: ToastId; timestamp: number }>();
 const DEDUP_WINDOW_MS = 3000; // Don't show same toast within 3 seconds
 
 function getToastKey(type: ToastType, description: string): string {
@@ -46,7 +41,67 @@ function cleanupExpiredToasts(): void {
   }
 }
 
-const createToast = (type: ToastType, title: string, description: string) => {
+interface SonnerToastConfig {
+  id?: string | number;
+  duration?: number;
+  description?: string;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+}
+
+function createSonnerConfig(
+  description: string,
+  options?: Pick<ToastOptions, "id" | "duration" | "action">,
+): SonnerToastConfig {
+  return {
+    id: options?.id,
+    duration: options?.duration,
+    description,
+    action: options?.action,
+  };
+}
+
+function showToast(
+  type: ToastType,
+  title: string,
+  description: string,
+  options?: Pick<ToastOptions, "id" | "duration" | "action">,
+): ToastId {
+  const config = createSonnerConfig(description, options);
+  let id: string | number;
+
+  if (type === "success") {
+    id = sonnerToast.success(title, config);
+    return String(id);
+  }
+
+  if (type === "error") {
+    id = sonnerToast.error(title, config);
+    return String(id);
+  }
+
+  if (type === "warning") {
+    id = sonnerToast.warning(title, config);
+    return String(id);
+  }
+
+  if (type === "loading") {
+    id = sonnerToast.loading(title, config);
+    return String(id);
+  }
+
+  id = sonnerToast.info(title, config);
+  return String(id);
+}
+
+const createToast = (
+  type: ToastType,
+  title: string,
+  description: string,
+  options?: Pick<ToastOptions, "id" | "duration" | "action">,
+) => {
   cleanupExpiredToasts();
 
   const key = getToastKey(type, description);
@@ -56,25 +111,46 @@ const createToast = (type: ToastType, title: string, description: string) => {
     return existing.id;
   }
 
-  const id = toaster.create({
-    title,
-    description,
-    type,
-  });
+  const id = showToast(type, title, description, options);
 
   activeToasts.set(key, { id, timestamp: Date.now() });
   return id;
 };
 
+export const toaster = {
+  create: (options: ToastOptions): ToastId => {
+    return showToast(
+      options.type,
+      options.title,
+      options.description,
+      options,
+    );
+  },
+  dismiss: (id?: ToastId): void => {
+    if (id === undefined || id === null) {
+      sonnerToast.dismiss();
+      activeToasts.clear();
+      return;
+    }
+
+    sonnerToast.dismiss(id);
+    for (const [key, value] of activeToasts) {
+      if (value.id === id) {
+        activeToasts.delete(key);
+      }
+    }
+  },
+};
+
 // Функция для установки кастомных дефолтных заголовков
 export const setDefaultTitles = (
-  titles: Partial<Record<ToastType, string>>
+  titles: Partial<Record<ToastType, string>>,
 ) => {
   defaultTitles = { ...defaultTitles, ...titles };
 };
 
 export const toast = {
-  create: (options: ToastOptions) => toaster.create(options),
+  create: (options: ToastOptions): ToastId => toaster.create(options),
   info: (description: string, title?: string) => {
     return createToast("info", title ?? defaultTitles.info, description);
   },
@@ -86,5 +162,5 @@ export const toast = {
     createToast("warning", title ?? defaultTitles.warning, description),
   loading: (description: string, title?: string) =>
     createToast("loading", title ?? defaultTitles.loading, description),
-  dismiss: (id: string) => toaster.dismiss(id),
+  dismiss: (id?: ToastId) => toaster.dismiss(id),
 };

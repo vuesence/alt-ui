@@ -347,7 +347,7 @@ graph TD
 
 ### AltSelect
 
-Выпадающий список с поддержкой поиска.
+Нативный выпадающий список на базе HTML `<select>`.
 
 ```vue
 <AltSelect
@@ -361,9 +361,11 @@ graph TD
 
 | Prop | Тип | По умолчанию | Описание |
 |------|-----|--------------|-----------|
-| modelValue | any | null | Выбранное значение |
-| options | Option[] | [] | Массив опций |
-| searchable | boolean | false | Возможность поиска |
+| modelValue | string \| number | undefined | Выбранное значение |
+| options | Array<{ value: string \| number; label: string }> | [] | Массив опций |
+| label | string | '' | Подпись поля |
+| placeholder | string | '' | Placeholder для пустого значения |
+| disabled | boolean | false | Блокировка выбора |
 
 ### AltCheckbox
 

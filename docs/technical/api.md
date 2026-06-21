@@ -93,6 +93,10 @@ import { loadIcons } from 'alt-ui';
 ```typescript
 // Импорт утилит для уведомлений
 import { toast, toaster } from 'alt-ui';
+
+toast.success("Изменения сохранены", "Успех");
+toast.error("Не удалось сохранить", "Ошибка");
+toast.info("Обновление доступно");
 ```
 
 ## Типы

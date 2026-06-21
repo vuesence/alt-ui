@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { HoverCard } from "@ark-ui/vue/hover-card";
 import { computed, onMounted, onUnmounted, ref } from "vue";
-import { useOnboarding } from '../Onboarding/useOnboarding';
 import AltButton from "../base/AltButton.vue";
+import { useOnboarding } from "../Onboarding/useOnboarding";
 
 const emit = defineEmits<{
   (e: "dismissed"): void;
@@ -16,18 +15,16 @@ const {
 } = useOnboarding(emit);
 
 const isClosing = ref(false);
+const DEFAULT_OFFSET_PX = 14;
 
-// Set closing flag, then remove tooltip with delay
-const handleDismiss = () => {
+function handleDismiss(): void {
   isClosing.value = true;
-
-  setTimeout(() => {
+  window.setTimeout(() => {
     dismissCurrentTooltip();
     isClosing.value = false;
   }, 300);
-};
+}
 
-// Computed styles for positioning trigger
 const triggerStyles = computed(() => {
   if (!currentTargetElement.value) {
     return {};
@@ -35,7 +32,6 @@ const triggerStyles = computed(() => {
 
   const rect = currentTargetElement.value.getBoundingClientRect();
   return {
-    position: "absolute" as const,
     top: `${rect.top}px`,
     left: `${rect.left}px`,
     width: `${rect.width}px`,
@@ -43,18 +39,53 @@ const triggerStyles = computed(() => {
   };
 });
 
-const tooltipPositioning = computed(() => ({
-  placement: currentTooltip.value?.placement ?? "top",
-  gutter: 10,
-  strategy: "fixed" as const,
-}));
+const placement = computed(() => currentTooltip.value?.placement ?? "top");
 
-// Keyboard accessibility
-const handleKeydown = (event: KeyboardEvent) => {
+const tooltipStyles = computed(() => {
+  const target = currentTargetElement.value;
+  if (!target) {
+    return {
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    };
+  }
+
+  const rect = target.getBoundingClientRect();
+  if (placement.value === "bottom") {
+    return {
+      top: `${rect.bottom + DEFAULT_OFFSET_PX}px`,
+      left: `${rect.left + rect.width / 2}px`,
+      transform: "translateX(-50%)",
+    };
+  }
+  if (placement.value === "left") {
+    return {
+      top: `${rect.top + rect.height / 2}px`,
+      left: `${Math.max(12, rect.left - DEFAULT_OFFSET_PX)}px`,
+      transform: "translate(-100%, -50%)",
+    };
+  }
+  if (placement.value === "right") {
+    return {
+      top: `${rect.top + rect.height / 2}px`,
+      left: `${rect.right + DEFAULT_OFFSET_PX}px`,
+      transform: "translateY(-50%)",
+    };
+  }
+
+  return {
+    top: `${Math.max(12, rect.top - DEFAULT_OFFSET_PX)}px`,
+    left: `${rect.left + rect.width / 2}px`,
+    transform: "translate(-50%, -100%)",
+  };
+});
+
+function handleKeydown(event: KeyboardEvent): void {
   if (event.key === "Escape" && isOnboardingEnabled.value) {
     handleDismiss();
   }
-};
+}
 
 onMounted(() => {
   window.addEventListener("keydown", handleKeydown);
@@ -72,103 +103,72 @@ onUnmounted(() => {
     :class="{ 'is-closing': isClosing }"
   >
     <div class="onboarding-tooltip__overlay" />
-    <HoverCard.Root
-      :open="isOnboardingEnabled"
-      :positioning="tooltipPositioning"
-    >
-      <HoverCard.Trigger :style="triggerStyles" />
-      <Teleport to="body">
-        <HoverCard.Positioner :style="{ zIndex: 'var(--alt-z-tooltip)' }">
-          <HoverCard.Content class="hover-card__content">
-            <HoverCard.Arrow class="arrow">
-              <HoverCard.ArrowTip class="arrow-tip" />
-            </HoverCard.Arrow>
-            <h3>
-              {{ currentTooltip?.title || 'Onboarding' }}
-            </h3>
-            <p class="description">
-              {{ currentTooltip?.content }}
-            </p>
-            <div class="actions">
-              <AltButton class="small primary" @click="handleDismiss">
-                Close
-              </AltButton>
-            </div>
-          </HoverCard.Content>
-        </HoverCard.Positioner>
-      </Teleport>
-    </HoverCard.Root>
+    <div class="onboarding-tooltip__target" :style="triggerStyles" />
+    <Teleport to="body">
+      <div class="onboarding-tooltip__content" :style="tooltipStyles">
+        <h3>{{ currentTooltip?.title || "Onboarding" }}</h3>
+        <p class="description">{{ currentTooltip?.content }}</p>
+        <div class="actions">
+          <AltButton class="small primary" @click="handleDismiss">
+            Close
+          </AltButton>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <style scoped>
 .onboarding-tooltip__overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: var(--alt-c-text-1);
   z-index: var(--alt-z-modal);
+  opacity: 0.2;
   animation: overlayFadeIn var(--alt-transition-slow) ease forwards;
-  will-change: opacity;
 }
 
 .onboarding-tooltip.is-closing .onboarding-tooltip__overlay {
   animation: overlayFadeOut var(--alt-transition-fast) ease forwards;
 }
 
-.hover-card__content {
-  border: 1px solid var(--alt-c-border);
-  border-radius: var(--alt-radius-base);
-  box-shadow: var(--alt-shadow-4);
-  background: var(--alt-c-surface-1);
-  border-radius: var(--alt-radius-md);
-  box-shadow: var(--alt-shadow-4);
-  position: relative;
+.onboarding-tooltip__target {
+  position: fixed;
+  z-index: calc(var(--alt-z-tooltip) - 1);
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.45) 0 0 0 9999px;
+  border-radius: var(--alt-radius-sm);
+}
+
+.onboarding-tooltip__content {
+  position: fixed;
+  z-index: var(--alt-z-tooltip);
+  max-width: min(28rem, 90vw);
   padding: var(--alt-space-3);
+  border: 1px solid var(--alt-c-border);
+  border-radius: var(--alt-radius-md);
+  background: var(--alt-c-surface-1);
+  box-shadow: var(--alt-shadow-4);
   display: flex;
   flex-direction: column;
   gap: var(--alt-space-2);
-  max-width: 80vw;
+  animation: fadeIn var(--alt-transition-slow);
+}
 
-  &[hidden] {
-    display: none;
-  }
+.onboarding-tooltip__content h3 {
+  margin: 0;
+  font-weight: var(--alt-font-weight-bold);
+  font-size: var(--alt-font-size-2);
+}
 
-  &[data-state="open"] {
-    animation: fadeIn var(--alt-transition-slow);
-  }
+.description {
+  margin: 0;
+  font-size: var(--alt-font-size-1);
+}
 
-  &[data-state="closed"] {
-    animation: fadeOut var(--alt-transition-fast);
-  }
-
-  .arrow {
-    --arrow-size: 0.75rem;
-    --arrow-background: var(--alt-c-surface-1);
-
-    .arrow-tip {
-      border-top-width: 1px;
-      border-left-width: 1px;
-      border-color: var(--alt-c-border);
-    }
-  }
-
-  h3 {
-    font-weight: var(--alt-font-weight-bold);
-    font-size: var(--alt-font-size-2);
-    margin: var(--alt-space-1) 0;
-  }
-
-  .description {
-    font-size: var(--alt-font-size-1);
-  }
-
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-  }
+.actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 @keyframes overlayFadeIn {
@@ -197,17 +197,6 @@ onUnmounted(() => {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(0.5rem);
   }
 }
 </style>

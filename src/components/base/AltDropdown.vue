@@ -3,7 +3,15 @@
  * @component AltDropdown
  * @description Generic dropdown surface with viewport-aware positioning.
  */
-import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  onUpdated,
+  ref,
+  useId,
+} from "vue";
 
 import AltButton from "./AltButton.vue";
 
@@ -72,6 +80,8 @@ const panelMaxWidth = ref(props.maxWidth);
 const panelMaxHeight = ref(560);
 const panelTransformOrigin = ref("top right");
 const animationFrame = ref<number | null>(null);
+let hasBoundGlobalListeners = false;
+let observedOpenState = isOpen.value;
 
 const triggerId = `alt-dropdown-trigger-${useId()}`;
 const panelId = `alt-dropdown-panel-${useId()}`;
@@ -206,12 +216,36 @@ function schedulePositionUpdate(): void {
   });
 }
 
+function synchronizeOpenState(): void {
+  const nextOpen = isOpen.value;
+  if (nextOpen !== observedOpenState) {
+    observedOpenState = nextOpen;
+    emit("openChange", nextOpen);
+  }
+
+  if (nextOpen) {
+    bindGlobalListeners();
+    return;
+  }
+
+  unbindGlobalListeners();
+}
+
+function setOpenState(nextOpen: boolean): void {
+  if (isOpen.value === nextOpen) {
+    return;
+  }
+
+  isOpen.value = nextOpen;
+  synchronizeOpenState();
+}
+
 function open(): void {
   if (props.disabled || isOpen.value) {
     return;
   }
 
-  isOpen.value = true;
+  setOpenState(true);
   nextTick(() => {
     schedulePositionUpdate();
   });
@@ -222,7 +256,7 @@ function close(options?: CloseOptions): void {
     return;
   }
 
-  isOpen.value = false;
+  setOpenState(false);
   if (options?.restoreFocus === true) {
     nextTick(() => {
       focusTrigger();
@@ -294,29 +328,36 @@ function handleTriggerKeydown(event: KeyboardEvent): void {
 }
 
 function bindGlobalListeners(): void {
+  if (hasBoundGlobalListeners) {
+    return;
+  }
+
   // Track viewport and outside interactions only while menu is open.
   document.addEventListener("pointerdown", handleDocumentPointerDown);
   document.addEventListener("keydown", handleDocumentKeydown);
   window.addEventListener("resize", handleViewportChange);
   window.addEventListener("scroll", handleViewportChange, true);
+  hasBoundGlobalListeners = true;
 }
 
 function unbindGlobalListeners(): void {
+  if (!hasBoundGlobalListeners) {
+    return;
+  }
+
   document.removeEventListener("pointerdown", handleDocumentPointerDown);
   document.removeEventListener("keydown", handleDocumentKeydown);
   window.removeEventListener("resize", handleViewportChange);
   window.removeEventListener("scroll", handleViewportChange, true);
+  hasBoundGlobalListeners = false;
 }
 
-watch(isOpen, (nextOpen) => {
-  emit("openChange", nextOpen);
+onMounted(() => {
+  synchronizeOpenState();
+});
 
-  if (nextOpen) {
-    bindGlobalListeners();
-    return;
-  }
-
-  unbindGlobalListeners();
+onUpdated(() => {
+  synchronizeOpenState();
 });
 
 onBeforeUnmount(() => {

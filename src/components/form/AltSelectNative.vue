@@ -57,13 +57,6 @@ const selectedValue = computed({
     emit("change", newValue);
   },
 });
-
-const selectedLabel = computed(() => {
-  const selectedItem = props.options.find(
-    (item) => item.value === props.modelValue,
-  );
-  return selectedItem ? selectedItem.label : props.placeholder;
-});
 </script>
 
 <template>
@@ -203,17 +196,5 @@ select::picker(select) {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 250ms, transform 250ms;
-}
-
-select::picker(select):popover-open {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@starting-style {
-  select::picker(select):popover-open {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
 }
 </style>

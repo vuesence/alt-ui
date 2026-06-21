@@ -22,7 +22,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "mjs" : "js"}`,
     },
     rollupOptions: {
-      external: ["vue", "vue-router", "@ark-ui/vue"],
+      external: ["vue", "vue-router"],
       output: {
         globals: {
           vue: "Vue",

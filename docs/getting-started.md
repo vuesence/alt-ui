@@ -6,16 +6,9 @@ title: Установка и настройка
 
 ## Установка пакета
 
-Вы можете установить Alt-UI с помощью npm, yarn или pnpm:
+Устанавливайте Alt-UI через `pnpm`:
 
 ```bash
-# npm
-npm install alt-ui
-
-# yarn
-yarn add alt-ui
-
-# pnpm
 pnpm add alt-ui
 ```
 
@@ -121,16 +114,20 @@ function confirmAction() {
 
 ## Использование уведомлений (toasts)
 
-Библиотека предоставляет сервис для показа уведомлений:
+Библиотека предоставляет сервис для показа уведомлений. Добавьте `AltToaster` в корневой layout и используйте `toast`:
 
 ```vue
 <script setup>
-import { toast } from 'alt-ui'
+import { AltToaster, toast } from 'alt-ui'
 
 function showNotification() {
-  toast.success('Операция выполнена успешно')
+  toast.success('Операция выполнена успешно', 'Успех')
 }
 </script>
+
+<template>
+  <AltToaster />
+</template>
 ```
 
 ## Настройка темы

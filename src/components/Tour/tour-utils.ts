@@ -1,5 +1,4 @@
 import { nextTick, type Ref } from "vue";
-import type { TourStep } from "./TourStep";
 
 /**
  * Scroll to the target element if it's not fully visible in the viewport

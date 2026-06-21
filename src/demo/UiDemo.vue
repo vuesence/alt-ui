@@ -7,11 +7,7 @@ import {
   AltRadioGroup,
   AltSegmentGroup,
   AltSelect,
-  AltSpinner,
   AltSwitch,
-  AltTable,
-  type TableColumnDefinition,
-  type TableRowData,
 } from "../";
 
 // Input demo data
@@ -43,24 +39,6 @@ const radioItems = [
 // Switch demo data
 const switchValue = ref(false);
 
-// Table demo data
-const tableColumns: TableColumnDefinition[] = [
-  {
-    key: "name",
-    label: "Name",
-    sortable: true,
-  },
-  {
-    key: "email",
-    label: "Email",
-    sortable: true,
-  },
-  {
-    key: "role",
-    label: "Role",
-    sortable: true,
-  },
-];
 // const tableItems: TableRow[] = [
 //   { id: "1", cells: { id: "1", name: "John Doe", email: "john@example.com" } },
 //   {
