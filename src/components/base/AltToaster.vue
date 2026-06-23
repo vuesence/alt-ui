@@ -64,9 +64,12 @@ import "vue-sonner/style.css";
     transform var(--alt-transition-base) var(--alt-ease-out),
     opacity var(--alt-transition-base) var(--alt-ease-out);
   will-change: translate, opacity, scale;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--alt-space-3);
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: start;
+  column-gap: var(--alt-space-3);
+  row-gap: var(--alt-space-2);
 }
 
 :global(.mobile [data-sonner-toast]),
@@ -75,6 +78,8 @@ import "vue-sonner/style.css";
 }
 
 :global([data-sonner-toast] [data-icon]) {
+  grid-column: 1;
+  grid-row: 1 / span 2;
   margin-left: var(--alt-space-2);
   margin-right: var(--alt-space-2);
   margin-top: 2px;
@@ -87,10 +92,12 @@ import "vue-sonner/style.css";
 }
 
 :global([data-sonner-toast] [data-content]) {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   gap: var(--alt-space-1);
-  padding-right: var(--alt-space-6);
+  padding-right: var(--alt-space-8);
 }
 
 :global([data-sonner-toast][data-type="info"]) {
@@ -112,21 +119,24 @@ import "vue-sonner/style.css";
 :global([data-sonner-toast] [data-title]) {
   margin: 0;
   color: var(--alt-c-text-1);
-  font-size: var(--alt-font-size-1);
+  font-size: var(--alt-font-size-2);
   font-weight: var(--alt-font-weight-medium);
-  line-height: var(--alt-line-height-1);
+  line-height: var(--alt-line-height-2);
 }
 
 :global([data-sonner-toast] [data-description]) {
   margin: 0;
   color: var(--alt-c-text-2);
-  font-size: var(--alt-font-size-0);
-  line-height: var(--alt-line-height-1);
+  font-size: var(--alt-font-size-1);
+  line-height: var(--alt-line-height-2);
 }
 
 :global([data-sonner-toast] [data-button]) {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
   color: var(--alt-c-brand-1-500);
-  align-self: flex-end;
+  margin-top: var(--alt-space-1);
   padding: var(--alt-space-2) var(--alt-space-3);
   border: 1px solid var(--alt-c-brand-1-200);
   border-radius: var(--alt-radius-base);
@@ -140,9 +150,9 @@ import "vue-sonner/style.css";
   transform: none !important;
   background: transparent !important;
   box-shadow: none !important;
-  width: auto;
-  height: auto;
-  padding: 0;
+  width: 22px;
+  height: 22px;
+  padding: 2px;
   line-height: 0;
   color: var(--alt-c-text-3);
   transition: color var(--alt-transition-base) var(--alt-ease-out);
@@ -151,8 +161,9 @@ import "vue-sonner/style.css";
 }
 
 :global([data-sonner-toast] [data-close-button] svg) {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.25;
 }
 
 :global([data-sonner-toast] [data-close-button]:hover) {
