@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Component, watch } from "vue";
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  type Component,
+  watch,
+} from "vue";
 import AltButton from "../base/AltButton.vue";
 import type { SidePanelOptions } from "./dialogState";
+import { createFocusTrap, type FocusTrap } from "../../utils/useFocusTrap";
 
 const props = defineProps({
   backText: {
@@ -25,11 +34,17 @@ const panelOptions = ref<SidePanelOptions>({
   hideFooter: false,
 });
 const resolvePromise = ref<((value: void) => void) | null>(null);
-const overlayRef = ref<HTMLDivElement | null>(null);
+const panelRef = ref<HTMLElement | null>(null);
+let focusTrap: FocusTrap | null = null;
 
 const panelStyle = computed(() => ({
   maxWidth: panelOptions.value.width || "560px",
 }));
+
+function releaseFocusTrap(returnFocus = true) {
+  focusTrap?.deactivate(returnFocus);
+  focusTrap = null;
+}
 
 function show(
   title: string,
@@ -55,6 +70,7 @@ function show(
 
 function close() {
   isVisible.value = false;
+  releaseFocusTrap(true);
   resolvePromise.value?.();
   panelContent.value = null;
   panelProps.value = {};
@@ -79,14 +95,24 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown, true);
+  releaseFocusTrap(false);
 });
 
 watch(isVisible, (visible) => {
-  if (visible) {
-    nextTick(() => {
-      overlayRef.value?.focus();
-    });
+  if (!visible) {
+    return;
   }
+
+  nextTick(() => {
+    if (!panelRef.value) {
+      return;
+    }
+
+    releaseFocusTrap(false);
+    focusTrap = createFocusTrap(panelRef.value);
+    focusTrap.activate();
+    focusTrap.focusFirst();
+  });
 });
 
 defineExpose({ show, close });
@@ -97,21 +123,27 @@ defineExpose({ show, close });
     <Transition name="side-panel-overlay">
       <div
         v-if="isVisible"
-        ref="overlayRef"
         class="side-panel-overlay"
-        tabindex="-1"
         @click.self="onOverlayClick"
         @keydown.escape="close"
       >
         <Transition name="side-panel-slide">
           <aside
             v-if="isVisible"
+            ref="panelRef"
             class="side-panel"
             :class="`position-${panelOptions.position}`"
             :style="panelStyle"
+            role="dialog"
+            aria-modal="true"
+            :aria-label="panelTitle"
           >
             <header class="panel-header">
-              <button class="back-btn" @click="close">
+              <button
+                class="back-btn"
+                :aria-label="backText"
+                @click="close"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -122,6 +154,7 @@ defineExpose({ show, close });
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
@@ -164,7 +197,6 @@ defineExpose({ show, close });
   background: var(--alt-c-overlay);
   z-index: var(--alt-z-modal, 1000);
   display: flex;
-  outline: none;
 }
 
 .side-panel-overlay-enter-active,

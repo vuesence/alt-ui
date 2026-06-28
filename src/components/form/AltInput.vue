@@ -12,10 +12,11 @@
  * <AltInput v-model="email" label="Email" type="email" required />
  *
  * @example
- * <AltInput v-model="name" state="error" placeholder="Enter name" />
+ * <AltInput v-model="name" state="error" error-message="Required" placeholder="Enter name" />
  */
-import { computed } from "vue";
+import { computed, useAttrs } from "vue";
 import AltIcon from "../base/AltIcon.vue";
+import { useUniqueId } from "../../utils/useUniqueId";
 
 interface AltInputProps {
   /**
@@ -35,6 +36,14 @@ interface AltInputProps {
    */
   label?: string;
   /**
+   * Explicit id for the input element (auto-generated when omitted)
+   */
+  id?: string;
+  /**
+   * Validation error message announced to assistive technologies
+   */
+  errorMessage?: string;
+  /**
    * Whether the input is required
    */
   required?: boolean;
@@ -53,12 +62,35 @@ const props = withDefaults(defineProps<AltInputProps>(), {
   type: "text",
   state: "default",
   label: "",
+  id: "",
+  errorMessage: "",
   required: false,
   disabled: false,
   clearable: false,
 });
 
 const modelValue = defineModel<string | number | boolean>();
+const attrs = useAttrs();
+
+const generatedId = useUniqueId("alt-input");
+const inputId = computed(() => props.id || generatedId);
+const errorId = computed(() =>
+  props.errorMessage ? `${inputId.value}-error` : ""
+);
+
+const describedBy = computed(() => {
+  const ids: string[] = [];
+
+  if (typeof attrs["aria-describedby"] === "string") {
+    ids.push(attrs["aria-describedby"]);
+  }
+
+  if (errorId.value) {
+    ids.push(errorId.value);
+  }
+
+  return ids.length > 0 ? ids.join(" ") : undefined;
+});
 
 const hasClearButton = computed(() => {
   if (!props.clearable || props.disabled) {
@@ -81,18 +113,21 @@ defineOptions({ inheritAttrs: false });
 
 <template>
   <div class="input-wrapper">
-    <label v-if="props.label" class="input-label">
+    <label v-if="props.label" :for="inputId" class="input-label">
       {{ props.label }}
       <span v-if="props.required" class="required">*</span>
     </label>
     <div class="input-control" :class="{ 'has-clear': props.clearable }">
       <input
         v-bind="$attrs"
+        :id="inputId"
         v-model="modelValue"
         :type="props.type"
         :placeholder="props.placeholder"
         :required="props.required"
         :disabled="props.disabled"
+        :aria-invalid="props.state === 'error' ? true : undefined"
+        :aria-describedby="describedBy"
         class="base-input alt-input"
         :class="[props.state, { disabled: props.disabled }]"
       />
@@ -106,6 +141,14 @@ defineOptions({ inheritAttrs: false });
         <AltIcon name="interface/cancel" :size="14" />
       </button>
     </div>
+    <p
+      v-if="props.errorMessage"
+      :id="errorId"
+      class="input-error"
+      role="alert"
+    >
+      {{ props.errorMessage }}
+    </p>
   </div>
 </template>
 
@@ -137,6 +180,12 @@ defineOptions({ inheritAttrs: false });
 .required {
   color: var(--alt-c-danger);
   margin-left: var(--alt-space-1);
+}
+
+.input-error {
+  margin: 0;
+  font-size: var(--alt-font-size-0);
+  color: var(--alt-c-danger);
 }
 
 .base-input {

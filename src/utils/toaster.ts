@@ -53,7 +53,7 @@ interface SonnerToastConfig {
 
 function createSonnerConfig(
   description: string,
-  options?: Pick<ToastOptions, "id" | "duration" | "action">,
+  options?: Pick<ToastOptions, "id" | "duration" | "action">
 ): SonnerToastConfig {
   return {
     id: options?.id,
@@ -67,7 +67,7 @@ function showToast(
   type: ToastType,
   title: string,
   description: string,
-  options?: Pick<ToastOptions, "id" | "duration" | "action">,
+  options?: Pick<ToastOptions, "id" | "duration" | "action">
 ): ToastId {
   const config = createSonnerConfig(description, options);
   let id: string | number;
@@ -100,7 +100,7 @@ const createToast = (
   type: ToastType,
   title: string,
   description: string,
-  options?: Pick<ToastOptions, "id" | "duration" | "action">,
+  options?: Pick<ToastOptions, "id" | "duration" | "action">
 ) => {
   cleanupExpiredToasts();
 
@@ -119,12 +119,7 @@ const createToast = (
 
 export const toaster = {
   create: (options: ToastOptions): ToastId => {
-    return showToast(
-      options.type,
-      options.title,
-      options.description,
-      options,
-    );
+    return showToast(options.type, options.title, options.description, options);
   },
   dismiss: (id?: ToastId): void => {
     if (id === undefined || id === null) {
@@ -144,7 +139,7 @@ export const toaster = {
 
 // Функция для установки кастомных дефолтных заголовков
 export const setDefaultTitles = (
-  titles: Partial<Record<ToastType, string>>,
+  titles: Partial<Record<ToastType, string>>
 ) => {
   defaultTitles = { ...defaultTitles, ...titles };
 };

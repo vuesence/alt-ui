@@ -58,6 +58,8 @@ export {
 export type { IconSystemConfig } from "./utils/icons";
 export { getCssVar, setCssVar, toNumber } from "./utils/css";
 export { useUniqueId } from "./utils/useUniqueId";
+export { createFocusTrap, getFocusableElements } from "./utils/useFocusTrap";
+export type { FocusTrap } from "./utils/useFocusTrap";
 export {
   onEnter,
   onEscape,

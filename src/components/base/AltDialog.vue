@@ -14,17 +14,45 @@
  * @expose close - Closes the dialog
  * @dependency none
  */
-import { ref } from "vue";
+import { nextTick, onBeforeUnmount, ref } from "vue";
+import { createFocusTrap, type FocusTrap } from "../../utils/useFocusTrap";
+
+const props = defineProps<{
+  ariaLabelledby?: string;
+  ariaLabel?: string;
+}>();
+
+const emit = defineEmits<{
+  close: [];
+}>();
 
 const dialog = ref<HTMLDialogElement | null>(null);
+let focusTrap: FocusTrap | null = null;
+
+function releaseFocusTrap(returnFocus = true) {
+  focusTrap?.deactivate(returnFocus);
+  focusTrap = null;
+}
 
 function show() {
-  if (dialog.value) {
-    dialog.value.showModal();
+  if (!dialog.value) {
+    return;
   }
+
+  releaseFocusTrap(false);
+  focusTrap = createFocusTrap(dialog.value);
+  focusTrap.activate();
+  dialog.value.showModal();
+
+  nextTick(() => {
+    focusTrap?.focusFirst();
+  });
 }
+
 function close() {
-  if (dialog.value) {
+  releaseFocusTrap(true);
+
+  if (dialog.value?.open) {
     dialog.value.close();
   }
 }
@@ -38,7 +66,7 @@ function onMouseDown($event: MouseEvent) {
       return;
     }
 
-    dialog.value.close();
+    close();
   }
 }
 
@@ -48,9 +76,14 @@ function onKeydown(event: KeyboardEvent) {
   }
 }
 
-defineEmits<{
-  close: [];
-}>();
+function onClose() {
+  releaseFocusTrap(true);
+  emit("close");
+}
+
+onBeforeUnmount(() => {
+  releaseFocusTrap(false);
+});
 
 defineExpose({ show, close });
 </script>
@@ -58,10 +91,13 @@ defineExpose({ show, close });
 <template>
   <dialog
     ref="dialog"
-    tabindex="0"
+    aria-modal="true"
+    :aria-labelledby="props.ariaLabelledby"
+    :aria-label="props.ariaLabel"
+    tabindex="-1"
     @mousedown="onMouseDown"
     @keydown="onKeydown"
-    @close="$emit('close')"
+    @close="onClose"
   >
     <slot :close="close" />
   </dialog>

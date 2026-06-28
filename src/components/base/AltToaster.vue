@@ -51,6 +51,7 @@ import "vue-sonner/style.css";
 :global([data-sonner-toast]) {
   background: var(--alt-c-surface-2);
   border: 1px solid transparent;
+  font-family: var(--alt-font-family-base);
   border-radius: var(--alt-radius-base);
   box-shadow: var(--alt-shadow-4);
   min-width: 16rem;
@@ -72,6 +73,10 @@ import "vue-sonner/style.css";
   row-gap: var(--alt-space-2);
 }
 
+:global([data-sonner-toast][data-styled='true']) {
+  column-gap: var(--alt-space-3);
+
+}
 :global(.mobile [data-sonner-toast]),
 :global(.tablet [data-sonner-toast]) {
   width: min(94vw, 22rem);
@@ -97,7 +102,7 @@ import "vue-sonner/style.css";
   display: flex;
   flex-direction: column;
   gap: var(--alt-space-1);
-  padding-right: var(--alt-space-8);
+  padding-right: var(--alt-space-6);
 }
 
 :global([data-sonner-toast][data-type="info"]) {
@@ -117,9 +122,10 @@ import "vue-sonner/style.css";
 }
 
 :global([data-sonner-toast] [data-title]) {
-  margin: 0;
+  margin: 0 0 var(--alt-space-2);
   color: var(--alt-c-text-1);
-  font-size: var(--alt-font-size-2);
+  font-family: var(--alt-font-family-heading);
+  font-size: var(--alt-font-size-1);
   font-weight: var(--alt-font-weight-medium);
   line-height: var(--alt-line-height-2);
 }
@@ -127,7 +133,7 @@ import "vue-sonner/style.css";
 :global([data-sonner-toast] [data-description]) {
   margin: 0;
   color: var(--alt-c-text-2);
-  font-size: var(--alt-font-size-1);
+  font-size: var(--alt-font-size-0);
   line-height: var(--alt-line-height-2);
 }
 
@@ -142,7 +148,8 @@ import "vue-sonner/style.css";
   border-radius: var(--alt-radius-base);
 }
 
-:global([data-sonner-toast] [data-close-button]) {
+:global([data-sonner-toast] [data-close-button]),
+:global([data-sonner-toast][data-styled='true'] [data-close-button]) {
   position: absolute;
   top: var(--alt-space-3);
   right: var(--alt-space-3) !important;
@@ -150,8 +157,8 @@ import "vue-sonner/style.css";
   transform: none !important;
   background: transparent !important;
   box-shadow: none !important;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   padding: 2px;
   line-height: 0;
   color: var(--alt-c-text-3);
