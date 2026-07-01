@@ -13,10 +13,14 @@ import {
  */
 function alert(message: string, isHtml: boolean = false): Promise<void> {
   return new Promise<void>((resolve) => {
+    if (dialogsState.alert.resolve) {
+      dialogsState.alert.resolve();
+    }
     dialogsState.alert.message = message;
     dialogsState.alert.isHtml = isHtml;
     dialogsState.alert.resolve = resolve;
     dialogsState.alert.isOpen = true;
+    dialogsState.alert.seq++;
   });
 }
 

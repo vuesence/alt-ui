@@ -4,6 +4,8 @@ export interface AlertDialogState {
   message: string;
   isHtml: boolean;
   isOpen: boolean;
+  /** Monotonic counter to guarantee watcher fires even on rapid re-open */
+  seq: number;
   resolve: ((value: void) => void) | null;
 }
 
@@ -65,6 +67,7 @@ export const dialogsState = reactive<DialogsState>({
     message: "",
     isHtml: false,
     isOpen: false,
+    seq: 0,
     resolve: null,
   },
   confirm: {

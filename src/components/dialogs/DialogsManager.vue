@@ -39,21 +39,20 @@ const promptDialog = ref<InstanceType<typeof AltPromptDialog> | null>(null);
 const formDialog = ref<InstanceType<typeof AltFormDialog> | null>(null);
 const sidePanel = ref<InstanceType<typeof AltSidePanel> | null>(null);
 
-// Отслеживаем изменения состояния для alert диалога
 watch(
-  () => dialogsState.alert.isOpen,
-  async (isOpen) => {
-    if (isOpen && alertDialog.value) {
-      try {
-        await alertDialog.value.show(dialogsState.alert.message);
-        // Вызываем резолв промиса после закрытия диалога
-        if (dialogsState.alert.resolve) {
-          dialogsState.alert.resolve();
-          dialogsState.alert.resolve = null;
-        }
-      } finally {
-        dialogsState.alert.isOpen = false;
+  () => dialogsState.alert.seq,
+  async () => {
+    if (!dialogsState.alert.isOpen || !alertDialog.value) {
+      return;
+    }
+    try {
+      await alertDialog.value.show(dialogsState.alert.message);
+      if (dialogsState.alert.resolve) {
+        dialogsState.alert.resolve();
+        dialogsState.alert.resolve = null;
       }
+    } finally {
+      dialogsState.alert.isOpen = false;
     }
   },
 );

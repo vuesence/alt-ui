@@ -3,6 +3,9 @@ import { Toaster } from "vue-sonner";
 
 import AltIcon from "./AltIcon.vue";
 import "vue-sonner/style.css";
+
+const TOAST_GAP = 16;
+const VISIBLE_TOASTS = 4;
 </script>
 
 <template>
@@ -11,25 +14,27 @@ import "vue-sonner/style.css";
     close-button
     close-button-position="top-right"
     expand
+    :gap="TOAST_GAP"
+    :visible-toasts="VISIBLE_TOASTS"
   >
     <template #success-icon>
-      <AltIcon name="success" size="20" class="toast-type-icon" />
+      <AltIcon name="success" size="22" class="toast-type-icon" />
     </template>
     <template #error-icon>
-      <AltIcon name="error" size="20" class="toast-type-icon" />
+      <AltIcon name="error" size="22" class="toast-type-icon" />
     </template>
     <template #warning-icon>
-      <AltIcon name="warning" size="20" class="toast-type-icon" />
+      <AltIcon name="warning" size="22" class="toast-type-icon" />
     </template>
     <template #info-icon>
-      <AltIcon name="info" size="20" class="toast-type-icon" />
+      <AltIcon name="info" size="22" class="toast-type-icon" />
     </template>
   </Toaster>
 </template>
 
 <style lang="css" scoped>
 :global([data-sonner-toaster]) {
-  --toast-width: 22rem;
+  --toast-width: 24rem;
   --normal-bg: var(--alt-c-surface-2);
   --normal-border: var(--alt-c-border);
   --normal-text: var(--alt-c-text-1);
@@ -46,6 +51,23 @@ import "vue-sonner/style.css";
   --info-border: var(--alt-c-brand-1-200);
   --info-text: var(--alt-c-text-1);
   z-index: var(--alt-z-toast);
+  pointer-events: none;
+}
+
+:global([data-sonner-toaster] [data-sonner-toast]) {
+  pointer-events: auto;
+}
+
+:global(body:has(.bottom-nav) [data-sonner-toaster][data-y-position='bottom']) {
+  bottom: calc(var(--offset-bottom, 24px) + var(--app-bottom-nav-total-height, 0px)) !important;
+}
+
+:global(body.mobile:has(.bottom-nav) [data-sonner-toaster][data-y-position='bottom']),
+:global(body.tablet:has(.bottom-nav) [data-sonner-toaster][data-y-position='bottom']) {
+  bottom: calc(
+    var(--mobile-offset-bottom, 16px) + max(env(safe-area-inset-bottom), 0px) +
+      var(--app-bottom-nav-total-height, 0px)
+  ) !important;
 }
 
 :global([data-sonner-toast]) {
@@ -54,17 +76,16 @@ import "vue-sonner/style.css";
   font-family: var(--alt-font-family-base);
   border-radius: var(--alt-radius-base);
   box-shadow: var(--alt-shadow-4);
-  min-width: 16rem;
-  max-width: 22rem;
-  width: 22rem;
+  min-width: 18rem;
+  max-width: 24rem;
+  width: var(--width, 24rem);
   overflow-wrap: anywhere;
-  position: relative;
-  padding: var(--alt-space-4);
-  z-index: var(--alt-z-toast);
+  padding: var(--alt-space-4) var(--alt-space-5);
   transition:
     transform var(--alt-transition-base) var(--alt-ease-out),
-    opacity var(--alt-transition-base) var(--alt-ease-out);
-  will-change: translate, opacity, scale;
+    opacity var(--alt-transition-base) var(--alt-ease-out),
+    height var(--alt-transition-base) var(--alt-ease-out);
+  will-change: transform, opacity, height;
   display: grid !important;
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-rows: auto auto;
@@ -79,7 +100,8 @@ import "vue-sonner/style.css";
 }
 :global(.mobile [data-sonner-toast]),
 :global(.tablet [data-sonner-toast]) {
-  width: min(94vw, 22rem);
+  width: min(calc(100vw - var(--alt-space-8)), 24rem);
+  max-width: min(calc(100vw - var(--alt-space-8)), 24rem);
 }
 
 :global([data-sonner-toast] [data-icon]) {
@@ -101,8 +123,9 @@ import "vue-sonner/style.css";
   grid-row: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--alt-space-1);
+  gap: var(--alt-space-2);
   padding-right: var(--alt-space-6);
+  min-width: 0;
 }
 
 :global([data-sonner-toast][data-type="info"]) {
@@ -122,19 +145,19 @@ import "vue-sonner/style.css";
 }
 
 :global([data-sonner-toast] [data-title]) {
-  margin: 0 0 var(--alt-space-2);
+  margin: 0;
   color: var(--alt-c-text-1);
   font-family: var(--alt-font-family-heading);
-  font-size: var(--alt-font-size-1);
-  font-weight: var(--alt-font-weight-medium);
-  line-height: var(--alt-line-height-2);
+  font-size: var(--alt-font-size-2);
+  font-weight: var(--alt-font-weight-semibold);
+  line-height: var(--alt-line-height-3);
 }
 
 :global([data-sonner-toast] [data-description]) {
   margin: 0;
-  color: var(--alt-c-text-2);
-  font-size: var(--alt-font-size-0);
-  line-height: var(--alt-line-height-2);
+  color: var(--alt-c-text-1);
+  font-size: var(--alt-font-size-1);
+  line-height: var(--alt-line-height-3);
 }
 
 :global([data-sonner-toast] [data-button]) {
