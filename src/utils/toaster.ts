@@ -72,6 +72,12 @@ function showToast(
   const config = createSonnerConfig(description, options);
   let id: string | number;
 
+  if (type === "error") {
+    console.error(`[Toast error] ${title}: ${description}`);
+  } else if (type === "warning") {
+    console.warn(`[Toast warning] ${title}: ${description}`);
+  }
+
   if (type === "success") {
     id = sonnerToast.success(title, config);
     return String(id);
