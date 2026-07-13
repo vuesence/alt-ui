@@ -59,21 +59,21 @@ watch(
 
 // Отслеживаем изменения состояния для confirm диалога
 watch(
-  () => dialogsState.confirm.isOpen,
-  async (isOpen) => {
-    if (isOpen && confirmDialog.value) {
-      try {
-        const result = await confirmDialog.value.show(
-          dialogsState.confirm.message,
-        );
-        // Вызываем резолв промиса с результатом
-        if (dialogsState.confirm.resolve) {
-          dialogsState.confirm.resolve(result);
-          dialogsState.confirm.resolve = null;
-        }
-      } finally {
-        dialogsState.confirm.isOpen = false;
+  () => dialogsState.confirm.seq,
+  async () => {
+    if (!dialogsState.confirm.isOpen || !confirmDialog.value) {
+      return;
+    }
+    try {
+      const result = await confirmDialog.value.show(
+        dialogsState.confirm.message,
+      );
+      if (dialogsState.confirm.resolve) {
+        dialogsState.confirm.resolve(result);
+        dialogsState.confirm.resolve = null;
       }
+    } finally {
+      dialogsState.confirm.isOpen = false;
     }
   },
 );

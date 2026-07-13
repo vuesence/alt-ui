@@ -30,7 +30,15 @@ function show(text: string): Promise<void> {
 
 function onClose() {
   resolvePromise.value?.();
+  resolvePromise.value = null;
   dialog.value?.close();
+}
+
+function onDialogClose() {
+  if (resolvePromise.value) {
+    resolvePromise.value();
+    resolvePromise.value = null;
+  }
 }
 
 function onKeydown(event: KeyboardEvent) {
@@ -44,7 +52,7 @@ defineExpose({ show });
 </script>
 
 <template>
-  <AltDialog ref="dialog">
+  <AltDialog ref="dialog" @close="onDialogClose">
     <div class="alert-dialog" data-testid="alert-dialog" @keydown="onKeydown">
       <div class="alert-content">
         <p v-if="!isHtml">{{ message }}</p>

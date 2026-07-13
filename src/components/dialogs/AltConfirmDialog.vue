@@ -31,7 +31,15 @@ function show(text: string): Promise<boolean> {
 
 function onConfirm(result: boolean) {
   resolvePromise.value?.(result);
+  resolvePromise.value = null;
   dialog.value?.close();
+}
+
+function onDialogClose() {
+  if (resolvePromise.value) {
+    resolvePromise.value(false);
+    resolvePromise.value = null;
+  }
 }
 
 function onKeydown(event: KeyboardEvent) {
@@ -45,7 +53,7 @@ defineExpose({ show });
 </script>
 
 <template>
-  <AltDialog ref="dialog">
+  <AltDialog ref="dialog" @close="onDialogClose">
     <div class="confirm-dialog" data-testid="confirm-dialog" @keydown="onKeydown">
       <div class="confirm-content">
         <p>{{ message }}</p>

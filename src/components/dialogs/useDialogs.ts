@@ -31,9 +31,13 @@ function alert(message: string, isHtml: boolean = false): Promise<void> {
  */
 function confirm(message: string): Promise<boolean> {
   return new Promise<boolean>((resolve) => {
+    if (dialogsState.confirm.resolve) {
+      dialogsState.confirm.resolve(false);
+    }
     dialogsState.confirm.message = message;
     dialogsState.confirm.resolve = resolve;
     dialogsState.confirm.isOpen = true;
+    dialogsState.confirm.seq++;
   });
 }
 

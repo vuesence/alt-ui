@@ -34,19 +34,28 @@ function show(text: string, defaultValue = ""): Promise<string | null> {
 
 function onConfirm() {
   resolvePromise.value?.(inputValue.value);
+  resolvePromise.value = null;
   dialog.value?.close();
 }
 
 function onCancel() {
   resolvePromise.value?.(null);
+  resolvePromise.value = null;
   dialog.value?.close();
+}
+
+function onDialogClose() {
+  if (resolvePromise.value) {
+    resolvePromise.value(null);
+    resolvePromise.value = null;
+  }
 }
 
 defineExpose({ show });
 </script>
 
 <template>
-  <AltDialog ref="dialog">
+  <AltDialog ref="dialog" @close="onDialogClose">
     <div class="prompt-dialog" data-testid="prompt-dialog">
       <div class="prompt-content">
         <p>{{ message }}</p>

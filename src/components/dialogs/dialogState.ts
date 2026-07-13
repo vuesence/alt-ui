@@ -12,6 +12,7 @@ export interface AlertDialogState {
 export interface ConfirmDialogState {
   message: string;
   isOpen: boolean;
+  seq: number;
   resolve: ((value: boolean) => void) | null;
 }
 
@@ -73,6 +74,7 @@ export const dialogsState = reactive<DialogsState>({
   confirm: {
     message: "",
     isOpen: false,
+    seq: 0,
     resolve: null,
   },
   prompt: {
