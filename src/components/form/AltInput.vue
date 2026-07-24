@@ -141,12 +141,7 @@ defineOptions({ inheritAttrs: false });
         <AltIcon name="interface/cancel" :size="14" />
       </button>
     </div>
-    <p
-      v-if="props.errorMessage"
-      :id="errorId"
-      class="input-error"
-      role="alert"
-    >
+    <p v-if="props.errorMessage" :id="errorId" class="input-error" role="alert">
       {{ props.errorMessage }}
     </p>
   </div>
@@ -173,8 +168,8 @@ defineOptions({ inheritAttrs: false });
 }
 
 .input-label {
-  font-size: var(--alt-font-size-1);
-  color: var(--alt-c-text-2);
+  font-size: var(--alt-font-size-0);
+  color: var(--alt-c-text-3);
 }
 
 .required {
