@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * @component AltCombobox
- * @description Lightweight searchable combobox without Ark-UI dependency.
+ * @description Lightweight searchable combobox
  */
 import { computed, onBeforeUnmount, onMounted, onUpdated, ref, useId } from "vue";
 
@@ -244,7 +244,10 @@ onBeforeUnmount(() => {
       {{ title }}
     </label>
 
-    <div class="alt-combobox-control" :class="{ 'alt-combobox-control--open': isOpen }">
+    <div
+      class="alt-combobox-control"
+      :class="{ 'alt-combobox-control--open': isOpen }"
+    >
       <input
         ref="inputRef"
         class="alt-combobox-input"

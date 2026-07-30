@@ -2,7 +2,7 @@
 /**
  * @component AltSelectNative
  * @description Native HTML select with customized appearance using CSS `appearance: base-select`.
- * Lighter alternative to AltSelect when Ark-UI features are not needed.
+ * Lighter alternative to AltSelect
  *
  * @example
  * <AltSelectNative v-model="country" label="Country" :options="countries" />
@@ -70,10 +70,7 @@ const selectedValue = computed({
       {{ props.label }}
     </label>
 
-    <select
-      v-model="selectedValue"
-      :disabled="props.disabled"
-    >
+    <select v-model="selectedValue" :disabled="props.disabled">
       <option v-if="props.placeholder" value="" disabled hidden>
         {{ props.placeholder }}
       </option>
