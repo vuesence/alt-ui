@@ -435,6 +435,12 @@ defineExpose({
   position: relative;
   display: inline-flex;
   max-width: 100%;
+  border: 1px solid var(--alt-c-divider);
+  border-radius: var(--alt-radius-base);
+  box-shadow: var(--alt-shadow-2);
+  outline: none;
+  /* position: fixed; */
+  z-index: var(--alt-z-max);
 
   .slot-trigger {
     display: inline-flex;
