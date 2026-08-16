@@ -848,7 +848,7 @@ onBeforeUnmount(() => {
     min-width: 220px;
     max-width: min(360px, calc(100vw - var(--alt-space-4)));
     max-height: min(70vh, calc(100vh - var(--alt-space-4)));
-    padding: var(--alt-space-2) 0;
+    /* padding: var(--alt-space-2) 0; */
     overflow-y: auto;
     background: var(--alt-c-surface-1);
     border: 1px solid var(--alt-dropdown-menu-border-color, var(--alt-c-border));

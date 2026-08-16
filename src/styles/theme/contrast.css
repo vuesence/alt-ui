@@ -78,14 +78,34 @@
   --alt-c-attention: #fb923c;
 
   /* Soft variants */
-  --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 20%, transparent);
-  --alt-c-warning-soft: color-mix(in srgb, var(--alt-c-warning) 20%, transparent);
+  --alt-c-success-soft: color-mix(
+    in srgb,
+    var(--alt-c-success) 20%,
+    transparent
+  );
+  --alt-c-warning-soft: color-mix(
+    in srgb,
+    var(--alt-c-warning) 20%,
+    transparent
+  );
   --alt-c-danger-soft: color-mix(in srgb, var(--alt-c-danger) 20%, transparent);
   --alt-c-info-soft: color-mix(in srgb, var(--alt-c-info) 20%, transparent);
-  --alt-c-attention-soft: color-mix(in srgb, var(--alt-c-attention) 20%, transparent);
+  --alt-c-attention-soft: color-mix(
+    in srgb,
+    var(--alt-c-attention) 20%,
+    transparent
+  );
   --alt-c-brand-soft: color-mix(in srgb, var(--alt-c-brand) 20%, transparent);
-  --alt-c-brand-2-soft: color-mix(in srgb, var(--alt-c-brand-2) 20%, transparent);
-  --alt-c-brand-3-soft: color-mix(in srgb, var(--alt-c-brand-3) 20%, transparent);
+  --alt-c-brand-2-soft: color-mix(
+    in srgb,
+    var(--alt-c-brand-2) 20%,
+    transparent
+  );
+  --alt-c-brand-3-soft: color-mix(
+    in srgb,
+    var(--alt-c-brand-3) 20%,
+    transparent
+  );
 
   /* Background Colors */
   --alt-c-bg: var(--alt-c-black);

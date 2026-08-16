@@ -10,7 +10,7 @@
    * BRAND COLORS
    * Primary palette with full shade scale (50-900)
    * ============================================ */
-  
+
   /* Brand 1: Primary Blue - Main brand color */
   --alt-c-brand-1: #3b82f6;
   --alt-c-brand-1-50: #eff6ff;
@@ -52,7 +52,7 @@
   --alt-c-brand-3-800: #5b21b6;
   --alt-c-brand-3-900: #4c1d95;
   --alt-c-brand-3-950: #2a1065;
-  
+
   /* ============================================
    * FUNCTIONAL COLORS
    * Semantic colors for status/feedback
@@ -76,14 +76,34 @@
    * SOFT VARIANTS
    * Subtle backgrounds for badges, alerts, etc.
    * ============================================ */
-  --alt-c-success-soft: color-mix(in srgb, var(--alt-c-success) 15%, transparent);
-  --alt-c-warning-soft: color-mix(in srgb, var(--alt-c-warning) 15%, transparent);
+  --alt-c-success-soft: color-mix(
+    in srgb,
+    var(--alt-c-success) 15%,
+    transparent
+  );
+  --alt-c-warning-soft: color-mix(
+    in srgb,
+    var(--alt-c-warning) 15%,
+    transparent
+  );
   --alt-c-danger-soft: color-mix(in srgb, var(--alt-c-danger) 15%, transparent);
   --alt-c-info-soft: color-mix(in srgb, var(--alt-c-info) 15%, transparent);
-  --alt-c-attention-soft: color-mix(in srgb, var(--alt-c-attention) 15%, transparent);
+  --alt-c-attention-soft: color-mix(
+    in srgb,
+    var(--alt-c-attention) 15%,
+    transparent
+  );
   --alt-c-brand-soft: color-mix(in srgb, var(--alt-c-brand) 15%, transparent);
-  --alt-c-brand-2-soft: color-mix(in srgb, var(--alt-c-brand-2) 15%, transparent);
-  --alt-c-brand-3-soft: color-mix(in srgb, var(--alt-c-brand-3) 15%, transparent);
+  --alt-c-brand-2-soft: color-mix(
+    in srgb,
+    var(--alt-c-brand-2) 15%,
+    transparent
+  );
+  --alt-c-brand-3-soft: color-mix(
+    in srgb,
+    var(--alt-c-brand-3) 15%,
+    transparent
+  );
 
   /* ============================================
    * GRAY SCALE (Slate)
@@ -138,6 +158,7 @@
    * Modal/dialog backdrops
    * ============================================ */
   --alt-c-overlay-light: rgba(255, 255, 255, 0.5);
+  --alt-c-overlay-light-dark: rgba(0, 0, 0, 0.1);
   --alt-c-overlay-dark: rgba(0, 0, 0, 0.5);
   --alt-c-overlay-heavy: rgba(0, 0, 0, 0.85);
 
@@ -186,4 +207,4 @@
   --alt-c-dev-vue: #42b883;
   --alt-c-dev-dark: rgba(0, 0, 0, 0.85);
   --alt-c-dev-panel: rgba(30, 30, 30, 0.9);
-} 
+}

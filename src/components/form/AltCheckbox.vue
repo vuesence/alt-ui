@@ -17,6 +17,9 @@
  *
  * @example
  * <AltCheckbox v-model="selectAll" :indeterminate="isPartial" />
+ *
+ * @example
+ * <AltCheckbox class="small" v-model="agreed" label="Compact option" />
  */
 import { computed, nextTick, ref } from "vue";
 import AltIcon from "../base/AltIcon.vue";
@@ -104,10 +107,7 @@ function handleBlur(): void {
 </script>
 
 <template>
-  <label
-    class="base-checkbox"
-    :data-disabled="props.disabled || undefined"
-  >
+  <label class="base-checkbox" :data-disabled="props.disabled || undefined">
     <span
       class="checkbox-control"
       :data-state="checkboxState"
@@ -161,7 +161,7 @@ function handleBlur(): void {
 }
 
 .base-checkbox.small {
-  gap: var(--alt-space-1);
+  /* Public modifier class: consumers can pass class="small" for compact density. */
 
   .checkbox-control {
     width: 16px;
