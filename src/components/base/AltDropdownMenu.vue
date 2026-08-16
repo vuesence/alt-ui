@@ -835,6 +835,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .alt-dropdown-menu {
+  :deep(.panel) {
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    overflow: visible;
+  }
+
   .menu-surface,
   .submenu-panel {
     min-width: 220px;
@@ -843,13 +851,13 @@ onBeforeUnmount(() => {
     padding: var(--alt-space-2) 0;
     overflow-y: auto;
     background: var(--alt-c-surface-1);
+    border: 1px solid var(--alt-dropdown-menu-border-color, var(--alt-c-border));
+    border-radius: var(--alt-radius-base);
+    box-shadow: var(--alt-dropdown-menu-shadow, var(--alt-shadow-4));
   }
 
   .submenu-panel {
     position: fixed;
-    border: 1px solid var(--alt-c-border);
-    border-radius: var(--alt-radius-base);
-    box-shadow: var(--alt-shadow-4);
     z-index: calc(var(--alt-z-max) + 1);
     animation: fadeMenuIn var(--alt-duration-fast) var(--alt-ease-in-out);
   }

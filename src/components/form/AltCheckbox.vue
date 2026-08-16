@@ -160,6 +160,26 @@ function handleBlur(): void {
   opacity: 0.6;
 }
 
+.base-checkbox.small {
+  gap: var(--alt-space-1);
+
+  .checkbox-control {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+  }
+
+  .checkbox-icon {
+    width: 11px;
+    height: 11px;
+  }
+
+  .checkbox-label {
+    font-size: var(--alt-font-size-0);
+  }
+}
+
 .checkbox-hidden-input {
   position: absolute;
   inline-size: 1px;
