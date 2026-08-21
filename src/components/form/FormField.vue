@@ -68,6 +68,8 @@ const visited = ref(false);
           !props.field?.isValid && ((touched && visited) || props.validate)
         "
         class="error-msg"
+        role="alert"
+        aria-live="polite"
       >
         {{ props.field?.error }}
       </div>
