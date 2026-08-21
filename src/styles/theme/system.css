@@ -31,7 +31,7 @@
     /* Text Colors */
     --alt-c-text-1: var(--alt-c-gray-50);
     --alt-c-text-2: var(--alt-c-gray-400);
-    --alt-c-text-3: var(--alt-c-gray-500);
+    --alt-c-text-3: var(--alt-c-gray-300);
 
     /* Surface Colors */
     --alt-c-surface-1: var(--alt-c-gray-900);
