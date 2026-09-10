@@ -245,15 +245,15 @@ function click(event: MouseEvent) {
  * ============================================ */
 .base-button.primary {
   background-color: transparent;
-  border-color: var(--alt-c-brand-1-500);
-  color: var(--alt-c-brand-1-500);
+  border-color: var(--alt-c-brand-1-600);
+  color: var(--alt-c-brand-1-600);
   box-shadow: var(--alt-shadow-1);
 }
 
 .base-button.primary:hover:not(:disabled) {
   background-color: var(--alt-c-brand-soft);
-  border-color: var(--alt-c-brand-1-600);
-  color: var(--alt-c-brand-1-600);
+  border-color: var(--alt-c-brand-1-700);
+  color: var(--alt-c-brand-1-700);
 }
 
 .base-button.primary:active:not(:disabled) {
@@ -261,21 +261,21 @@ function click(event: MouseEvent) {
 }
 
 .base-button.primary.solid {
-  background-color: var(--alt-c-brand-1-500);
-  border-color: var(--alt-c-brand-1-500);
+  background-color: var(--alt-c-brand-1-solid);
+  border-color: var(--alt-c-brand-1-solid);
   color: var(--alt-c-white);
   box-shadow: var(--alt-shadow-2);
 }
 
 .base-button.primary.solid:hover:not(:disabled) {
-  background-color: var(--alt-c-brand-hover);
-  border-color: var(--alt-c-brand-hover);
+  background-color: var(--alt-c-brand-1-solid-hover);
+  border-color: var(--alt-c-brand-1-solid-hover);
   color: var(--alt-c-white);
 }
 
 .base-button.primary.solid:active:not(:disabled) {
-  background-color: var(--alt-c-brand-active);
-  border-color: var(--alt-c-brand-active);
+  background-color: var(--alt-c-brand-1-solid-active);
+  border-color: var(--alt-c-brand-1-solid-active);
   color: var(--alt-c-white);
 }
 
@@ -286,24 +286,24 @@ function click(event: MouseEvent) {
  * ============================================ */
 .base-button.secondary-brand {
   background-color: transparent;
-  border-color: var(--alt-c-brand-2-500);
-  color: var(--alt-c-brand-2-500);
+  border-color: var(--alt-c-brand-2-700);
+  color: var(--alt-c-brand-2-700);
 }
 
 .base-button.secondary-brand:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--alt-c-brand-2-500) 10%, transparent);
-  color: var(--alt-c-brand-2-600);
+  background-color: color-mix(in srgb, var(--alt-c-brand-2-700) 10%, transparent);
+  color: var(--alt-c-brand-2-800);
 }
 
 .base-button.secondary-brand.solid {
-  background-color: var(--alt-c-brand-2-500);
-  border-color: var(--alt-c-brand-2-500);
+  background-color: var(--alt-c-brand-2-solid);
+  border-color: var(--alt-c-brand-2-solid);
   color: var(--alt-c-white);
 }
 
 .base-button.secondary-brand.solid:hover:not(:disabled) {
-  background-color: var(--alt-c-brand-2-600);
-  border-color: var(--alt-c-brand-2-600);
+  background-color: var(--alt-c-brand-2-solid-hover);
+  border-color: var(--alt-c-brand-2-solid-hover);
   color: var(--alt-c-white);
 }
 
@@ -314,24 +314,24 @@ function click(event: MouseEvent) {
  * ============================================ */
 .base-button.accent {
   background-color: transparent;
-  border-color: var(--alt-c-brand-3-500);
-  color: var(--alt-c-brand-3-500);
-}
-
-.base-button.accent:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--alt-c-brand-3-500) 10%, transparent);
+  border-color: var(--alt-c-brand-3-600);
   color: var(--alt-c-brand-3-600);
 }
 
+.base-button.accent:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--alt-c-brand-3-600) 10%, transparent);
+  color: var(--alt-c-brand-3-700);
+}
+
 .base-button.accent.solid {
-  background-color: var(--alt-c-brand-3-500);
-  border-color: var(--alt-c-brand-3-500);
+  background-color: var(--alt-c-brand-3-solid);
+  border-color: var(--alt-c-brand-3-solid);
   color: var(--alt-c-white);
 }
 
 .base-button.accent.solid:hover:not(:disabled) {
-  background-color: var(--alt-c-brand-3-600);
-  border-color: var(--alt-c-brand-3-600);
+  background-color: var(--alt-c-brand-3-solid-hover);
+  border-color: var(--alt-c-brand-3-solid-hover);
   color: var(--alt-c-white);
 }
 
@@ -355,13 +355,13 @@ function click(event: MouseEvent) {
  * ============================================ */
 .base-button.outline {
   background-color: transparent;
-  border-color: var(--alt-c-brand-1-500);
-  color: var(--alt-c-brand-1-500);
+  border-color: var(--alt-c-brand-1-600);
+  color: var(--alt-c-brand-1-600);
 }
 
 .base-button.outline:hover:not(:disabled) {
   background-color: var(--alt-c-brand-soft);
-  color: var(--alt-c-brand-1-600);
+  color: var(--alt-c-brand-1-700);
 }
 
 
@@ -399,14 +399,14 @@ function click(event: MouseEvent) {
 }
 
 .base-button.success.solid {
-  background-color: var(--alt-c-success);
-  border-color: var(--alt-c-success);
+  background-color: var(--alt-c-success-solid);
+  border-color: var(--alt-c-success-solid);
   color: var(--alt-c-white);
 }
 
 .base-button.success.solid:hover:not(:disabled) {
-  background-color: var(--alt-c-success-600, color-mix(in srgb, var(--alt-c-success) 85%, black));
-  border-color: var(--alt-c-success-600, color-mix(in srgb, var(--alt-c-success) 85%, black));
+  background-color: color-mix(in srgb, var(--alt-c-success-solid) 85%, black);
+  border-color: color-mix(in srgb, var(--alt-c-success-solid) 85%, black);
   color: var(--alt-c-white);
 }
 
@@ -427,14 +427,14 @@ function click(event: MouseEvent) {
 }
 
 .base-button.warning.solid {
-  background-color: var(--alt-c-warning);
-  border-color: var(--alt-c-warning);
+  background-color: var(--alt-c-warning-solid);
+  border-color: var(--alt-c-warning-solid);
   color: var(--alt-c-white);
 }
 
 .base-button.warning.solid:hover:not(:disabled) {
-  background-color: var(--alt-c-warning-600, color-mix(in srgb, var(--alt-c-warning) 85%, black));
-  border-color: var(--alt-c-warning-600, color-mix(in srgb, var(--alt-c-warning) 85%, black));
+  background-color: color-mix(in srgb, var(--alt-c-warning-solid) 85%, black);
+  border-color: color-mix(in srgb, var(--alt-c-warning-solid) 85%, black);
   color: var(--alt-c-white);
 }
 
@@ -455,14 +455,14 @@ function click(event: MouseEvent) {
 }
 
 .base-button.danger.solid {
-  background-color: var(--alt-c-danger);
-  border-color: var(--alt-c-danger);
+  background-color: var(--alt-c-danger-solid);
+  border-color: var(--alt-c-danger-solid);
   color: var(--alt-c-white);
 }
 
 .base-button.danger.solid:hover:not(:disabled) {
-  background-color: var(--alt-c-danger-600, color-mix(in srgb, var(--alt-c-danger) 85%, black));
-  border-color: var(--alt-c-danger-600, color-mix(in srgb, var(--alt-c-danger) 85%, black));
+  background-color: color-mix(in srgb, var(--alt-c-danger-solid) 85%, black);
+  border-color: color-mix(in srgb, var(--alt-c-danger-solid) 85%, black);
   color: var(--alt-c-white);
 }
 

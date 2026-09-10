@@ -56,12 +56,16 @@
   /* ============================================
    * FUNCTIONAL COLORS
    * Semantic colors for status/feedback
+   *
+   * Tuned so the colors stay WCAG AA (>= 4.5:1) when used as
+   * text on light surfaces. Dark theme overrides them with
+   * lighter shades for dark surfaces — see theme/dark.css.
    * ============================================ */
-  --alt-c-success: #16a34a;
-  --alt-c-warning: #d97706;
-  --alt-c-danger: #dc2626;
-  --alt-c-info: #0284c7;
-  --alt-c-attention: #f97316;
+  --alt-c-success: #15803d; /* green-700, 5.02:1 on white */
+  --alt-c-warning: #b45309; /* amber-700, 5.02:1 on white */
+  --alt-c-danger: #dc2626; /* red-600, 4.83:1 on white */
+  --alt-c-info: #0369a1; /* sky-700, 5.93:1 on white */
+  --alt-c-attention: #c2410c; /* orange-700, 5.18:1 on white */
 
   /* ============================================
    * BRAND ALIASES
@@ -71,6 +75,30 @@
   --alt-c-brand-hover: var(--alt-c-brand-1-600);
   --alt-c-brand-active: var(--alt-c-brand-1-700);
   --alt-c-brand-disabled: var(--alt-c-brand-1-300);
+
+  /* ============================================
+   * SOLID BUTTON BACKGROUNDS
+   * Filled variants always pair with white text.
+   * These shades are intentionally darker than the
+   * outline colors so white labels keep WCAG AA.
+   * Theme-scoped overrides live in theme/dark.css
+   * and theme/contrast.css.
+   * ============================================ */
+  --alt-c-brand-1-solid: var(--alt-c-brand-1-600);
+  --alt-c-brand-1-solid-hover: var(--alt-c-brand-1-700);
+  --alt-c-brand-1-solid-active: var(--alt-c-brand-1-800);
+  --alt-c-brand-2-solid: var(--alt-c-brand-2-700);
+  --alt-c-brand-2-solid-hover: var(--alt-c-brand-2-800);
+  --alt-c-brand-2-solid-active: var(--alt-c-brand-2-900);
+  --alt-c-brand-3-solid: var(--alt-c-brand-3-600);
+  --alt-c-brand-3-solid-hover: var(--alt-c-brand-3-700);
+  --alt-c-brand-3-solid-active: var(--alt-c-brand-3-800);
+
+  --alt-c-success-solid: var(--alt-c-success);
+  --alt-c-warning-solid: var(--alt-c-warning);
+  --alt-c-danger-solid: var(--alt-c-danger);
+  --alt-c-info-solid: var(--alt-c-info);
+  --alt-c-attention-solid: var(--alt-c-attention);
 
   /* ============================================
    * SOFT VARIANTS

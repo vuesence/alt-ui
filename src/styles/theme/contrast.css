@@ -77,6 +77,26 @@
   --alt-c-info: #38bdf8;
   --alt-c-attention: #fb923c;
 
+  /*
+   * Solid button backgrounds - dark shades so white labels stay AA.
+   * The vivid brand/functional colors above are for text on dark.
+   */
+  --alt-c-brand-1-solid: #2563eb;
+  --alt-c-brand-1-solid-hover: #1d4ed8;
+  --alt-c-brand-1-solid-active: #1e40af;
+  --alt-c-brand-2-solid: #0f766e;
+  --alt-c-brand-2-solid-hover: #115e59;
+  --alt-c-brand-2-solid-active: #134e4a;
+  --alt-c-brand-3-solid: #7c3aed;
+  --alt-c-brand-3-solid-hover: #6d28d9;
+  --alt-c-brand-3-solid-active: #5b21b6;
+
+  --alt-c-success-solid: #15803d;
+  --alt-c-warning-solid: #b45309;
+  --alt-c-danger-solid: #dc2626;
+  --alt-c-info-solid: #0369a1;
+  --alt-c-attention-solid: #c2410c;
+
   /* Soft variants */
   --alt-c-success-soft: color-mix(
     in srgb,
