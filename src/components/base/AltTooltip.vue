@@ -34,11 +34,34 @@ type TooltipPlacement =
   | "right-start"
   | "right-end";
 
+interface AltTooltipAnchor {
+  x: number;
+  y: number;
+}
+
+interface RectLike {
+  top: number;
+  left: number;
+  right: number;
+  bottom: number;
+  width: number;
+  height: number;
+}
+
 interface AltTooltipPositioning {
   placement?: TooltipPlacement;
   gutter?: number;
   strategy?: "absolute" | "fixed";
   offset?: { mainAxis?: number; crossAxis?: number };
+  /** Padding (px) kept between the tooltip and the viewport edge on clamp. */
+  viewportPadding?: number;
+  /** Flip to the opposite side when the preferred one overflows. Default true. */
+  flip?: boolean;
+  /**
+   * Overrides the measured content size when clamping to the viewport. Useful
+   * when the caller wants deterministic bounds (e.g. a fixed-size chart tooltip).
+   */
+  clampSize?: { width?: number; height?: number };
 }
 
 interface AltTooltipProps {
@@ -52,6 +75,19 @@ interface AltTooltipProps {
   disabled?: boolean;
   contentClass?: string;
   positionerStyle?: Record<string, string>;
+  contentStyle?: Record<string, string>;
+  /**
+   * Raw HTML rendered directly inside the tooltip content element (no extra
+   * wrapper). When set, the `content`/default slots are ignored.
+   */
+  html?: string;
+  /**
+   * Virtual anchor for controlled-coordinate mode. When provided, no trigger
+   * element is required and trigger hover/focus/click logic is skipped.
+   */
+  anchor?: AltTooltipAnchor;
+  pointerEvents?: "auto" | "none";
+  dismissOnOutsidePointerdown?: boolean;
 }
 
 const props = withDefaults(defineProps<AltTooltipProps>(), {
@@ -68,6 +104,10 @@ const props = withDefaults(defineProps<AltTooltipProps>(), {
     strategy: "fixed",
   }),
   positionerStyle: () => ({}),
+  contentStyle: () => ({}),
+  html: "",
+  pointerEvents: "auto",
+  dismissOnOutsidePointerdown: true,
 });
 
 const emit = defineEmits<{
@@ -92,6 +132,7 @@ let hasBoundGlobalListeners = false;
 let observedOpenState = false;
 
 const isControlled = computed(() => props.modelValue !== undefined);
+const isAnchorMode = computed(() => props.anchor !== undefined);
 const isOpen = computed(() => {
   if (isControlled.value) {
     return Boolean(props.modelValue);
@@ -110,6 +151,7 @@ const positionerInlineStyle = computed(() => {
     top: `${positionTop.value}px`,
     left: `${positionLeft.value}px`,
     transformOrigin: transformOrigin.value,
+    pointerEvents: props.pointerEvents,
     ...props.positionerStyle,
   };
 });
@@ -278,7 +320,7 @@ function handleContentKeydown(event: KeyboardEvent): void {
 }
 
 function handleOutsidePointerDown(event: Event): void {
-  if (!isOpen.value) {
+  if (!isOpen.value || !props.dismissOnOutsidePointerdown) {
     return;
   }
 
@@ -301,7 +343,9 @@ function bindGlobalListeners(): void {
 
   window.addEventListener("resize", updatePosition);
   window.addEventListener("scroll", updatePosition, true);
-  document.addEventListener("pointerdown", handleOutsidePointerDown, true);
+  if (props.dismissOnOutsidePointerdown) {
+    document.addEventListener("pointerdown", handleOutsidePointerDown, true);
+  }
   hasBoundGlobalListeners = true;
 }
 
@@ -334,8 +378,8 @@ function resolvePlacement(
 }
 
 function computeAlignedLeft(
-  triggerRect: DOMRect,
-  contentRect: DOMRect,
+  triggerRect: RectLike,
+  contentRect: RectLike,
   align: "start" | "center" | "end",
 ): number {
   if (align === "start") {
@@ -350,8 +394,8 @@ function computeAlignedLeft(
 }
 
 function computeAlignedTop(
-  triggerRect: DOMRect,
-  contentRect: DOMRect,
+  triggerRect: RectLike,
+  contentRect: RectLike,
   align: "start" | "center" | "end",
 ): number {
   if (align === "start") {
@@ -439,16 +483,41 @@ function updatePosition(): void {
 
   const trigger = triggerRef.value;
   const content = contentRef.value;
-  if (!trigger || !content) {
+  if (!content) {
     return;
   }
 
-  const viewportPadding = 8;
+  const viewportPadding = Math.max(0, props.positioning?.viewportPadding ?? 8);
+  const shouldFlip = props.positioning?.flip ?? true;
   const gutter = props.positioning?.gutter ?? 8;
   const desiredPlacement = props.positioning?.placement ?? "top";
   const [desiredPrimary, desiredAlign] = resolvePlacement(desiredPlacement);
-  const triggerRect = trigger.getBoundingClientRect();
-  const contentRect = content.getBoundingClientRect();
+
+  let triggerRect: RectLike;
+  if (props.anchor) {
+    triggerRect = {
+      top: props.anchor.y,
+      left: props.anchor.x,
+      right: props.anchor.x,
+      bottom: props.anchor.y,
+      width: 0,
+      height: 0,
+    };
+  } else if (trigger) {
+    triggerRect = trigger.getBoundingClientRect();
+  } else {
+    return;
+  }
+
+  const measuredRect = content.getBoundingClientRect();
+  const contentRect: RectLike = {
+    top: measuredRect.top,
+    left: measuredRect.left,
+    right: measuredRect.right,
+    bottom: measuredRect.bottom,
+    width: props.positioning?.clampSize?.width ?? measuredRect.width,
+    height: props.positioning?.clampSize?.height ?? measuredRect.height,
+  };
 
   let primary = desiredPrimary;
   let align = desiredAlign;
@@ -486,28 +555,30 @@ function updatePosition(): void {
   let next = computeBase(primary);
   next = applyAxisOffsets(primary, next.top, next.left);
 
-  if (primary === "top" && next.top < viewportPadding) {
-    primary = "bottom";
-    next = computeBase(primary);
-    next = applyAxisOffsets(primary, next.top, next.left);
-  } else if (
-    primary === "bottom" &&
-    next.top + contentRect.height > window.innerHeight - viewportPadding
-  ) {
-    primary = "top";
-    next = computeBase(primary);
-    next = applyAxisOffsets(primary, next.top, next.left);
-  } else if (primary === "left" && next.left < viewportPadding) {
-    primary = "right";
-    next = computeBase(primary);
-    next = applyAxisOffsets(primary, next.top, next.left);
-  } else if (
-    primary === "right" &&
-    next.left + contentRect.width > window.innerWidth - viewportPadding
-  ) {
-    primary = "left";
-    next = computeBase(primary);
-    next = applyAxisOffsets(primary, next.top, next.left);
+  if (shouldFlip) {
+    if (primary === "top" && next.top < viewportPadding) {
+      primary = "bottom";
+      next = computeBase(primary);
+      next = applyAxisOffsets(primary, next.top, next.left);
+    } else if (
+      primary === "bottom" &&
+      next.top + contentRect.height > window.innerHeight - viewportPadding
+    ) {
+      primary = "top";
+      next = computeBase(primary);
+      next = applyAxisOffsets(primary, next.top, next.left);
+    } else if (primary === "left" && next.left < viewportPadding) {
+      primary = "right";
+      next = computeBase(primary);
+      next = applyAxisOffsets(primary, next.top, next.left);
+    } else if (
+      primary === "right" &&
+      next.left + contentRect.width > window.innerWidth - viewportPadding
+    ) {
+      primary = "left";
+      next = computeBase(primary);
+      next = applyAxisOffsets(primary, next.top, next.left);
+    }
   }
 
   const clampedLeft = clamp(
@@ -538,7 +609,11 @@ function updatePosition(): void {
 </script>
 
 <template>
-  <div class="alt-tooltip-root" :data-disabled="props.disabled || undefined">
+  <div
+    v-if="!isAnchorMode"
+    class="alt-tooltip-root"
+    :data-disabled="props.disabled || undefined"
+  >
     <span
       ref="triggerRef"
       class="alt-tooltip-trigger"
@@ -568,10 +643,21 @@ function updatePosition(): void {
       @keydown="handleContentKeydown"
     >
       <div
+        v-if="props.html"
         :id="`alt-tooltip-${tooltipId}`"
         role="tooltip"
         class="alt-tooltip-content"
         :class="props.contentClass"
+        :style="props.contentStyle"
+        v-html="props.html"
+      />
+      <div
+        v-else
+        :id="`alt-tooltip-${tooltipId}`"
+        role="tooltip"
+        class="alt-tooltip-content"
+        :class="props.contentClass"
+        :style="props.contentStyle"
       >
         <slot name="content">
           <slot />
