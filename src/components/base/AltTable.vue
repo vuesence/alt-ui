@@ -67,17 +67,29 @@ function updateCellValue(
   emit("update:rows", updatedRows);
 }
 
-// Prevent unwanted formatting on paste
-function handleCellPaste(event: ClipboardEvent) {
+// Prevent unwanted formatting on paste. Plain text is inserted manually, so no
+// `input` event fires — the row must be emitted explicitly afterwards.
+function handleCellPaste(
+  event: ClipboardEvent,
+  row: TableRowData,
+  column: TableColumnDefinition,
+  rowIndex: number,
+) {
   event.preventDefault();
   const plainText = event.clipboardData?.getData("text/plain") ?? "";
   const selection = window.getSelection();
   if (selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
     range.deleteContents();
-    range.insertNode(document.createTextNode(plainText));
-    range.collapse(false);
+    const pastedNode = document.createTextNode(plainText);
+    range.insertNode(pastedNode);
+    range.setStartAfter(pastedNode);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
+
+  updateCellValue(event, row, column, rowIndex);
 }
 </script>
 
@@ -131,7 +143,7 @@ function handleCellPaste(event: ClipboardEvent) {
                 contenteditable
                 class="editable-cell"
                 @input="(e) => updateCellValue(e, row, column, rowIndex)"
-                @paste="handleCellPaste"
+                @paste="(e) => handleCellPaste(e, row, column, rowIndex)"
                 v-text="row[column.key]"
               />
               <template v-else>

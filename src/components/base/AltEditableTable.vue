@@ -39,14 +39,12 @@ const props = defineProps({
 
 const isUpdating = new WeakMap<HTMLElement, boolean>();
 
-function onCellInput(
-  event: Event,
+function commitCellValue(
+  target: HTMLElement,
   row: TableRow,
   header: TableHeader,
   rowIndex: number,
 ) {
-  const target = event.target as HTMLElement;
-
   // Prevent recursive updates
   if (isUpdating.get(target)) {
     return;
@@ -69,6 +67,15 @@ function onCellInput(
   });
 }
 
+function onCellInput(
+  event: Event,
+  row: TableRow,
+  header: TableHeader,
+  rowIndex: number,
+) {
+  commitCellValue(event.target as HTMLElement, row, header, rowIndex);
+}
+
 function initCell(
   el: Element | ComponentPublicInstance | null,
   row: TableRow,
@@ -82,16 +89,33 @@ function initCell(
   }
 }
 
-function onCellPaste(event: ClipboardEvent) {
+/**
+ * Paste is handled manually to keep plain text only (no pasted markup).
+ * The browser fires no `input` event for programmatic DOM insertion, so the
+ * cell value must be committed explicitly, otherwise v-model stays stale.
+ */
+function onCellPaste(
+  event: ClipboardEvent,
+  row: TableRow,
+  header: TableHeader,
+  rowIndex: number,
+) {
   event.preventDefault();
   const text = event.clipboardData?.getData("text/plain") ?? "";
+  const target = event.currentTarget as HTMLElement;
   const selection = window.getSelection();
   if (selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
     range.deleteContents();
-    range.insertNode(document.createTextNode(text));
-    range.collapse(false);
+    const pastedNode = document.createTextNode(text);
+    range.insertNode(pastedNode);
+    range.setStartAfter(pastedNode);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
+
+  commitCellValue(target, row, header, rowIndex);
 }
 
 function onHeaderClick(header: TableHeader) {
@@ -158,7 +182,7 @@ function deleteRow(index: number) {
               contenteditable
               class="editable-cell"
               @input="(e) => onCellInput(e, row, header, rowIndex)"
-              @paste="onCellPaste"
+              @paste="(e) => onCellPaste(e, row, header, rowIndex)"
             >
               <!-- Content set via ref callback -->
             </div>
